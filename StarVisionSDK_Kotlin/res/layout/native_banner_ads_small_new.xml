@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/app_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:paddingTop="15dp"
+	android:paddingStart="125dp"
+	android:paddingEnd="125dp">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignBottom="@+id/imgSub"
+			android:layout_alignTop="@+id/imgSub"
+			android:layout_marginBottom="5dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="5dp" >
+
+		</RelativeLayout>
+
+		<ImageView
+			android:id="@+id/mIvAppIcon"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:adjustViewBounds="true"
+			android:src="@drawable/ic_launcher" />
+
+	</RelativeLayout>
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="17dp"
+            android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:gravity="center_vertical|center_horizontal"
+            android:visibility="visible"
+			android:maxLines="2"
+			android:background="@color/ad_native"
+            android:textColor="@color/white"
+            android:text="Ad" />
+
+        <TextView
+            android:id="@+id/mTvAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="@drawable/btn_text"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Application name" />
+
+        <LinearLayout
+	        android:layout_gravity="center_vertical"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+
+	        <ImageView
+		        android:layout_weight="0"
+		        android:layout_gravity="center_vertical|center_horizontal"
+		        android:layout_width="10dp"
+		        android:layout_height="10dp"
+		        android:layout_marginRight="3dp"
+		        android:src="@drawable/img_star" />
+
+	        <TextView
+	            android:id="@+id/mTvAppDesc"
+				android:layout_weight="1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:textSize="12sp"
+				android:gravity="left"
+	            android:visibility="visible"
+				android:maxLines="2"
+            	android:textColor="@color/ad_native_text"
+	            android:text="AdStar" />
+	    </LinearLayout>
+    </LinearLayout>
+
+	<TextView
+	   android:id="@+id/mBtInstall"
+	   android:layout_weight="0"
+	   android:layout_width="55dp"
+	   android:layout_height="30dp"
+	   android:layout_margin="10dp"
+	   android:text="@string/get_it"
+	   android:textColor="@color/white"
+		android:gravity="center"
+	   android:layout_gravity="center_vertical|center_horizontal"
+	   android:background="@drawable/single_box_install_cornor_border" />
+</LinearLayout>

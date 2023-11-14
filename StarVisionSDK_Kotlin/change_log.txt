@@ -1,0 +1,10 @@
+[27/06/2559]
+- InstallSDK ตัดโหนด json ที่คาดว่าจะผิดกฎของ Google play ออก
+[08/06/2559]
+- แก้ไขให้มีการ แสดง banner ตาม AdsvertisingPage ที่ส่งมาถึงแม้ว่า Datarowbannersmall จะไม่มีข้อมูลส่งมา แก้ไขเฉพาะ Small banner เนื่องจาก Popup ไม่มีปัญหานี้
+[19/11/2558]
+- แก้ไขการเรียก json ไปที่ node Datarowbannermedium --> DatarowbannermediumNew, DatarowbannerBig --> DatarowbannerBigNew
+- ใน Link AppUpdate
+- ให้เพิ่ม popup_size (medium, big)
+- เพื่อเรียกใช้งาน BannerSDK
+- ขนาด popup banner ให้อิงจาก AppUpdate

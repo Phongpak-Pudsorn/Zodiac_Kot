@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#EC28A5</color>
+    <color name="dark">#FF222222</color>
+    <color name="light">#FFEEEEEE</color>
+    <color name="pink2">#F48FB1</color>
+    <color name="red_item">#fc7878</color>
+    <color name="red_item_">#d10000</color>
+    <color name="red2">#7d0f0f</color>
+    <color name="blue_item">#90CAF9</color>
+    <color name="green_item">#0ab680</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="gray">#aea9ac</color>
+    <color name="yellow">#FFC107</color>
+    <color name="transparent">#00000000</color>
+    <!--      <color name="tab_aap">#d10000</color> -->
+    <color name="click_list">#7e0608</color>
+    <color name="blue">#0099FF</color>
+
+
+    <color name="google_red">#d62d20</color>
+    <color name="google_blue">#0057e7</color>
+    <color name="google_green">#008744</color>
+    <color name="google_yellow">#ffa700</color>
+    <!-- color tab notic -->
+    <color name="color_tabnotic1">#FF6A6A</color>
+    <color name="color_tabnotic2">#1E90FF</color>
+    <color name="color_tabnotic3">#9400D3</color>
+
+    <!-- End color tab notic -->
+</resources>

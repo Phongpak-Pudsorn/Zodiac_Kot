@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color> 
+    <color name="ghost_white">#E8E8E8</color> 
+    <color name="red">#FF0000</color>    
+    <color name="tab_medium">#2B2B2B</color>
+	<color name="tab_dark">#000000</color>
+	<color name="tab_transparent">#10ffffff</color>
+	<color name="green">#33FF33</color>
+	<color name="black">#000000</color>
+	<color name="blue2">#3366FF</color>
+	<color name="black_trin">#99000000</color>
+	<color name="black_trin_image">#4D000000</color>
+	<color name="transparent">#00000000</color>
+	<color name="gray_light">#DFE6EF</color>
+	<color name="green_lemon">#4bd137</color>
+	<color name="green_light">#CCFFCC</color>
+	<color name="green_dark">#009900</color>
+	<color name="green_dark_indicator">#00EE00</color>
+	<color name="orenge_dark_indicator">#ff610f</color>
+	<color name="pink">#FF00FF</color>
+	<color name="border_gray">#d4d4cf</color>  
+	<color name="blue">#0099FF</color>
+	<color name="gray">#999999</color>
+	<color name="gold">#FFD700</color>
+	<color name="ad_native">#fd9500</color>	
+	<color name="ad_native_text">#656d74</color>
+	<color name="ad_native_sub_text">#cfcfcc</color>		
+	<color name="native_bg">#f8f8f8</color>	
+	<color name="app_bg">#f8f8f8</color>
+	<color name="game_name">#3f3c3b</color>
+	<color name="text_header">#365f8d</color>
+	<color name="text_blue">#588efd</color>
+	<color name="coral">#FBB917</color>
+	<color name="green_header">#1ebf20</color>
+	<color name="tab_gray">#f8f8f8</color>
+	<color name="tab_gray9">#f9f9f9</color>
+	<color name="tab_gray_text">#919191</color> 
+	<color name="gray_line">#d9d9d9</color>
+	<color name="gray_bg_box">#f8f8f8</color>
+	<color name="gray_bg_box_select">#f7f6f6</color>
+	<color name="gray_bg_listview">#e5e5e5</color>
+	<color name="gray_line2">#c9ccd1</color> 
+	<color name="gray_text1">#5e5e5e</color>    
+	<color name="gray_text2">#a1a3aa</color> 
+	<color name="gray_text3">#6e6e73</color>
+	<color name="gray6">#666666</color> 
+	<color name="gray_line3">#b2b2b2</color> 
+	<color name="orange_text">#fd9500</color>
+	<color name="blue_border_button">#0082ff</color>
+	<color name="background_tab_pressed">#6633B5E5</color>
+	
+	<color name="red_tab">#ff0000</color>
+	<color name="FreeItemBg">#fe9500</color>
+		<color name="FreeItemClickBg">#fca800</color>
+	<color name="NewsBg">#1db0f6</color>
+		<color name="NewsClickBg">#1dc3f5</color>
+	<color name="GuideBg">#c859e3</color>
+		<color name="GuideClickBg">#de59e3</color>
+	<color name="RatingBg">#ff6201</color>
+		<color name="RatingClickBg">#ff7803</color>
+		
+		
+	<color name="skip_color">#FF3333</color>
+	<color name="skip_color_click">#b32424</color>
+	
+	<color name="download_color">#99CC00</color>
+	<color name="download_color_click">#6b8f00</color>
+</resources>

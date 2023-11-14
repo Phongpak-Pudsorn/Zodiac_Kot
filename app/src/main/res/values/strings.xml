@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">ดูดวง 12 ราศี</string>
+    <string name="text_share_nameapp_android">แอพ ดูดวง 12 ราศี - Android</string>
+    <string name="text_share_hashtag"> #ดูดวง #ดูดวง12ราศี #12ราศี #ทายนิสัย #ทายลักษณะนิสัย #ทำนาย #ทำนายลักษณะนิสัย #ทำนายนิสัย #ฟันธง #ราศี</string>
+
+
+    <string name="action_settings">Settings</string>
+    <string name="zodiac_week">ดูดวงรายสัปดาห์</string>
+    <string name="zodiac_month">ดูดวงรายเดือน</string>
+    <string name="zodiac_year">ดูดวงรายปี</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+
+
+    <string name="select_img_camera">ถ่ายรูปใหม่</string>
+    <string name="select_img_gallery">เลือกรูปจากคลังภาพ</string>
+    <string name="text_close">ยกเลิก</string>
+    <string name="strAbout"> ดูดวง 12 ราศี แอพพลิเคชั่นสุดชิค ที่จะบ่งบอกลักษณะนิสัย เรื่องราว ความรักและตัวตนของคุณตามราศีเกิด แม่นชัวร์ฟันธง!!</string>
+    <string name="link_app_mobile">market://details?id=</string>
+    <string name="link_app_url">https://play.google.com/store/apps/details?id=</string>
+    <string name="link_app_starvision_url">https://play.google.com/store/apps/developer?id=Gostar+Company+Limited</string>
+    <string name="link_starvision_mobile">market://search?q=pub:SmileApps</string>
+    <!-- Crop image-->
+    <string name="saving_image">Saving image</string>
+    <string name="preparing_card">Preparing card</string>
+    <string name="no_storage_card">No storage card</string>
+    <string name="not_enough_space">Not enough space</string>
+    <string name="txtNo_internet">No Internet Connection</string>
+    <!-- END Crop image-->
+    <string name="yes">ตกลง</string>
+    <string name="no">ยกเลิก</string>
+    <string name="noConnect">No</string>
+    <string name="Connect">Connect Again</string>
+    <string name="web_policy">"https://www.starvision.in.th/term/privacy.html"</string>
+    <!--        AdmobREAL-->
+    <string name="admob_id">ca-app-pub-1595388041462924~4567259920</string>
+    <string name="KEY_ADMOB_InterstitialBanner">ca-app-pub-1595388041462924/9823525844</string>
+    <string name="KEY_ADMOB">ca-app-pub-1595388041462924/6010728752</string>
+    <string name="KEY_ADMOB_AppOpen">ca-app-pub-1595388041462924/6013267326</string>
+    <string name="KEY_ADMOB_Native">ca-app-pub-1595388041462924/7606330840</string>
+
+    <!--        AdmobTEST-->
+    <!--    <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>-->
+    <!--    <string name="KEY_ADMOB">ca-app-pub-3940256099942544/6300978111</string>-->
+    <!--    <string name="KEY_ADMOB_InterstitialBanner">ca-app-pub-3940256099942544/1033173712</string>-->
+    <!--    <string name="KEY_ADMOB_AppOpen">ca-app-pub-3940256099942544/3419835294</string>-->
+    <!--    <string name="KEY_ADMOB_Native">ca-app-pub-3940256099942544/2247696110</string>-->
+
+
+    <string name="text_ok">ตกลง</string>
+    <string name="text_no">ไม่</string>
+    <string name="text_exit">คุณต้องการออกแอพ ใช่ หรือ ไม่</string>
+
+    <string name="text_title_notic_Nodata">ยังไม่มีข้อมูลในขณะนี้</string>
+    <string name="text_title_notic_Data30">แสดงข้อมูลย้อนหลัง 30 วัน</string>
+    <string name="text_nonet_thai">เนื้อหาส่วนนี้ต้องใช้อินเตอร์เน็ต</string>
+
+    <string name="string_rating_title">ให้คะแนนแอพ ดูดวง 12 ราศี </string>
+    <string name="string_rating_message">ถ้าคุณชื่นชอบแอพ  ช่วยให้คะแนน 5 ดาว ด้วยนะคะ ขอบคุณมากค่ะ </string>
+    <string name="string_rating_ok">ให้คะแนนตอนนี้ </string>
+    <string name="string_rating_later">ให้คะแนนภายหลัง </string>
+    <string name="string_rating_no">ไม่…ขอบคุณ </string>
+</resources>

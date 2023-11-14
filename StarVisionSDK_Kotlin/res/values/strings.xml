@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SmartdirectSDK</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+	<string name="grant_message">อนุญาตให้เข้าถึงรายชื่อผู้ติดต่อ สำหรับแนะนำเพื่อนหรือไม่?</string>
+	<string name="grant">อนุญาต</string>
+	<string name="no_grant">ไม่อนุญาต</string>
+
+	<string name="text_about_setting">เกี่ยวกับ</string>
+	<string name="text_public">ประกาศ</string>
+	<string name="text_public_none">ไม่พบประกาศ</string>
+	<string name="text_ver">เวอร์ชั่น</string>
+	<string name="text_policy">นโยบาย</string>
+	<string name="text_app_me">แอพของเรา</string>
+	<string name="text_rating">ให้คะแนนแอพ</string>
+	<string name="text_share">แชร์แอพ</string>
+
+	<string name="url_policy">https://www.starvision.in.th/term/privacy.html</string>
+	
+	<string name="skip">Skip</string>
+	<string name="skip_in">Skip in</string>
+	<string name="get_it">GET IT</string>
+
+
+</resources>
