@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "92060407731",
+    "firebase_url": "https://zodiac12-02.firebaseio.com",
+    "project_id": "zodiac12-02",
+    "storage_bucket": "zodiac12-02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92060407731:android:87e7e22cf3faa29f",
+        "android_client_info": {
+          "package_name": "com.smileapp.zodiac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92060407731-vhsopfvgpjni6s1i2030gc2me82q70ph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUT676ai_mynkdZzYewrJaywyluf6b8Ho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92060407731-vhsopfvgpjni6s1i2030gc2me82q70ph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

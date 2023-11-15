@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:visibility="gone"
             ads:adSize="BANNER"
-            ads:adUnitId="@string/Banner" />
+            ads:adUnitId="@string/KEY_ADMOB" />
 
         <com.starvision.bannersdk.BannerAds
             android:id="@+id/bannerAds_2"

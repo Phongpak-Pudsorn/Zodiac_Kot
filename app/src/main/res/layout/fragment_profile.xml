@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/bg_main"
+   >
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@mipmap/img_tab_main">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="เริ่มทำนาย"
+                android:id="@+id/TvTitle"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+        <com.starvision.bannersdk.NoticeAds
+            android:id="@+id/noticeAds"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone">
+        </com.starvision.bannersdk.NoticeAds>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                >
+
+                <com.smileapp.zodiac.circle.CircleImageView
+                    android:id="@+id/mImguser"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/profile_user"
+                    app:border_color="@color/white"
+                    app:border_width="4dp" />
+            </RelativeLayout>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/TvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NAME"
+                    android:shadowColor="#000000"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="2"
+                    android:padding="10dp"
+                    android:textSize="30sp"
+
+                    />
+
+                <EditText
+                    android:id="@+id/mEdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_editext_while"
+                    android:layout_weight="1"
+                    android:hint="ใส่ชื่อ"
+                    android:textColorHint="@color/gray"
+                    android:inputType="text"
+                    android:maxLength="15"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/TvGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GENDER"
+                    android:shadowColor="#000000"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="2"
+                    android:padding="10dp"
+                    android:textSize="30sp"
+
+                    />
+
+                <RadioGroup
+                    android:id="@+id/rdGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical">
+                    <RadioButton
+                        android:id="@+id/rdMan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="Man"
+                        android:button="@drawable/img_gender_radio_man"
+                        android:layout_marginRight="10dp"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rdWoman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="Woman"
+                        android:button="@drawable/img_gender_radio_woman"
+                        />
+
+                </RadioGroup>
+
+
+            </TableRow>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/TvZodiac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ZODIAC"
+                    android:gravity="center"
+                    android:shadowColor="#000000"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="2"
+                    android:padding="10dp"
+                    android:textSize="30sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <Spinner
+                    android:id="@+id/SpinDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"
+                    android:padding="2dp"
+                    android:background="@drawable/bg_spinner"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ImgStart"
+                    android:src="@drawable/btn_start"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/item_banner" />
+
+
+</LinearLayout>
