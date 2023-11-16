@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer
+        xmlns:my="http://schemas.android.com/apk/res/com.smileapp.zodiac"
+        android:id="@+id/drawer"
+        my:direction="topToBottom"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        my:handle="@+id/handle"
+        my:content="@+id/content">
+        <RelativeLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#90000000"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <com.smileapp.zodiac.circle.CircleImageView
+                    android:id="@+id/mImguser"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@mipmap/profile_user"
+                    my:border_color="@color/white"
+                    my:border_width="2dp" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:src="@mipmap/img_btn_edite" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/relativeLayout"
+                android:layout_toRightOf="@+id/relativeLayout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/TvNameUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="MediumTexteweeeeeeeeeeeeeeeeeeeeewewewewewewewewewewewewewewewew"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="28sp"
+                    android:layout_marginLeft="15dp"/>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp">
+
+                        <ImageView
+                            android:id="@+id/ImgRasi"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:layout_marginLeft="1dp"
+                            android:adjustViewBounds="true"
+
+                             />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/TvRasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Medium Text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                </TableRow>
+            </LinearLayout>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_slide_close" />
+    </com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer>
+</LinearLayout>

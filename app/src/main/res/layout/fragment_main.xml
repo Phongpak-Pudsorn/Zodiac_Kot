@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/img_bg_trans_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/RL_Tab_User"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@mipmap/img_tab_main">
+
+                <ImageView
+                    android:id="@+id/imgNotic"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:padding="6dp"
+                    android:visibility="invisible"
+                    android:src="@drawable/btn_notic" />
+
+                <TextView
+                    android:id="@+id/TvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="ดูดวง 12 ราศี"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imgSetting"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="6dp"
+                    android:src="@drawable/btn_setting" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Rl_Notic_ImgArrow"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imgArrow"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="10dp"
+                    android:padding="6dp"
+                    android:src="@mipmap/img_arrow_notilist" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/white">
+
+
+                    <TextView
+                        android:id="@+id/tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="การแจ้งเตือน"
+                        android:textStyle="bold"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <com.starvision.bannersdk.NoticeAds
+            android:id="@+id/noticeAds"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone">
+        </com.starvision.bannersdk.NoticeAds>
+
+        <RelativeLayout
+            android:id="@+id/Rl_Menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ScrollView
+                android:id="@+id/scrollView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/Rl_Head"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"></RelativeLayout>
+
+            <!--        <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                    </RelativeLayout>-->
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="20dp"
+                        android:src="@mipmap/logo_12" />
+                    <TextView
+                        android:id="@+id/btnZodiac12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="ดูดวง  12 ราศี"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/btnToDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="ดูดวงรายวัน"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/btnWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="ดูดวงรายสัปดาห์"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/btnMonth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="ดูดวงรายเดือน"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/btnYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="ดูดวงรายปี"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:id="@+id/btnRecommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/bg_button"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="ดูดวงแนะนำ"
+                        android:textColor="@color/white"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+            <include
+                android:id="@+id/userTab"
+                layout="@layout/layout_menue_user_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Rl_Notic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayout2">
+
+                <ListView
+                    android:id="@+id/LvView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:divider="@color/gray"
+                    android:dividerHeight="1dp"
+                    android:fadingEdge="none"></ListView>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="#AAAAAA">
+
+                <TextView
+                    android:id="@+id/TvTileNotic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <include
+            android:id="@+id/include"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/item_banner" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/transparent">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+</FrameLayout>

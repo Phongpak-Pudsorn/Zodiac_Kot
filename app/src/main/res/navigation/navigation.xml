@@ -26,5 +26,20 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.smileapp.zodiac.view.fragment.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.smileapp.zodiac.view.fragment.SettingFragment"
+        android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.smileapp.zodiac.view.fragment.EditProfileFragment"
+        android:label="EditProfileFragment" />
 </navigation>
