@@ -135,7 +135,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="Man"
-                        android:button="@drawable/img_gender_radio_man"
+                        android:button="@null"
+                        android:background="@drawable/img_gender_radio_man"
                         android:layout_marginRight="10dp"
                         />
 
@@ -144,7 +145,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tag="Woman"
-                        android:button="@drawable/img_gender_radio_woman"
+                        android:button="@null"
+                        android:background="@drawable/img_gender_radio_woman"
                         />
 
                 </RadioGroup>

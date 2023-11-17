@@ -13,4 +13,10 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="ZodiacRadioMaleStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/img_gender_radio_man</item>
+    </style>
+    <style name="ZodiacRadioFemaleStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:radioButtonStyle">@drawable/img_gender_radio_woman</item>
+    </style>
 </resources>

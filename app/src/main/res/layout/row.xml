@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.smileapp.zodiac.commonclass.CMTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:maxLines="1"
+    android:padding="10dp"
+    android:textAppearance="?android:attr/textAppearanceLargeInverse"
+    android:textColor="@color/white"
+    android:background="@drawable/click_spinner"
+/>

@@ -2,6 +2,8 @@ package com.smileapp.zodiac.view.fragment
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,22 +30,84 @@ class SplashFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
-        val timer = object : CountDownTimer(5000, 1000) {
-            override fun onTick(p0: Long) {
-                Log.e("time", p0.toString())
-            }
+        val accept = Utils.getPrefer(requireActivity(), Utils.KEY_ACCEPT, false)
+        val firstOpen = Utils.getPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,false)
+        if (accept==false){
+            val policy = PolicyDialogFragment.newInstance()
+            policy.show(childFragmentManager,"SpinDialogFragment")
+            policy.setOnClickAdapterListener(object :PolicyDialogFragment.onClickAdapterListener{
+                override fun onClick(i: Boolean) {
+                    Utils.setPrefer(requireActivity(),Utils.KEY_ACCEPT,i)
+                    if (firstOpen==false){
+                        val timer = object : CountDownTimer(3000, 1000) {
+                            override fun onTick(p0: Long) {
+                                Log.e("time", p0.toString())
+                            }
+                            override fun onFinish() {
+                                bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
+                                    override fun onAdClosed() {
+//                                        Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
+                                        Navigation.findNavController(requireView())
+                                            .navigate(R.id.action_splashFragment_to_profileFragment)
+                                    }
+                                })
+                            }
+                        }
+                        timer.start()
+                    }else{
+                        val timer = object : CountDownTimer(3000, 1000) {
+                            override fun onTick(p0: Long) {
+                                Log.e("time", p0.toString())
+                            }
+                            override fun onFinish() {
+                                bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
+                                    override fun onAdClosed() {
+                                        Navigation.findNavController(requireView())
+                                            .navigate(R.id.action_splashFragment_to_mainFragment)
+                                    }
+                                })
+                            }
 
-            override fun onFinish() {
-                bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
-                    override fun onAdClosed() {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_splashFragment_to_mainFragment)
+                        }
+                        timer.start()
                     }
-                })
+                }
+            })
+
+        }else{
+            if (firstOpen==false){
+                val timer = object : CountDownTimer(3000, 1000) {
+                    override fun onTick(p0: Long) {
+                        Log.e("time", p0.toString())
+                    }
+                    override fun onFinish() {
+                        bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
+                            override fun onAdClosed() {
+//                                Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_splashFragment_to_profileFragment)
+                            }
+                        })
+                    }
+                }
+                timer.start()
+            }else{
+                val timer = object : CountDownTimer(3000, 1000) {
+                    override fun onTick(p0: Long) {
+                        Log.e("time", p0.toString())
+                    }
+                    override fun onFinish() {
+                        bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
+                            override fun onAdClosed() {
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_splashFragment_to_mainFragment)
+                            }
+                        })
+                    }
+
+                }
+                timer.start()
             }
-
         }
-        timer.start()
-
     }
 }
