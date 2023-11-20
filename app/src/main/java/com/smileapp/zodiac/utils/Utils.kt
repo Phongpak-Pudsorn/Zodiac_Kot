@@ -8,6 +8,7 @@ import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Build
 import android.widget.TextView
+import java.io.IOException
 import java.util.*
 
 object Utils {
@@ -21,6 +22,10 @@ object Utils {
     const val KEY_ACCEPT = "isAccept"
     const val KEY_FIRST_OPEN = "isFirstTime"
     const val NAME_USER = "NAME_USER"
+    const val KEY_RASI = "KEY_RASI"
+    const val KEY_GENDER = "KEY_GENDER"
+    const val NAME_DATE_RASI = "NAME_DATE_RASI"
+    const val KEY_NOTICEADS = "KEY_NOTICEADS"
     var UUID = ""
     var currentFragment = 0
 
@@ -47,6 +52,58 @@ object Utils {
     }
     fun getNameUser():String{
         return sharedPrefs!!.getString(NAME_USER,"").toString()
+    }
+    fun loadFromAssets(mContext: Context): String? {
+        var dataStr = ""
+        try {
+            val input = mContext.assets.open("DataZodiac/Data_Zodiac.json")
+            val size = input.available()
+            val buffer = ByteArray(size)
+            input.read(buffer)
+            input.close()
+            dataStr = String(buffer, charset("UTF-8"))
+
+        }catch (ex: IOException){
+            ex.printStackTrace()
+            return null
+        }
+        return dataStr
+    }
+
+    //---------END  SET ID RASI-------------------
+    fun setRasi(month: Int) {
+        prefsEditor!!.putInt(KEY_RASI, month)
+        prefsEditor!!.commit()
+    }
+
+    fun getRasi(): Int {
+        return sharedPrefs!!.getInt(KEY_RASI, 0)
+    }
+    fun setGENDER(Gender: String?) {
+        prefsEditor!!.putString(KEY_GENDER, Gender)
+        prefsEditor!!.commit()
+    }
+
+    fun getGENDER(): String? {
+        return sharedPrefs!!.getString(KEY_GENDER, "")
+    }
+
+    //---------END  SET Name User-------------------
+
+    fun setNameAndDateRasi(date: String?) {
+        prefsEditor!!.putString(NAME_DATE_RASI, date)
+        prefsEditor!!.commit()
+    }
+
+    fun getNameAndDateRasi(): String? {
+        return sharedPrefs!!.getString(NAME_DATE_RASI, "")
+    }
+    fun setNoticeAds(status: Boolean){
+        prefsEditor!!.putBoolean(KEY_NOTICEADS,status)
+        prefsEditor!!.commit()
+    }
+    fun getNoticeAds(): Boolean {
+        return sharedPrefs!!.getBoolean(KEY_NOTICEADS,true)
     }
     fun setPrefer(mcontext: Context, key:String, objects:Any){
         val preferences = mcontext.getSharedPreferences(namePreferences, modePreferences)
@@ -108,6 +165,14 @@ object Utils {
         val myShader: Shader = LinearGradient(
             0f, 70f, 0f, 180f,
             Color.WHITE, Color.BLUE,
+            Shader.TileMode.CLAMP
+        )
+        tv.paint.shader = myShader
+    }
+    fun setTextGradient_Green(tv:TextView){
+        val myShader: Shader = LinearGradient(
+            0f, 50f, 0f, 200f,
+            Color.WHITE, Color.GREEN,
             Shader.TileMode.CLAMP
         )
         tv.paint.shader = myShader

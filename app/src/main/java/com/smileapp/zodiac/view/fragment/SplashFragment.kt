@@ -46,7 +46,7 @@ class SplashFragment:Fragment() {
                             override fun onFinish() {
                                 bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
                                     override fun onAdClosed() {
-//                                        Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
+                                        Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
                                         Navigation.findNavController(requireView())
                                             .navigate(R.id.action_splashFragment_to_profileFragment)
                                     }

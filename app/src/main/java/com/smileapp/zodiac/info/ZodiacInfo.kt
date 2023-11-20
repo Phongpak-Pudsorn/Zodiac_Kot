@@ -1,9 +1,10 @@
-package com.smileapp.zodiac
+package com.smileapp.zodiac.info
 
-data class ZodiacInfo(val Data_Zodiac:ZodiacData) {
+data class ZodiacInfo(val Data_Zodiac: ZodiacData) {
     data class ZodiacData(val zodiac_main:ArrayList<MainData>,
-                          val zodiac_general:GeneralData,
-                          val zodiac_love:LoveData){
+                          val zodiac_general: GeneralData,
+                          val zodiac_love: LoveData
+    ){
         data class MainData(val zodiac_id:String,
                             val zodiac_name_thai:String,
                             val zodiac_name_eng:String,
