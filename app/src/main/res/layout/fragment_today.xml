@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@mipmap/img_tab_main">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@drawable/btn_back" />
+
+        <com.smileapp.zodiac.commonclass.CMTextView
+            android:id="@+id/TvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="ดูดวงรายวัน "
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+             />
+
+        <ImageView
+            android:id="@+id/imgShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/btn_share" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/TvDailydate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/hour_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/hour_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </RadioGroup>
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            >
+
+            <ImageView
+                android:id="@+id/imgDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="5dp"/>
+
+
+            <!--  <TextView
+                  android:id="@+id/TvDescription"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:textAppearance="?android:attr/textAppearanceLarge"
+                  android:textColor="@color/black"
+                  android:background="#4DFFFFFF"
+                  android:padding="10dp"
+                  android:text="ลักษณะทั่วไปของชาวราศีมังกร : ชาวมังกรจัดอยู่ในธาตุดิน ตั้งแต่กำเนิดสีของเส้นผมจึงออกเข้ม เช่น ดำ น้ำตาลเข้ม แต่ไม่หยักหนาไม่หงิกงอ ใบหน้าติดออกไปทางเหลี่ยมหรือยาวมากกว่ากลม จมูกได้รูปสวย คอยาวระหง น้ำเสียงที่เปล่งออกมาดังกังวาน ทุ้มลึก ผิวพรรณก็ขาวสวย ดูดี ส่วนขากับเท้า แข็งแรงดี ชอบใส่รองเท้าสบาย ไม่เน้นความงามจนเกินไป บ้างก็สูงยาวเข่าดี บ้างก็เตี้ย แต่ก็ทรงเสน่ห์กันคนละแบบลักษณะทั่วไปของชาวราศีมังกร : ชาวมังกรจัดอยู่ในธาตุดิน ตั้งแต่กำเนิดสีของเส้นผมจึงออกเข้ม เช่น ดำ น้ำตาลเข้ม แต่ไม่หยักหนาไม่หงิกงอ ใบหน้าติดออกไปทางเหลี่ยมหรือยาวมากกว่ากลม จมูกได้รูปสวย คอยาวระหง น้ำเสียงที่เปล่งออกมาดังกังวาน ทุ้มลึก ผิวพรรณก็ขาวสวย ดูดี ส่วนขากับเท้า แข็งแรงดี ชอบใส่รองเท้าสบาย ไม่เน้นความงามจนเกินไป บ้างก็สูงยาวเข่าดี บ้างก็เตี้ย แต่ก็ทรงเสน่ห์กันคนละแบบ"
+                />-->
+
+            <!--     <WebView
+                     android:id="@+id/mWvDescription"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:background="#4DFFFFFF" />-->
+
+            <RelativeLayout
+                android:id="@+id/RlWebView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4DFFFFFF">
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/item_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
