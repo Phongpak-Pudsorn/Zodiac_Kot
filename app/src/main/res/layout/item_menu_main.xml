@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/Li">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgMenu"
+            android:adjustViewBounds="true"
+            android:src="@drawable/click_item_menu"
+            android:background="@mipmap/img_item_zodiac_10"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imgClick"
+            android:adjustViewBounds="true"
+            android:src="@drawable/click_item_menu"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Medium Text"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:shadowColor="@color/black"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"
+            android:id="@+id/TvNameZodiacTH" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="Medium Text"
+            android:textColor="@color/yellow"
+            android:id="@+id/TvNameZodiacEN" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Medium Text"
+            android:gravity="center"
+            android:textColor="@color/blue"
+            android:id="@+id/TvNameZodiacDate" />
+    </LinearLayout>
+
+</LinearLayout>

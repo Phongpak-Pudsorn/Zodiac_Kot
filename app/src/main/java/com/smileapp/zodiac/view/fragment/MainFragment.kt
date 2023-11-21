@@ -48,6 +48,34 @@ class MainFragment:Fragment() {
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_mainFragment_to_settingFragment)
         }
+        binding.userTab.mImguser.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_editProfileFragment)
+        }
+        binding.btnZodiac12.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_menuZodiacFragment)
+        }
+        binding.btnToDay.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
+        }
+        binding.btnWeek.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+        }
+        binding.btnMonth.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+        }
+        binding.btnYear.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+        }
+        binding.btnRecommend.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_mainFragment_to_zodiacRecommend)
+        }
     }
     fun setNoticeAds(){
         binding.noticeAds.setNoticeAdsListener(object : NoticeAds.NoticeAdsListener{

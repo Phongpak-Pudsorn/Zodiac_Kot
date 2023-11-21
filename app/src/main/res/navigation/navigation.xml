@@ -33,6 +33,18 @@
         <action
             android:id="@+id/action_mainFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_menuZodiacFragment"
+            app:destination="@id/menuZodiacFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_zodiacTodayFragment"
+            app:destination="@id/zodiacTodayFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_zodiacWebFragment"
+            app:destination="@id/zodiacWebFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_zodiacRecommend"
+            app:destination="@id/zodiacRecommend" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -42,4 +54,44 @@
         android:id="@+id/editProfileFragment"
         android:name="com.smileapp.zodiac.view.fragment.EditProfileFragment"
         android:label="EditProfileFragment" />
+    <fragment
+        android:id="@+id/menuZodiacFragment"
+        android:name="com.smileapp.zodiac.view.fragment.MenuZodiacFragment"
+        android:label="MenuZodiacFragment" >
+        <action
+            android:id="@+id/action_menuZodiacFragment_to_predictFragment"
+            app:destination="@id/predictFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/zodiacTodayFragment"
+        android:name="com.smileapp.zodiac.view.fragment.ZodiacTodayFragment"
+        android:label="ZodiacTodayFragment" >
+        <action
+            android:id="@+id/action_zodiacTodayFragment_to_shareTodayFragment"
+            app:destination="@id/shareTodayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/zodiacWebFragment"
+        android:name="com.smileapp.zodiac.view.fragment.ZodiacWebFragment"
+        android:label="ZodiacWebFragment" />
+    <fragment
+        android:id="@+id/zodiacRecommend"
+        android:name="com.smileapp.zodiac.view.fragment.ZodiacRecommend"
+        android:label="ZodiacRecommend" />
+    <fragment
+        android:id="@+id/predictFragment"
+        android:name="com.smileapp.zodiac.view.fragment.PredictFragment"
+        android:label="PredictFragment" >
+        <action
+            android:id="@+id/action_predictFragment_to_shareFragment"
+            app:destination="@id/shareFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.smileapp.zodiac.view.fragment.ShareFragment"
+        android:label="ShareFragment" />
+    <fragment
+        android:id="@+id/shareTodayFragment"
+        android:name="com.smileapp.zodiac.view.fragment.ShareTodayFragment"
+        android:label="ShareTodayFragment" />
 </navigation>

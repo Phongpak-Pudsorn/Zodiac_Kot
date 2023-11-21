@@ -39,6 +39,7 @@ class SplashFragment:Fragment() {
                 override fun onClick(i: Boolean) {
                     Utils.setPrefer(requireActivity(),Utils.KEY_ACCEPT,i)
                     if (firstOpen==false){
+                        Log.e("accept and first", "$accept $firstOpen")
                         val timer = object : CountDownTimer(3000, 1000) {
                             override fun onTick(p0: Long) {
                                 Log.e("time", p0.toString())
@@ -55,6 +56,7 @@ class SplashFragment:Fragment() {
                         }
                         timer.start()
                     }else{
+                        Log.e("accept and first", "$accept $firstOpen")
                         val timer = object : CountDownTimer(3000, 1000) {
                             override fun onTick(p0: Long) {
                                 Log.e("time", p0.toString())
@@ -76,6 +78,7 @@ class SplashFragment:Fragment() {
 
         }else{
             if (firstOpen==false){
+                Log.e("accept and first", "$accept $firstOpen")
                 val timer = object : CountDownTimer(3000, 1000) {
                     override fun onTick(p0: Long) {
                         Log.e("time", p0.toString())
@@ -83,7 +86,7 @@ class SplashFragment:Fragment() {
                     override fun onFinish() {
                         bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
                             override fun onAdClosed() {
-//                                Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
+                                Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
                                 Navigation.findNavController(requireView())
                                     .navigate(R.id.action_splashFragment_to_profileFragment)
                             }
@@ -92,6 +95,7 @@ class SplashFragment:Fragment() {
                 }
                 timer.start()
             }else{
+                Log.e("accept and first", "$accept $firstOpen")
                 val timer = object : CountDownTimer(3000, 1000) {
                     override fun onTick(p0: Long) {
                         Log.e("time", p0.toString())

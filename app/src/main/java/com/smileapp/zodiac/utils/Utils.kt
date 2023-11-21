@@ -7,9 +7,14 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Build
+import android.util.Log
 import android.widget.TextView
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStreamReader
+import java.net.URL
 import java.util.*
+import javax.net.ssl.HttpsURLConnection
 
 object Utils {
     private val namePreferences = "zdaadmob"
@@ -26,6 +31,9 @@ object Utils {
     const val KEY_GENDER = "KEY_GENDER"
     const val NAME_DATE_RASI = "NAME_DATE_RASI"
     const val KEY_NOTICEADS = "KEY_NOTICEADS"
+    const val ADVERTISING_ID_CLIENT = "ADVERTISING_ID_CLIENT"
+    const val NAME_MENU_MONTH ="NAME_MENU_MONTH"
+    const val NAME_MENU_YEAR ="NAME_MENU_YEAR"
     var UUID = ""
     var currentFragment = 0
 
@@ -53,6 +61,20 @@ object Utils {
     fun getNameUser():String{
         return sharedPrefs!!.getString(NAME_USER,"").toString()
     }
+
+    //---------END  BANNER POPUP  SIZE-------------------
+    fun setAdvertisingIdClient(id: String?) {
+        prefsEditor!!.putString(ADVERTISING_ID_CLIENT, id)
+        prefsEditor!!.commit()
+    }
+
+    fun getAdvertisingIdClient(): String? {
+        return sharedPrefs!!.getString(ADVERTISING_ID_CLIENT, "")
+    }
+    //---------END AdvertisingIdClient ID -------------------
+
+
+    //--------- AdvertisingIdClient ID -------------------
     fun loadFromAssets(mContext: Context): String? {
         var dataStr = ""
         try {
@@ -104,6 +126,65 @@ object Utils {
     }
     fun getNoticeAds(): Boolean {
         return sharedPrefs!!.getBoolean(KEY_NOTICEADS,true)
+    }
+    fun setNameMenuMonth(name:String){
+        prefsEditor!!.putString(NAME_MENU_MONTH,name)
+        prefsEditor!!.commit()
+    }
+    fun getNameMenuMonth():String? {
+        return sharedPrefs!!.getString(NAME_MENU_MONTH,"")
+    }
+    fun setNameMenuYear(name:String){
+        prefsEditor!!.putString(NAME_MENU_YEAR,name)
+        prefsEditor!!.commit()
+    }
+    fun getNameMenuYear():String? {
+        return sharedPrefs!!.getString(NAME_MENU_YEAR,"")
+    }
+
+    @Throws(Exception::class)
+    fun doHttpUrlConnectionAction(desiredUrl: String?): String? {
+        var url: URL? = null
+        var reader: BufferedReader? = null
+        val stringBuilder: StringBuilder
+        var strHttp = ""
+        return try {
+            // create the HttpURLConnection
+            url = URL(desiredUrl)
+            val connection = url.openConnection() as HttpsURLConnection
+            // just want to do an HTTP GET here
+            connection.requestMethod = "GET"
+            // connection.setReadTimeout(5000);
+            connection.connectTimeout = 10000
+            connection.connect()
+            // read the output from the server
+            reader = BufferedReader(InputStreamReader(connection.inputStream, "UTF-8"))
+            stringBuilder = StringBuilder()
+            var line: String? = null
+            while (reader.readLine().also { line = it } != null) {
+                stringBuilder.append(
+                    """
+                        $line
+                        
+                        """.trimIndent()
+                )
+            }
+            strHttp = stringBuilder.toString()
+            strHttp
+        } catch (e: Exception) {
+            Log.e("timeout", "timeout")
+            strHttp = ""
+            e.printStackTrace()
+            strHttp
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close()
+                } catch (ioe: IOException) {
+                    ioe.printStackTrace()
+                }
+            }
+        }
     }
     fun setPrefer(mcontext: Context, key:String, objects:Any){
         val preferences = mcontext.getSharedPreferences(namePreferences, modePreferences)

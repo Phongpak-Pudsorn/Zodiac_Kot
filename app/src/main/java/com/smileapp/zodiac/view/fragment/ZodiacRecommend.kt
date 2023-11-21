@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.Font
-import com.smileapp.zodiac.databinding.FragmentMenuZodiacBinding
+import com.smileapp.zodiac.databinding.FragmentRecommendBinding
 
-class MenuZodiacFragment:Fragment() {
-    val binding:FragmentMenuZodiacBinding by lazy { FragmentMenuZodiacBinding.inflate(layoutInflater) }
+class ZodiacRecommend:Fragment() {
+    val binding: FragmentRecommendBinding by lazy { FragmentRecommendBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

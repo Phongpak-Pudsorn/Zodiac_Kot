@@ -17,7 +17,7 @@ import com.smileapp.zodiac.R
 import com.smileapp.zodiac.adapter.SpinnerAdapter
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentProfileBinding
-import com.smileapp.zodiac.info.ZodiacInfo
+import com.smileapp.zodiac.model.ZodiacInfo
 import com.smileapp.zodiac.utils.Utils
 import com.starvision.bannersdk.NoticeAds
 import org.json.JSONException
@@ -47,6 +47,7 @@ class ProfileFragment:Fragment() {
         Utils.setTextGradient_Blue(binding.TvName)
         Utils.setTextGradient_Blue(binding.TvGender)
         binding.ImgStart.setOnClickListener {
+            Utils.setNameUser(binding.mEdittext.text.toString())
             val gender = binding.rdGender.checkedRadioButtonId
             if (Utils.getNameUser()==""){
                 Toast.makeText(MyApplication.getContext(),"กรุณาใส่ชื่อของคุณ",Toast.LENGTH_SHORT).show()

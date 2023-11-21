@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+   >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/click_item_news"
+
+       >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true"
+			android:src="@mipmap/logo_12"/>
+        
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView1" >
+
+	        <TextView
+	            android:id="@+id/txtTotal_View"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_toRightOf="@+id/imgViewEye"
+	            android:layout_marginLeft="2dp"
+	            android:text="TextView" 
+	            android:textColor="#9A9A9A"/>
+
+	        <ImageView
+	            android:id="@+id/imgViewEye"
+	            android:layout_width="30dp"
+	            android:layout_height="17dp"
+	            android:layout_alignParentBottom="true"
+	            android:layout_alignParentLeft="true"
+	            android:src="@mipmap/eyeview"
+	            android:padding="2dp"
+	          
+	            />
+
+	        <TextView
+	            android:id="@+id/txtDate"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_alignParentRight="true"
+	            android:text="11 Feb 2014"
+	            android:layout_marginRight="5dp"
+	            android:textSize="13sp" 
+	           android:textColor="#9A9A9A"/>
+
+	        <TextView
+	            android:id="@+id/txtTitle"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_above="@+id/imageView1"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_marginRight="5dp"
+	            android:layout_marginTop="5dp"
+	            android:text="Title"
+	            android:lines="2"
+				android:ellipsize="end"
+	            android:textColor="@color/black"
+	            android:textSize="23sp"
+	            android:textStyle="bold" />
+	
+	    </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#BCBCBC"
+        android:layout_below="@+id/linearLayout1" />
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.smileapp.zodiac.info
+package com.smileapp.zodiac.model
 
 data class ZodiacInfo(val Data_Zodiac: ZodiacData) {
     data class ZodiacData(val zodiac_main:ArrayList<MainData>,

@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         Utils.UUID = getUUID(this)
         setStarVisionSDK()
         Utils.AppPreference(this)
+        Utils.setAdvertisingIdClient(Utils.UUID)
     }
     fun setStarVisionSDK(){
         val starVisionCcuSDK = StarVisionCcuSDK(this)

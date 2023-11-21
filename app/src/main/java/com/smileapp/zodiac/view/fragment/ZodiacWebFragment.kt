@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.WebviewBinding
 
 class ZodiacWebFragment: Fragment() {
@@ -20,5 +22,10 @@ class ZodiacWebFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
+        binding.imgBack.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigateUp()
+        }
     }
 }

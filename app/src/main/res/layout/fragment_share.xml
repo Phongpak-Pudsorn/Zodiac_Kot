@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/bg"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@mipmap/img_tab_main">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/imgBack"
+            android:src="@drawable/btn_back"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/TvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="แชร์ให้เพื่อน"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"/>
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:background="@drawable/bg_btn_sharenow"
+            android:gravity="center"
+            android:text="ShareNow"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_margin="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/scrollView2" >
+
+        <LinearLayout
+            android:id="@+id/LiCropShare"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/bg2">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/img_frameshare_leftt"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@mipmap/img_frameshare_top"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/img_frameshare_rightt"></RelativeLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/img_frameshare_left"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView4"
+                        android:padding="10dp"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/img_bg_trans_3"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView2"
+                            android:src="@mipmap/logo_12"/>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:id="@+id/imgDodiac"
+                                android:layout_margin="10dp"
+                                android:src="@mipmap/img_item_zodiac_1"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="ราศีมังกร Capricorn \n15 ม.ค. - 12 ก.พ."
+                                android:padding="5dp"
+                                android:textColor="@color/white"
+                                android:shadowColor="@color/black"
+                                android:shadowDx="-1"
+                                android:shadowDy="-1"
+                                android:shadowRadius="1"
+                                android:gravity="center"
+                                android:id="@+id/TvNameRasi" />
+
+                        </TableRow>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="ลักษณะทั่วไป"
+                            android:padding="5dp"
+                            android:gravity="center"
+                            android:id="@+id/TvNameButton" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            >
+
+                         <!--   <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="ลักษณะทั่วไปของชาวราศีกุมภ์ : ชาวกุมภ์อยู่ในธาตุลม เส้นผมของคุณออกสีดำน้ำตาล หน้าผากเถิกเล็กน้อย ใบหน้ากลมมนมีเหลี่ยมเล็กน้อย ขนคิ้วดำดี ดวงตาแฝงไปด้วยพลังเร้นลับ น่าพิศวง คุณเป็นคนสูงไม่มากนัก ท่อนบนยาว ไหล่กว้าง เป็นคนมีเสน่ห์ ผิวพรรณสดใส แข็งแรง พูดจาฉะฉานลักษณะทั่วไปของชาวราศีกุมภ์ : ชาวกุมภ์อยู่ในธาตุลม เส้นผมของคุณออกสีดำน้ำตาล หน้าผากเถิกเล็กน้อย ใบหน้ากลมมนมีเหลี่ยมเล็กน้อย ขนคิ้วดำดี ดวงตาแฝงไปด้วยพลังเร้นลับ น่าพิศวง คุณเป็นคนสูงไม่มากนัก ท่อนบนยาว ไหล่กว้าง เป็นคนมีเสน่ห์ ผิวพรรณสดใส แข็งแรง พูดจาฉะฉานลักษณะทั่วไปของชาวราศีกุมภ์ : ชาวกุมภ์อยู่ในธาตุลม เส้นผมของคุณออกสีดำน้ำตาล หน้าผากเถิกเล็กน้อย ใบหน้ากลมมนมีเหลี่ยมเล็กน้อย ขนคิ้วดำดี ดวงตาแฝงไปด้วยพลังเร้นลับ น่าพิศวง คุณเป็นคนสูงไม่มากนัก ท่อนบนยาว ไหล่กว้าง เป็นคนมีเสน่ห์ ผิวพรรณสดใส แข็งแรง พูดจาฉะฉานลักษณะทั่วไปของชาวราศีกุมภ์ : ชาวกุมภ์อยู่ในธาตุลม เส้นผมของคุณออกสีดำน้ำตาล หน้าผากเถิกเล็กน้อย ใบหน้ากลมมนมีเหลี่ยมเล็กน้อย ขนคิ้วดำดี ดวงตาแฝงไปด้วยพลังเร้นลับ น่าพิศวง คุณเป็นคนสูงไม่มากนัก ท่อนบนยาว ไหล่กว้าง เป็นคนมีเสน่ห์ ผิวพรรณสดใส แข็งแรง พูดจาฉะฉานลักษณะทั่วไปของชาวราศีกุมภ์ : ชาวกุมภ์อยู่ในธาตุลม เส้นผมของคุณออกสีดำน้ำตาล หน้าผากเถิกเล็กน้อย ใบหน้ากลมมนมีเหลี่ยมเล็กน้อย ขนคิ้วดำดี ดวงตาแฝงไปด้วยพลังเร้นลับ น่าพิศวง คุณเป็นคนสูงไม่มากนัก ท่อนบนยาว ไหล่กว้าง เป็นคนมีเสน่ห์ ผิวพรรณสดใส แข็งแรง พูดจาฉะฉานลักษณะทั่วไปของชาวราศีกุมภ์ : ชาวกุมภ์อยู่ในธาตุลม เส้นผมของคุณออกสีดำน้ำตาล หน้าผากเถิกเล็กน้อย ใบหน้ากลมมนมีเหลี่ยมเล็กน้อย ขนคิ้วดำดี ดวงตาแฝงไปด้วยพลังเร้นลับ น่าพิศวง คุณเป็นคนสูงไม่มากนัก ท่อนบนยาว ไหล่กว้าง เป็นคนมีเสน่ห์ ผิวพรรณสดใส แข็งแรง พูดจาฉะฉาน"
+                                android:id="@+id/TvDescription"
+                                android:padding="2dp"/>-->
+                            <WebView
+                                android:id="@+id/mWvDescription"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/img_frameshare_right"></RelativeLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/img_frameshare_leftb"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@mipmap/img_frameshare_bottom"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/img_frameshare_rightb"></RelativeLayout>
+            </TableRow>
+        </LinearLayout>
+    </ScrollView>
+    <include
+        android:id="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/item_banner" />
+</LinearLayout>
+

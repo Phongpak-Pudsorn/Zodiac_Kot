@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import com.smileapp.zodiac.commonclass.Font
-import com.smileapp.zodiac.databinding.FragmentTodayBinding
+import com.smileapp.zodiac.databinding.FragmentShareTodayBinding
 
-class ZodiacTodayFragment:Fragment() {
-    val binding:FragmentTodayBinding by lazy { FragmentTodayBinding.inflate(layoutInflater) }
+class ShareTodayFragment:Fragment() {
+    val binding: FragmentShareTodayBinding by lazy { FragmentShareTodayBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -18,13 +16,7 @@ class ZodiacTodayFragment:Fragment() {
     ): View? {
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
-        binding.imgBack.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigateUp()
-        }
     }
 }
