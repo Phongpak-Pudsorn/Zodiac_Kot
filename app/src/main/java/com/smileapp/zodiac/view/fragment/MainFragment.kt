@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.Font
+import com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer
 import com.smileapp.zodiac.databinding.FragmentMainBinding
 import com.smileapp.zodiac.utils.Utils
 import com.starvision.bannersdk.NoticeAds
@@ -26,6 +27,15 @@ class MainFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setNoticeAds()
+        if (Utils.getOpenProfile()){
+            binding.userTab.drawer.open()
+            binding.userTab.handle.setImageResource(R.mipmap.ic_slide_open)
+            binding.RlHead.visibility = View.VISIBLE
+        }else{
+            binding.userTab.drawer.close()
+            binding.userTab.handle.setImageResource(R.mipmap.ic_slide_close)
+            binding.RlHead.visibility = View.GONE
+        }
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         Font().styleText_RSU_BOLD(requireActivity(),binding.btnZodiac12,32)
         Font().styleText_RSU_BOLD(requireActivity(),binding.btnToDay,32)
@@ -44,6 +54,20 @@ class MainFragment:Fragment() {
         }else if (Utils.getGENDER() =="Woman"){
             binding.userTab.ImgRasi.setImageResource(R.mipmap.img_sex_woman_trans)
         }
+        binding.userTab.drawer.setOnDrawerOpenListener(object : MultiDirectionSlidingDrawer.OnDrawerOpenListener{
+            override fun onDrawerOpened() {
+                Utils.setOpenProfile(true)
+                binding.RlHead.visibility = View.VISIBLE
+                binding.userTab.handle.setImageResource(R.mipmap.ic_slide_open)
+            }
+        })
+        binding.userTab.drawer.setOnDrawerCloseListener(object :MultiDirectionSlidingDrawer.OnDrawerCloseListener{
+            override fun onDrawerClosed() {
+                Utils.setOpenProfile(false)
+                binding.RlHead.visibility = View.GONE
+                binding.userTab.handle.setImageResource(R.mipmap.ic_slide_close)
+            }
+        })
         binding.imgSetting.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_mainFragment_to_settingFragment)

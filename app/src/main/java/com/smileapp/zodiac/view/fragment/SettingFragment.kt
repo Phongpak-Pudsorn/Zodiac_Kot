@@ -36,7 +36,7 @@ class SettingFragment:Fragment() {
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         binding.Details.visibility = View.GONE
-        binding.mTvVersion.text = BuildConfig.VERSION_NAME
+        binding.mTvVersion.text = getString(R.string.version)+" "+BuildConfig.VERSION_NAME
         binding.imgBack.setOnClickListener {
             Navigation.findNavController(requireView()).navigateUp()
         }

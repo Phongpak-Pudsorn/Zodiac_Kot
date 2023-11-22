@@ -3,11 +3,11 @@ package com.smileapp.zodiac.utils
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
+import android.content.res.Resources
+import android.graphics.*
 import android.os.Build
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import java.io.BufferedReader
 import java.io.IOException
@@ -34,6 +34,11 @@ object Utils {
     const val ADVERTISING_ID_CLIENT = "ADVERTISING_ID_CLIENT"
     const val NAME_MENU_MONTH ="NAME_MENU_MONTH"
     const val NAME_MENU_YEAR ="NAME_MENU_YEAR"
+    const val KEY_OPEN_PROFILE ="KEY_OPEN_PROFILE"
+    const val KEY_SHARED_DAY ="KEY_SHARED_DAY"
+    const val KEY_SHARED_ID ="KEY_SHARED_ID"
+    const val KEY_SHARED_IMAGE ="KEY_SHARED_IMAGE"
+    const val KEY_SHARED_DESC ="KEY_SHARED_DESC"
     var UUID = ""
     var currentFragment = 0
 
@@ -120,6 +125,13 @@ object Utils {
     fun getNameAndDateRasi(): String? {
         return sharedPrefs!!.getString(NAME_DATE_RASI, "")
     }
+    fun setOpenProfile(status: Boolean){
+        prefsEditor!!.putBoolean(KEY_OPEN_PROFILE,status)
+        prefsEditor!!.commit()
+    }
+    fun getOpenProfile(): Boolean {
+        return sharedPrefs!!.getBoolean(KEY_OPEN_PROFILE,true)
+    }
     fun setNoticeAds(status: Boolean){
         prefsEditor!!.putBoolean(KEY_NOTICEADS,status)
         prefsEditor!!.commit()
@@ -141,6 +153,35 @@ object Utils {
     fun getNameMenuYear():String? {
         return sharedPrefs!!.getString(NAME_MENU_YEAR,"")
     }
+    fun setSharedDay(name: String){
+        prefsEditor!!.putString(KEY_SHARED_DAY,name)
+        prefsEditor!!.commit()
+    }
+    fun getSharedDay():String?{
+        return sharedPrefs!!.getString(KEY_SHARED_DAY,"")
+    }
+    fun setSharedID(id: Int){
+        prefsEditor!!.putInt(KEY_SHARED_ID,id)
+        prefsEditor!!.commit()
+    }
+    fun getSharedID():Int{
+        return sharedPrefs!!.getInt(KEY_SHARED_ID,0)
+    }
+    fun setSharedImage(name: String){
+        prefsEditor!!.putString(KEY_SHARED_IMAGE,name)
+        prefsEditor!!.commit()
+    }
+    fun getSharedImage():String?{
+        return sharedPrefs!!.getString(KEY_SHARED_IMAGE,"")
+    }
+    fun setSharedDesc(name: String){
+        prefsEditor!!.putString(KEY_SHARED_DESC,name)
+        prefsEditor!!.commit()
+    }
+    fun getSharedDesc():String?{
+        return sharedPrefs!!.getString(KEY_SHARED_DESC,"")
+    }
+
 
     @Throws(Exception::class)
     fun doHttpUrlConnectionAction(desiredUrl: String?): String? {
@@ -242,6 +283,27 @@ object Utils {
         }
         return null
     }
+    fun getHtmlData(
+        context: Context?,
+        data: String,
+        size: Int,
+    ): String? {
+        var head = ""
+        head =
+            "<head><style>@font-face{font-family: 'psl029pro';src: url('file:///android_asset/fonts/psl029pro.ttf');} body {font-family: 'psl029pro'; font-size:$size; color: #000000; }</style></head>"
+        return "<html>$head<body>$data</body></html>"
+    }
+
+    fun getHtmlData_While(
+        context: Context?,
+        data: String,
+        size: Int,
+    ): String? {
+        var head = ""
+        head =
+            "<head><style>@font-face{font-family: 'psl029pro';src: url('file:///android_asset/fonts/psl029pro.ttf');} body {font-family: 'psl029pro'; font-size:$size; color: #FFFFFF; }</style></head>"
+        return "<html>$head<body>$data</body></html>"
+    }
     fun setTextGradient_Blue(tv:TextView){
         val myShader: Shader = LinearGradient(
             0f, 70f, 0f, 180f,
@@ -258,5 +320,69 @@ object Utils {
         )
         tv.paint.shader = myShader
     }
+    fun setStringImageDrawable(
+        context: Context,
+        img: ImageView,
+        imgTarot: String?,
+        reqWidth: Int,
+        reqHeight: Int,
+    ) {
+        try {
+            val imageResourceId =
+                context.resources.getIdentifier(imgTarot, "mipmap", context.packageName)
+            val bitmap: Bitmap? = decodeSampledBitmapFromResource(
+                context.resources,
+                imageResourceId,
+                reqWidth,
+                reqHeight
+            )
+            img.setImageBitmap(bitmap)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+    fun decodeSampledBitmapFromResource(
+        res: Resources?,
+        resId: Int,
+        reqWidth: Int,
+        reqHeight: Int,
+    ): Bitmap? {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeResource(res, resId, options)
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(
+            options, reqWidth,
+            reqHeight
+        )
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false
+        return BitmapFactory.decodeResource(res, resId, options)
+    }
+    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        // Raw height and width of image
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and
+            // width
+            val heightRatio = Math.round(height.toFloat() / reqHeight.toFloat())
+            val widthRatio = Math.round(width.toFloat() / reqWidth.toFloat())
+
+            // Choose the smallest ratio as inSampleSize value, this will
+            // guarantee
+            // a final image with both dimensions larger than or equal to the
+            // requested height and width.
+            inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
+        }
+        return inSampleSize
+    }
+
 
 }

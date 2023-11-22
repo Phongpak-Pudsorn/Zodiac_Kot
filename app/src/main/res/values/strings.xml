@@ -5,11 +5,20 @@
 
 
     <string name="action_settings">Settings</string>
+    <string name="version">Version</string>
     <string name="zodiac_week">ดูดวงรายสัปดาห์</string>
     <string name="zodiac_month">ดูดวงรายเดือน</string>
     <string name="zodiac_year">ดูดวงรายปี</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+
+    <string name="sun">อา</string>
+    <string name="mon">จ</string>
+    <string name="tue">อ</string>
+    <string name="wed">พ</string>
+    <string name="thu">พฤ</string>
+    <string name="fri">ศ</string>
+    <string name="sat">ส</string>
 
 
     <string name="select_img_camera">ถ่ายรูปใหม่</string>
