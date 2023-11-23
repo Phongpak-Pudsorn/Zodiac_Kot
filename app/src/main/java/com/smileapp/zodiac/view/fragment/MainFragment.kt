@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
+import com.smileapp.zodiac.api.Url
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer
 import com.smileapp.zodiac.databinding.FragmentMainBinding
@@ -85,14 +86,20 @@ class MainFragment:Fragment() {
                 .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
         }
         binding.btnWeek.setOnClickListener {
+            Utils.setWebTitle(getString(R.string.zodiac_week))
+            Utils.setWebUrl(Url.weekUrl)
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
         }
         binding.btnMonth.setOnClickListener {
+            Utils.setWebTitle(getString(R.string.zodiac_month))
+            Utils.setWebUrl(Url.monthUrl)
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
         }
         binding.btnYear.setOnClickListener {
+            Utils.setWebTitle(getString(R.string.zodiac_year))
+            Utils.setWebUrl(Url.yearUrl)
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
         }

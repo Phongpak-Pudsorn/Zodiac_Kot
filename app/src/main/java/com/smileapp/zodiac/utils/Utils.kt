@@ -1,14 +1,18 @@
 package com.smileapp.zodiac.utils
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.*
 import android.os.Build
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -32,13 +36,15 @@ object Utils {
     const val NAME_DATE_RASI = "NAME_DATE_RASI"
     const val KEY_NOTICEADS = "KEY_NOTICEADS"
     const val ADVERTISING_ID_CLIENT = "ADVERTISING_ID_CLIENT"
-    const val NAME_MENU_MONTH ="NAME_MENU_MONTH"
-    const val NAME_MENU_YEAR ="NAME_MENU_YEAR"
+//    const val NAME_MENU_MONTH ="NAME_MENU_MONTH"
+//    const val NAME_MENU_YEAR ="NAME_MENU_YEAR"
     const val KEY_OPEN_PROFILE ="KEY_OPEN_PROFILE"
     const val KEY_SHARED_DAY ="KEY_SHARED_DAY"
     const val KEY_SHARED_ID ="KEY_SHARED_ID"
     const val KEY_SHARED_IMAGE ="KEY_SHARED_IMAGE"
     const val KEY_SHARED_DESC ="KEY_SHARED_DESC"
+    const val KEY_WEB_NAME ="KEY_WEB_NAME"
+    const val KEY_WEB_URL ="KEY_WEB_URL"
     var UUID = ""
     var currentFragment = 0
 
@@ -139,20 +145,20 @@ object Utils {
     fun getNoticeAds(): Boolean {
         return sharedPrefs!!.getBoolean(KEY_NOTICEADS,true)
     }
-    fun setNameMenuMonth(name:String){
-        prefsEditor!!.putString(NAME_MENU_MONTH,name)
-        prefsEditor!!.commit()
-    }
-    fun getNameMenuMonth():String? {
-        return sharedPrefs!!.getString(NAME_MENU_MONTH,"")
-    }
-    fun setNameMenuYear(name:String){
-        prefsEditor!!.putString(NAME_MENU_YEAR,name)
-        prefsEditor!!.commit()
-    }
-    fun getNameMenuYear():String? {
-        return sharedPrefs!!.getString(NAME_MENU_YEAR,"")
-    }
+//    fun setNameMenuMonth(name:String){
+//        prefsEditor!!.putString(NAME_MENU_MONTH,name)
+//        prefsEditor!!.commit()
+//    }
+//    fun getNameMenuMonth():String? {
+//        return sharedPrefs!!.getString(NAME_MENU_MONTH,"")
+//    }
+//    fun setNameMenuYear(name:String){
+//        prefsEditor!!.putString(NAME_MENU_YEAR,name)
+//        prefsEditor!!.commit()
+//    }
+//    fun getNameMenuYear():String? {
+//        return sharedPrefs!!.getString(NAME_MENU_YEAR,"")
+//    }
     fun setSharedDay(name: String){
         prefsEditor!!.putString(KEY_SHARED_DAY,name)
         prefsEditor!!.commit()
@@ -180,6 +186,20 @@ object Utils {
     }
     fun getSharedDesc():String?{
         return sharedPrefs!!.getString(KEY_SHARED_DESC,"")
+    }
+    fun setWebTitle(name:String){
+        prefsEditor!!.putString(KEY_WEB_NAME,name)
+        prefsEditor!!.commit()
+    }
+    fun getWebTitle():String?{
+        return sharedPrefs!!.getString(KEY_WEB_NAME,"")
+    }
+    fun setWebUrl(name:String){
+        prefsEditor!!.putString(KEY_WEB_URL,name)
+        prefsEditor!!.commit()
+    }
+    fun getWebUrl():String?{
+        return sharedPrefs!!.getString(KEY_WEB_URL,"")
     }
 
 
@@ -382,6 +402,40 @@ object Utils {
             inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
         }
         return inSampleSize
+    }
+    const val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
+    fun checkPermission(context: Context?): Boolean {
+        val currentAPIVersion = Build.VERSION.SDK_INT
+        return if (currentAPIVersion >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        (context as Activity?)!!,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                ) {
+                    ActivityCompat.requestPermissions(
+                        (context as Activity?)!!,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
+                    )
+                } else {
+                    ActivityCompat.requestPermissions(
+                        (context as Activity?)!!,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
+                    )
+                }
+                false
+            } else {
+                true
+            }
+        } else {
+            true
+        }
     }
 
 

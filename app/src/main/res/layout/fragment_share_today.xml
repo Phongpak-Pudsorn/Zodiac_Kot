@@ -136,6 +136,7 @@
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:text="ดูดวงวันนี้"
                                 android:padding="5dp"
+                                android:textColor="@color/white"
                                 android:gravity="center"
                                 android:id="@+id/TvDay" />
                         </RelativeLayout>
