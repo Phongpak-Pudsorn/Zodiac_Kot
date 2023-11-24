@@ -3,6 +3,7 @@ package com.smileapp.zodiac.view.fragment
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +13,10 @@ import android.view.ViewGroup
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.WebviewBinding
 import com.smileapp.zodiac.utils.Utils
@@ -36,6 +39,13 @@ class ZodiacWebFragment: Fragment() {
         binding.imgBack.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigateUp()
+        }
+        binding.imgShare.setOnClickListener {
+//            val intent = Intent(Intent.ACTION_SEND)
+//            intent.type = "text/plain"
+//            intent.putExtra(Intent.EXTRA_TEXT, strMessage + strUrl + " " + getString(R.string.text_share_hashtag))
+//            Toast.makeText(requireActivity(), "Share..", Toast.LENGTH_SHORT).show()
+//            startActivity(intent)
         }
     }
     private fun startWebView(url: String) {

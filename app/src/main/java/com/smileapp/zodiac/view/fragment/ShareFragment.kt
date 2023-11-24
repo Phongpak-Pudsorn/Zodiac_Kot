@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentShareBinding
 
 class ShareFragment:Fragment() {
@@ -19,5 +20,6 @@ class ShareFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
     }
 }

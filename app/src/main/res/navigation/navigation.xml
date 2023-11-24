@@ -77,7 +77,11 @@
     <fragment
         android:id="@+id/zodiacRecommend"
         android:name="com.smileapp.zodiac.view.fragment.ZodiacRecommend"
-        android:label="ZodiacRecommend" />
+        android:label="ZodiacRecommend" >
+        <action
+            android:id="@+id/action_zodiacRecommend_to_zodiacWebFragment"
+            app:destination="@id/zodiacWebFragment" />
+    </fragment>
     <fragment
         android:id="@+id/predictFragment"
         android:name="com.smileapp.zodiac.view.fragment.PredictFragment"
