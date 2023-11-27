@@ -45,6 +45,8 @@ object Utils {
     const val KEY_SHARED_DESC ="KEY_SHARED_DESC"
     const val KEY_WEB_NAME ="KEY_WEB_NAME"
     const val KEY_WEB_URL ="KEY_WEB_URL"
+    const val NAME_MONTH = "NAME_MONTH"
+    const val NAME_YEAR = "NAME_YEAR"
     var UUID = ""
     var currentFragment = 0
 
@@ -71,6 +73,22 @@ object Utils {
     }
     fun getNameUser():String{
         return sharedPrefs!!.getString(NAME_USER,"").toString()
+    }
+    fun setNameMonth(name:String){
+        prefsEditor!!.putString(NAME_MONTH,name)
+        prefsEditor!!.commit()
+
+    }
+    fun getNameMonth():String{
+        return sharedPrefs!!.getString(NAME_MONTH,"").toString()
+    }
+    fun setNameYear(name:String){
+        prefsEditor!!.putString(NAME_YEAR,name)
+        prefsEditor!!.commit()
+
+    }
+    fun getNameYear():String{
+        return sharedPrefs!!.getString(NAME_YEAR,"").toString()
     }
 
     //---------END  BANNER POPUP  SIZE-------------------

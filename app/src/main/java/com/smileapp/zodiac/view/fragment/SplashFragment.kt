@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.BannerShow
+import com.smileapp.zodiac.commonclass.CallVersion
 import com.smileapp.zodiac.databinding.FragmentSplashBinding
 import com.smileapp.zodiac.utils.Utils
 
@@ -30,6 +31,22 @@ class SplashFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
+        val version = CallVersion(requireActivity())
+        version.setCallListener(object :CallVersion.CallVersionListener{
+            override fun onSuccess() {
+                initial()
+            }
+
+            override fun onGotUpdate() {
+            }
+
+            override fun onFailed() {
+                requireActivity().finish()
+            }
+        })
+
+    }
+    fun initial(){
         val accept = Utils.getPrefer(requireActivity(), Utils.KEY_ACCEPT, false)
         val firstOpen = Utils.getPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,false)
         if (accept==false){

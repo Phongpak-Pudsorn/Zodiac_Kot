@@ -47,7 +47,9 @@ class MainFragment:Fragment() {
         Font().styleText_RSU_Reg(requireActivity(),binding.userTab.TvRasi,24)
         Font().styleText_RSU_Reg(requireActivity(),binding.userTab.TvNameUser,34)
         binding.userTab.TvNameUser.text = Utils.getNameUser()
-        binding.userTab.TvRasi.text =Utils.getNameAndDateRasi()
+        binding.userTab.TvRasi.text = Utils.getNameAndDateRasi()
+        binding.btnMonth.text = Utils.getNameMonth()
+        binding.btnYear.text = Utils.getNameYear()
         Utils.setTextGradient_Blue(binding.userTab.TvNameUser)
         Utils.setTextGradient_Green(binding.userTab.TvRasi)
         if (Utils.getGENDER() =="Man"){

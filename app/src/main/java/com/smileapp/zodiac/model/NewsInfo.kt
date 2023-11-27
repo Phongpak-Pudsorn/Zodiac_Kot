@@ -2,8 +2,7 @@ package com.smileapp.zodiac.model
 
 data class NewsInfo(val Status:String,
                     val Datarow:ArrayList<DataInfo>){
-    data class DataInfo(val id:String,
-                        val artide_id:String,
+    data class DataInfo(val artide_id:String,
                         val title:String,
                         val image:String,
                         val total_view:String,

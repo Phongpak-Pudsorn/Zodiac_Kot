@@ -32,7 +32,7 @@ class NewsAdapter(val mContext:Context,val list:ArrayList<NewsInfo.DataInfo>,pri
     override fun getItemCount(): Int = list.size
 
     override fun getItemViewType(position: Int): Int {
-        if(list[position].id=="abcdef"){
+        if(list[position].artide_date=="abcdef"){
             return VIEW_TYPE_NATIVE
         }else{
             return VIEW_TYPE_ITEM
