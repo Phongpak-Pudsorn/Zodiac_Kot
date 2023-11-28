@@ -1,6 +1,11 @@
 package com.smileapp.zodiac.view.fragment
 
+import android.app.AlertDialog
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -18,12 +23,20 @@ import com.smileapp.zodiac.adapter.SpinnerAdapter
 import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentEditprofileBinding
+import com.smileapp.zodiac.imagecrop.CropImage
 import com.smileapp.zodiac.model.ZodiacInfo
 import com.smileapp.zodiac.utils.Utils
 import org.json.JSONException
+import java.io.File
 import java.util.concurrent.Executors
 
 class EditProfileFragment: Fragment() {
+    val TEMP_PHOTO_FILE_NAME = "Android/data/com.smileapp.zodiac/temp_photo.jpg"
+    var myBitmap: Bitmap? = null
+    private var mFileTemp: File? = null
+    val REQUEST_CODE_GALLERY = 0x1
+    val REQUEST_CODE_TAKE_PICTURE = 0x2
+    val REQUEST_CODE_CROP_IMAGE = 0x3
     var bannerShow:BannerShow?=null
     var zodiacMain:ArrayList<ZodiacInfo.ZodiacData.MainData>?=null
     val executor = Executors.newSingleThreadExecutor()
@@ -34,7 +47,7 @@ class EditProfileFragment: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return binding.root
     }
@@ -47,13 +60,29 @@ class EditProfileFragment: Fragment() {
         Utils.setTextGradient_Blue(binding.TvZodiac)
         Utils.setTextGradient_Blue(binding.TvName)
         Utils.setTextGradient_Blue(binding.TvGender)
+        val state = Environment.getExternalStorageState()
+        mFileTemp = if (Environment.MEDIA_MOUNTED == state) {
+            File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME)
+        } else {
+            File(requireActivity().filesDir, TEMP_PHOTO_FILE_NAME)
+        }
+        if (mFileTemp!!.exists()) {
+            myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
+            binding.mImguser.setImageBitmap(myBitmap!!)
+        }
         CallData()
         if (Utils.getGENDER()=="Man"){
             binding.rdMan.isChecked = true
         }else if (Utils.getGENDER()=="Woman"){
             binding.rdWoman.isChecked = true
         }
+        binding.mImguser.setOnClickListener {
+            openAddPhoto()
+        }
         binding.mEdittext.setText(Utils.getNameUser())
+        if (myBitmap != null) {
+            myBitmap!!.recycle()
+        }
         binding.btnSave.setOnClickListener {
             Utils.setNameUser(binding.mEdittext.text.toString())
             val gender = binding.rdGender.checkedRadioButtonId
@@ -97,6 +126,58 @@ class EditProfileFragment: Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
+    private fun openAddPhoto() {
+//        if (mFileTemp != null) {
+//            mFileTemp.delete();
+//        }
+        val addPhoto = arrayOf(
+            resources.getString(R.string.select_img_camera),
+            resources.getString(R.string.select_img_gallery),
+            resources.getString(R.string.text_close)
+        )
+        val dialog = AlertDialog.Builder(requireActivity())
+        dialog.setTitle(resources.getString(R.string.app_name))
+        dialog.setItems(addPhoto) { dialog, id ->
+            if (id == 0) {
+                takePicture()
+            } else if (id == 1) {
+                openGallery()
+            } else if (id == 2) {
+                dialog.dismiss()
+            }
+        }
+        //        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface dialog) {
+//                onCreate(null);
+//            }
+//        });
+        dialog.show()
+    }
+    private fun takePicture(){
+
+    }
+    private fun openGallery(){
+        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        photoPickerIntent.type = "image/*"
+        startActivityForResult(
+            photoPickerIntent,
+            REQUEST_CODE_GALLERY
+        )
+
+    }
+    private fun startCropImage() {
+        val intent = Intent(requireActivity(), CropImage::class.java)
+        intent.putExtra(CropImage.IMAGE_PATH, mFileTemp!!.path)
+        intent.putExtra(CropImage.SCALE, true)
+        intent.putExtra(CropImage.ASPECT_X, 3)
+        intent.putExtra(CropImage.ASPECT_Y, 3)
+        startActivityForResult(
+            intent,
+            com.smileapp.zodiac.EditProfileActivity.REQUEST_CODE_CROP_IMAGE
+        )
+    }
+
     fun CallData(){
         executor.execute {
             val zodiacStr = Utils.loadFromAssets(requireActivity())
