@@ -18,6 +18,7 @@ import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.api.Api
 import com.smileapp.zodiac.api.ApiClient
+import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentTodayBinding
 import com.smileapp.zodiac.model.ZodiacTodayInfo
@@ -27,6 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ZodiacTodayFragment:Fragment() {
+    var bannerShow:BannerShow?=null
     private var strDescription = ""
     private var strDescription_share = ""
     val binding:FragmentTodayBinding by lazy { FragmentTodayBinding.inflate(layoutInflater) }
@@ -40,6 +42,8 @@ class ZodiacTodayFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.getShowBannerSmall(10)
         var listData = ArrayList<ZodiacTodayInfo>()
         val service = ApiClient().getClient().create(Api::class.java)
         service.getToday().enqueue(object: Callback<ZodiacTodayInfo>{

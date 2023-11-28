@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.api.Url
+import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer
 import com.smileapp.zodiac.databinding.FragmentMainBinding
@@ -16,6 +17,7 @@ import com.smileapp.zodiac.utils.Utils
 import com.starvision.bannersdk.NoticeAds
 
 class MainFragment:Fragment() {
+    var bannerShow:BannerShow?=null
     val binding:FragmentMainBinding by lazy { FragmentMainBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +29,8 @@ class MainFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.getShowBannerSmall(0)
         setNoticeAds()
         if (Utils.getOpenProfile()){
             binding.userTab.drawer.open()

@@ -17,11 +17,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
+import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.WebviewBinding
 import com.smileapp.zodiac.utils.Utils
 
 class ZodiacWebFragment: Fragment() {
+    var bannerShow:BannerShow?=null
     val binding: WebviewBinding by lazy { WebviewBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +35,8 @@ class ZodiacWebFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.getShowBannerSmall(10)
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         startWebView(Utils.getWebUrl().toString())
         binding.TvTitle.text = Utils.getWebTitle()

@@ -34,6 +34,7 @@ class SettingFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Utils.currentFragment = 2
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.getShowBannerSmall(10)
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         binding.Details.visibility = View.GONE
         binding.mTvVersion.text = getString(R.string.version)+" "+BuildConfig.VERSION_NAME

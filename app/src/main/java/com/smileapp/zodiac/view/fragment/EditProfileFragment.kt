@@ -15,6 +15,7 @@ import com.google.gson.Gson
 import com.smileapp.zodiac.MyApplication
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.adapter.SpinnerAdapter
+import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentEditprofileBinding
 import com.smileapp.zodiac.model.ZodiacInfo
@@ -23,6 +24,7 @@ import org.json.JSONException
 import java.util.concurrent.Executors
 
 class EditProfileFragment: Fragment() {
+    var bannerShow:BannerShow?=null
     var zodiacMain:ArrayList<ZodiacInfo.ZodiacData.MainData>?=null
     val executor = Executors.newSingleThreadExecutor()
     val handler = Handler(Looper.getMainLooper())
@@ -39,6 +41,8 @@ class EditProfileFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.getShowBannerSmall(10)
         Font().styleText_RSU_BOLD(requireActivity(),binding.textView,32)
         Utils.setTextGradient_Blue(binding.TvZodiac)
         Utils.setTextGradient_Blue(binding.TvName)
