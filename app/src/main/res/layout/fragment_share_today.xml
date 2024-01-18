@@ -56,7 +56,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="SHARENOW"
-            android:textStyle="normal"
+            android:textStyle="bold"
             android:textColor="@color/white"
             android:textSize="18sp" />
 

@@ -8,8 +8,9 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 
-open class ImageViewTouchBase:ImageView {
+abstract class ImageViewTouchBase : AppCompatImageView{
 
     private val TAG = "ImageViewTouchBase"
 
@@ -106,7 +107,7 @@ open class ImageViewTouchBase:ImageView {
         super.setImageBitmap(bitmap)
         val d = drawable
         d?.setDither(true)
-        val old: Bitmap = mBitmapDisplayed.getBitmap()
+        val old: Bitmap? = mBitmapDisplayed.getBitmap()
         mBitmapDisplayed.setBitmap(bitmap)
         mBitmapDisplayed.setRotation(rotation)
         if (old != null && old != bitmap && mRecycler != null) {
@@ -158,15 +159,15 @@ open class ImageViewTouchBase:ImageView {
     // view's dimensions then center it (literally).  If the image
     // is scaled larger than the view and is translated out of view
     // then translate it back into view (i.e. eliminate black bars).
-    protected fun center(horizontal: Boolean, vertical: Boolean) {
+    fun center(horizontal: Boolean, vertical: Boolean) {
         if (mBitmapDisplayed.getBitmap() == null) {
             return
         }
         val m = getImageViewMatrix()
         val rect = RectF(
             0f, 0f,
-            mBitmapDisplayed.getBitmap().getWidth(),
-            mBitmapDisplayed.getBitmap().getHeight()
+            mBitmapDisplayed.getBitmap()!!.width.toFloat(),
+            mBitmapDisplayed.getBitmap()!!.height.toFloat()
         )
         m.mapRect(rect)
         val height = rect.height()
@@ -201,15 +202,14 @@ open class ImageViewTouchBase:ImageView {
         imageMatrix = getImageViewMatrix()
     }
 
-    fun ImageViewTouchBase(context: Context?) {
-        super(context)
+    constructor(context: Context?):super(context!!){
         init()
     }
 
-    fun ImageViewTouchBase(context: Context?, attrs: AttributeSet?) {
-        super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?):super(context!!, attrs){
         init()
     }
+
 
     private fun init() {
         scaleType = ScaleType.MATRIX
@@ -225,7 +225,7 @@ open class ImageViewTouchBase:ImageView {
         return getValue(matrix, Matrix.MSCALE_X)
     }
 
-    protected fun getScale(): Float {
+    fun getScale(): Float {
         return getScale(mSuppMatrix)
     }
 
@@ -233,8 +233,8 @@ open class ImageViewTouchBase:ImageView {
     private fun getProperBaseMatrix(bitmap: RotateBitmap, matrix: Matrix) {
         val viewWidth = width.toFloat()
         val viewHeight = height.toFloat()
-        val w: Float = bitmap.getWidth()
-        val h: Float = bitmap.getHeight()
+        val w: Float = bitmap.getWidth().toFloat()
+        val h: Float = bitmap.getHeight().toFloat()
         val rotation: Int = bitmap.getRotation()
         matrix.reset()
 
@@ -272,7 +272,7 @@ open class ImageViewTouchBase:ImageView {
         return Math.max(fw, fh) * 4
     }
 
-    protected fun zoomTo(scale: Float, centerX: Float, centerY: Float) {
+    protected open fun zoomTo(scale: Float, centerX: Float, centerY: Float) {
         var scale = scale
         if (scale > mMaxZoom) {
             scale = mMaxZoom
@@ -310,11 +310,11 @@ open class ImageViewTouchBase:ImageView {
         zoomTo(scale, cx, cy)
     }
 
-    protected fun zoomIn() {
+    protected open fun zoomIn() {
         zoomIn(SCALE_RATE)
     }
 
-    protected fun zoomOut() {
+    protected open fun zoomOut() {
         zoomOut(SCALE_RATE)
     }
 
@@ -350,7 +350,7 @@ open class ImageViewTouchBase:ImageView {
         center(true, true)
     }
 
-    protected fun postTranslate(dx: Float, dy: Float) {
+    protected open fun postTranslate(dx: Float, dy: Float) {
         mSuppMatrix.postTranslate(dx, dy)
     }
 

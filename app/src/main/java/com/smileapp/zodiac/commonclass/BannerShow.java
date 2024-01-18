@@ -50,7 +50,7 @@ public class BannerShow {
     LoadData loadDatabanner;
     public BannerShow(Activity activity, String strUUID) {
         loadDatabanner = new LoadData(activity);
-        loadDatabanner.loadAdsData();
+        loadDatabanner.loadAdsData(true);
         this.strID = strUUID;
         this.activity = activity;
         adRequest = new AdRequest.Builder()

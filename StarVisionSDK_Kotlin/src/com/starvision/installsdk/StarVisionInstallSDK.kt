@@ -70,20 +70,20 @@ class StarVisionInstallSDK(context : Context) {
             ConstVisionInstallSDK.bSetAppBannerID = false
         }
         if((!ConstVisionInstallSDK.bSetPacketName) || (!ConstVisionInstallSDK.bSetUrlInstall) || (!ConstVisionInstallSDK.bSetAppBannerID)){
-			Const.log(tagS, "YOU CAN NOT SET PARAMS, PLEASE CHECK")
+//			Const.log(tagS, "YOU CAN NOT SET PARAMS, PLEASE CHECK")
             return
         }
-        Const.log(tagS,"KEY_PREFS_OPEN_APP_FIRST "+appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST,Boolean).toString())
+//        Const.log(tagS,"KEY_PREFS_OPEN_APP_FIRST "+appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST,Boolean).toString())
         if(appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST,false) == false){
             if(isOnline(mContext)){
-                Const.log(tagS, "isOnline")
+//                Const.log(tagS, "isOnline")
                 if(appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_SEND_MOBILE_DATA,false) == false){
-                    Const.log(tagS, "KEY_PREFS_SEND_MOBILE_DATA : false")
+//                    Const.log(tagS, "KEY_PREFS_SEND_MOBILE_DATA : false")
                     callGetContact = CallGetContact(strPacketNameInstall, false)
                     callGetContact.execute()
                 } else {
                     if(bSendContact){
-                        Const.log(tagS, "bSendContact : True")
+//                        Const.log(tagS, "bSendContact : True")
                         callGetContact = CallGetContact(strPacketNameInstall, true)
                         callGetContact.execute()
                     }
@@ -92,23 +92,23 @@ class StarVisionInstallSDK(context : Context) {
         } else {
             mCalendarNow.timeInMillis = dateFormat.format(mCalendarNow.timeInMillis).toLong()
             mCalendarFirst.timeInMillis = appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST_CALENDAR,mCalendarFirst.timeInMillis) as Long
-            Const.log(tagS,"appPre mCalendarFirst : "+ appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST_CALENDAR,mCalendarFirst.timeInMillis) as Long)
-            Const.log(tagS,"dateFormat mCalendarFirst : "+ dateFormat.format(mCalendarFirst.timeInMillis))
-            Const.log(tagS,"dateFormat mCalendarNow : "+ mCalendarNow.timeInMillis)
+//            Const.log(tagS,"appPre mCalendarFirst : "+ appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST_CALENDAR,mCalendarFirst.timeInMillis) as Long)
+//            Const.log(tagS,"dateFormat mCalendarFirst : "+ dateFormat.format(mCalendarFirst.timeInMillis))
+//            Const.log(tagS,"dateFormat mCalendarNow : "+ mCalendarNow.timeInMillis)
             if(daysBetween(mCalendarFirst, mCalendarNow) > 365){
-                Const.log(tagS, "RESET OPEN APP FIRST")
+//                Const.log(tagS, "RESET OPEN APP FIRST")
                 appPrefs.setPreferences(mContext,appPrefs.KEY_PREFS_OPEN_APP_FIRST,false)
                 appPrefs.setPreferences(mContext,appPrefs.KEY_PREFS_SEND_MOBILE_DATA,false)
                 appPrefs.setPreferences(mContext,appPrefs.KEY_PREFS_SEND_FRIEND_CONTACT,false)
                 if(isOnline(mContext)){
-                    Const.log(tagS, "isOnline")
+//                    Const.log(tagS, "isOnline")
                     if(appPrefs.getPreferences(mContext,appPrefs.KEY_PREFS_SEND_FRIEND_CONTACT,Boolean) == false){
-                        Const.log(tagS, "KEY_PREFS_SEND_FRIEND_CONTACT : False")
+//                        Const.log(tagS, "KEY_PREFS_SEND_FRIEND_CONTACT : False")
                         callGetContact = CallGetContact(strPacketNameInstall, false)
                         callGetContact.execute()
                     } else {
                         if(bSendContact){
-                            Const.log(tagS, "KEY_PREFS_SEND_FRIEND_CONTACT : True")
+//                            Const.log(tagS, "KEY_PREFS_SEND_FRIEND_CONTACT : True")
                             callGetContact = CallGetContact(strPacketNameInstall, true)
                             callGetContact.execute()
                         }
@@ -176,7 +176,7 @@ class StarVisionInstallSDK(context : Context) {
             date.add(Calendar.DAY_OF_MONTH, 1)
             daysBetween++
         }
-        Const.log(tagS, "DATE BETWEEN: $daysBetween")
+//        Const.log(tagS, "DATE BETWEEN: $daysBetween")
         return daysBetween
     }
 
@@ -211,22 +211,22 @@ class StarVisionInstallSDK(context : Context) {
                         arrayContact = ContactModel(strEmi,strPacket,ConstVisionInstallSDK.strAppBannerID,"Thailand"
                         ,"R71D1A6E23A8DB372E9E9D33E3CB4AB38D0A5",dataMachine)
 
-                        Const.log(tagS, "CallGetContact : ")
-                        Const.log(tagS, "ContactModel : "+arrayContact.machineIMEI
-                                +" "+arrayContact.appAdsPackage
-                                +" "+arrayContact.appBannerId
-                                +" "+arrayContact.appBannerCountry
-                                +" "+arrayContact.checked)
-                        Const.log(tagS, "dataMachine : "+dataMachine.OS
-                                +" "+dataMachine.Brand
-                                +" "+dataMachine.Model
-                                +" "+dataMachine.Device_Name
-                                +" "+dataMachine.IMEI_UDID
-                                +" "+dataMachine.Platform
-                                +" "+dataMachine.System_Version)
+//                        Const.log(tagS, "CallGetContact : ")
+//                        Const.log(tagS, "ContactModel : "+arrayContact.machineIMEI
+//                                +" "+arrayContact.appAdsPackage
+//                                +" "+arrayContact.appBannerId
+//                                +" "+arrayContact.appBannerCountry
+//                                +" "+arrayContact.checked)
+//                        Const.log(tagS, "dataMachine : "+dataMachine.OS
+//                                +" "+dataMachine.Brand
+//                                +" "+dataMachine.Model
+//                                +" "+dataMachine.Device_Name
+//                                +" "+dataMachine.IMEI_UDID
+//                                +" "+dataMachine.Platform
+//                                +" "+dataMachine.System_Version)
                         bRunning = false
                     }catch (e : Exception){
-                        Const.log(tagS, "catch :")
+//                        Const.log(tagS, "catch :")
                         bRunning = false
                     }
                 }
@@ -235,7 +235,7 @@ class StarVisionInstallSDK(context : Context) {
         }
         private fun onPostExecute(result: String){
             try {
-                Const.log(tagS,"result : $result")
+//                Const.log(tagS,"result : $result")
                 if(!bGetFriendContact){
                     callWebServerInstall = CallWebServerInstall(ConstVisionInstallSDK.getGoogleUrl(strEmi), false)
                     callWebServerInstall.execute()
@@ -244,7 +244,7 @@ class StarVisionInstallSDK(context : Context) {
                     callWebServerInstall.execute()
                 }
             }catch (e : Exception){
-                Const.log(tagS, "catch :")
+//                Const.log(tagS, "catch :")
                 e.printStackTrace()
             }
         }
@@ -261,22 +261,22 @@ class StarVisionInstallSDK(context : Context) {
             doInBackground() // runs in background thread without blocking the Main Thread
         }
         private suspend fun doInBackground() : String = withContext(Dispatchers.IO){
-            Const.log(tagS,"googleUrl : $googleUrl")
-            Const.log(tagS,"googleUrl : $b")
+//            Const.log(tagS,"googleUrl : $googleUrl")
+//            Const.log(tagS,"googleUrl : $b")
             try {
                 while (bRunning) {
                     if (execute().isCancelled){
                         break
                     }else {
-                        Const.log(tagS,"strUrlInstall : "+ConstVisionInstallSDK.strUrlInstall)
-                        Const.log(tagS,"CallWebServerInstall")
+//                        Const.log(tagS,"strUrlInstall : "+ConstVisionInstallSDK.strUrlInstall)
+//                        Const.log(tagS,"CallWebServerInstall")
                         com.starvision.api.URL.BASE_URL = "https://www.starvision.in.th"
                         val getURL = ApiClient().getClientBaseURL().create(Api::class.java)
                         getURL.getDataSDK().enqueue(object : Callback<CcuModel> {
                             override fun onResponse(call: Call<CcuModel>, response: Response<CcuModel>) {
-                                Const.log(tagS,"call "+call.request().url() )
+//                                Const.log(tagS,"call "+call.request().url() )
                                 try {
-                                    Const.log(tagS,"Status "+response.body()!!.Status )
+//                                    Const.log(tagS,"Status "+response.body()!!.Status )
                                     if (response.body()!!.Status == "True") {
                                         if (!bSendContact) {
                                             appPrefs.setPreferences(mContext, appPrefs.KEY_PREFS_SEND_MOBILE_DATA, true)
@@ -293,21 +293,21 @@ class StarVisionInstallSDK(context : Context) {
                                         }
                                     }
                                 } catch (e: Exception) {
-                                    Const.log(tagS, "catch :")
+//                                    Const.log(tagS, "catch :")
                                     e.printStackTrace()
                                 }
                             }
 
                             override fun onFailure(call: Call<CcuModel>, t: Throwable) {
-                                Const.log(tagS, "Call : $call")
-                                Const.log(tagS, "onFailure : $t")
+//                                Const.log(tagS, "Call : $call")
+//                                Const.log(tagS, "onFailure : $t")
                             }
                         })
                         bRunning = false
                     }
                 }
             }catch (e : Exception){
-                Const.log(tagS, "catch :")
+//                Const.log(tagS, "catch :")
                 e.printStackTrace()
                 bRunning = false
             }

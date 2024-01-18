@@ -15,11 +15,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import com.smileapp.zodiac.R
+import com.smileapp.zodiac.databinding.CropImageBinding
 import java.io.*
 import java.util.concurrent.CountDownLatch
 
 class CropImage:MonitoredActivity() {
-    val binding:
+    val binding:CropImageBinding by lazy { CropImageBinding.inflate(layoutInflater) }
 
     val IMAGE_MAX_SIZE = 1024
 
@@ -70,14 +71,14 @@ class CropImage:MonitoredActivity() {
         super.onCreate(icicle)
         mContentResolver = contentResolver
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.crop_image)
-        mImageView = findViewById(R.id.image) as CropImageView?
+        setContentView(binding.root)
+        mImageView = binding.image
         showStorageToast(this)
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
             if (extras.getString(CIRCLE_CROP) != null) {
-                mImageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+                mImageView!!.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 mCircleCrop = true
                 mAspectX = 1
                 mAspectY = 1
@@ -108,12 +109,12 @@ class CropImage:MonitoredActivity() {
 
         // Make UI fullscreen.
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        findViewById(R.id.discard).setOnClickListener(
+        binding.discard.setOnClickListener(
             View.OnClickListener {
                 setResult(RESULT_CANCELED)
                 finish()
             })
-        findViewById(R.id.save).setOnClickListener(
+        binding.save.setOnClickListener(
             View.OnClickListener {
                 try {
                     onSaveClicked()
@@ -121,20 +122,18 @@ class CropImage:MonitoredActivity() {
                     finish()
                 }
             })
-        findViewById(R.id.rotateLeft).setOnClickListener(
-            View.OnClickListener {
-                mBitmap = Util.rotateImage(mBitmap, -90)
+        binding.rotateLeft.setOnClickListener{
+                mBitmap = Util.rotateImage(mBitmap!!, -90F)
                 val rotateBitmap = RotateBitmap(mBitmap)
-                mImageView.setImageRotateBitmapResetBase(rotateBitmap, true)
+                mImageView!!.setImageRotateBitmapResetBase(rotateBitmap, true)
                 mRunFaceDetection.run()
-            })
-        findViewById(R.id.rotateRight).setOnClickListener(
-            View.OnClickListener {
-                mBitmap = Util.rotateImage(mBitmap, 90)
+            }
+        binding.rotateRight.setOnClickListener{
+                mBitmap = Util.rotateImage(mBitmap!!, 90F)
                 val rotateBitmap = RotateBitmap(mBitmap)
-                mImageView.setImageRotateBitmapResetBase(rotateBitmap, true)
+                mImageView!!.setImageRotateBitmapResetBase(rotateBitmap, true)
                 mRunFaceDetection.run()
-            })
+            }
         startFaceDetection()
     }
 
@@ -194,7 +193,7 @@ class CropImage:MonitoredActivity() {
         if (isFinishing) {
             return
         }
-        mImageView.setImageBitmapResetBase(mBitmap, true)
+        mImageView!!.setImageBitmapResetBase(mBitmap, true)
         Util.startBackgroundJob(this, null,
             "Please wait\u2026",
             Runnable {
@@ -202,12 +201,12 @@ class CropImage:MonitoredActivity() {
                 val b = mBitmap
                 mHandler.post {
                     if (b != mBitmap && b != null) {
-                        mImageView.setImageBitmapResetBase(b, true)
+                        mImageView!!.setImageBitmapResetBase(b, true)
                         mBitmap!!.recycle()
                         mBitmap = b
                     }
-                    if (mImageView.getScale() === 1f) {
-                        mImageView.center(true, true)
+                    if (mImageView!!.getScale() === 1f) {
+                        mImageView!!.center(true, true)
                     }
                     latch.countDown()
                 }
@@ -232,7 +231,7 @@ class CropImage:MonitoredActivity() {
             return
         }
         mSaving = true
-        val r: Rect = mCrop.getCropRect()
+        val r: Rect = mCrop!!.getCropRect()!!
         val width = r.width()
         val height = r.height()
 
@@ -299,7 +298,7 @@ class CropImage:MonitoredActivity() {
                     Bitmap.Config.RGB_565
                 )
                 val canvas = Canvas(b)
-                val srcRect: Rect = mCrop.getCropRect()
+                val srcRect: Rect = mCrop!!.getCropRect()!!
                 val dstRect = Rect(0, 0, mOutputX, mOutputY)
                 val dx = (srcRect.width() - dstRect.width()) / 2
                 val dy = (srcRect.height() - dstRect.height()) / 2
@@ -380,7 +379,7 @@ class CropImage:MonitoredActivity() {
 
     override fun onPause() {
         super.onPause()
-        BitmapManager.instance().cancelThreadDecoding(mDecodingThreads)
+        BitmapManager().instance()!!.cancelThreadDecoding(mDecodingThreads)
     }
 
     override fun onDestroy() {
@@ -405,7 +404,7 @@ class CropImage:MonitoredActivity() {
             midPoint.x *= mScale
             midPoint.y *= mScale
             val midX = midPoint.x.toInt()
-            val midY = RectF()
+            val midY = midPoint.y.toInt()
             val hv = HighlightView(mImageView)
             val width = mBitmap!!.width
             val height = mBitmap!!.height
@@ -434,7 +433,7 @@ class CropImage:MonitoredActivity() {
                 mImageMatrix, imageRect, faceRect, mCircleCrop,
                 mAspectX != 0 && mAspectY != 0
             )
-            mImageView.add(hv)
+            mImageView!!.add(hv)
         }
 
         // Create a default HightlightView if we found no face in the picture.
@@ -466,8 +465,8 @@ class CropImage:MonitoredActivity() {
                 mImageMatrix, imageRect, cropRect, mCircleCrop,
                 mAspectX != 0 && mAspectY != 0
             )
-            mImageView.mHighlightViews.clear() // Thong added for rotate
-            mImageView.add(hv)
+            mImageView!!.mHighlightViews.clear() // Thong added for rotate
+            mImageView!!.add(hv)
         }
 
         // Scale the image down for faster face detection.
@@ -494,7 +493,7 @@ class CropImage:MonitoredActivity() {
         }
 
         override fun run() {
-            mImageMatrix = mImageView.getImageMatrix()
+            mImageMatrix = mImageView!!.getImageMatrix()
             val faceBitmap = prepareBitmap()
             mScale = 1.0f / mScale
             if (faceBitmap != null && mDoFaceDetection) {
@@ -516,10 +515,10 @@ class CropImage:MonitoredActivity() {
                 } else {
                     makeDefault()
                 }
-                mImageView.invalidate()
-                if (mImageView.mHighlightViews.size() === 1) {
-                    mCrop = mImageView.mHighlightViews.get(0)
-                    mCrop.setFocus(true)
+                mImageView!!.invalidate()
+                if (mImageView!!.mHighlightViews.size == 1) {
+                    mCrop = mImageView!!.mHighlightViews.get(0)
+                    mCrop!!.setFocus(true)
                 }
                 if (mNumFaces > 1) {
                     Toast.makeText(
@@ -552,7 +551,7 @@ class CropImage:MonitoredActivity() {
             noStorageText = activity.getString(R.string.not_enough_space)
         }
         if (noStorageText != null) {
-            Toast.makeText(activity, noStorageText, 5000).show()
+            Toast.makeText(activity, noStorageText, Toast.LENGTH_SHORT).show()
         }
     }
 

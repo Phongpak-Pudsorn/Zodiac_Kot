@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.SslErrorHandler
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -19,12 +20,15 @@ import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
+import com.smileapp.zodiac.commonclass.LoadingDialog
 import com.smileapp.zodiac.databinding.WebviewBinding
 import com.smileapp.zodiac.utils.Utils
 
 class ZodiacWebFragment: Fragment() {
     var bannerShow:BannerShow?=null
     val binding: WebviewBinding by lazy { WebviewBinding.inflate(layoutInflater) }
+    var strMessage = ""
+    var loading = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,8 +39,6 @@ class ZodiacWebFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        bannerShow!!.getShowBannerSmall(10)
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         startWebView(Utils.getWebUrl().toString())
         binding.TvTitle.text = Utils.getWebTitle()
@@ -45,11 +47,11 @@ class ZodiacWebFragment: Fragment() {
                 .navigateUp()
         }
         binding.imgShare.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_SEND)
-//            intent.type = "text/plain"
-//            intent.putExtra(Intent.EXTRA_TEXT, strMessage + strUrl + " " + getString(R.string.text_share_hashtag))
-//            Toast.makeText(requireActivity(), "Share..", Toast.LENGTH_SHORT).show()
-//            startActivity(intent)
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, strMessage + Utils.getWebUrl() + " " + getString(R.string.text_share_hashtag))
+            Toast.makeText(requireActivity(), "Share..", Toast.LENGTH_SHORT).show()
+            startActivity(intent)
         }
     }
     private fun startWebView(url: String) {
@@ -57,7 +59,7 @@ class ZodiacWebFragment: Fragment() {
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
         binding.webview1.setWebViewClient(object : WebViewClient() {
-            var progressDialog: ProgressDialog? = null
+            var progressDialog = LoadingDialog.progressDialog(requireActivity())
 
             //If you will not use this method url links are opeen in new brower not in webview
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
@@ -67,11 +69,11 @@ class ZodiacWebFragment: Fragment() {
 
             //Show loader on url load
             override fun onLoadResource(view: WebView, url: String) {
-                if (progressDialog == null) {
-                    // in standard case YourActivity.this
-                    progressDialog = ProgressDialog(requireActivity())
-                    progressDialog!!.setMessage("Loading...")
-                    progressDialog!!.show()
+                // in standard case YourActivity.this
+                //                    progressDialog = ProgressDialog(requireActivity())
+                //                    progressDialog!!.setMessage("Loading...")
+                if (loading) {
+                    progressDialog.show()
                 }
             }
 
@@ -81,7 +83,8 @@ class ZodiacWebFragment: Fragment() {
 //                    progressDialog.dismiss();
 //                    progressDialog = null;
 //                }
-                    progressDialog!!.dismiss()
+                    progressDialog.dismiss()
+                    loading = false
                 } catch (exception: Exception) {
                     exception.printStackTrace()
                 }
@@ -123,19 +126,29 @@ class ZodiacWebFragment: Fragment() {
         })
 
         // Javascript inabled on webview
-        binding.webview1.getSettings().setJavaScriptEnabled(true)
+        binding.webview1.settings.javaScriptEnabled = true
 
         // Other webview options
         // webView.getSettings().setLoadWithOverviewMode(true);
         // webView.getSettings().setUseWideViewPort(true);
         // webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        binding.webview1.setScrollbarFadingEnabled(false)
-        binding.webview1.getSettings().setBuiltInZoomControls(true)
-        binding.webview1.getSettings().setJavaScriptEnabled(true)
-        binding.webview1.getSettings().setAllowFileAccess(true)
-
+        binding.webview1.isScrollbarFadingEnabled = false
+        binding.webview1.settings.builtInZoomControls = true
+        binding.webview1.settings.displayZoomControls = false
+        binding.webview1.settings.allowFileAccess = true
+        binding.webview1.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         //Load url in webview
         binding.webview1.loadUrl(url)
+    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        super.onStart()
+    }
+
+    override fun onResume() {
+        bannerShow!!.getShowBannerSmall(10)
+        super.onResume()
     }
 
 }

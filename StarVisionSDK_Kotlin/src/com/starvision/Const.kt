@@ -11,9 +11,8 @@ import android.util.Log
 
 
 object Const {
-    var MACTIVITY = 0
     fun log(strClass :String,text :String){
-//        Log.e(strClass,text)
+        Log.e(strClass,text)
     }
     @SuppressLint("InternalInsetResource", "DiscouragedApi")
     fun getStatusBarHeight(activity: Activity): Int {
@@ -57,7 +56,7 @@ object Const {
     }
 
     fun appInstalledOrNot(mContext: Context, uri: String): Boolean {
-        log("Const","uri : $uri")
+//        log("Const","uri : $uri")
         val appInstalled: Boolean = try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 mContext.packageManager.getApplicationInfo(mContext.packageName,

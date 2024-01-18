@@ -4,7 +4,7 @@
 	android:id="@+id/FrameTextNoticeMessage"
 	android:layout_width="match_parent"
 	android:layout_height="25dp"
-	android:background="@color/pink"
+	android:background="@color/red"
 	android:orientation="horizontal">
 
 	<TextView

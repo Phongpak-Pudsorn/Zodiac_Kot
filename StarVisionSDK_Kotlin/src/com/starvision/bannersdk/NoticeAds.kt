@@ -5,9 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.util.AttributeSet
 import android.view.*
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.LinearLayout
 import com.google.gson.Gson
 import com.starvision.AppPreferences
@@ -47,47 +45,50 @@ class NoticeAds @JvmOverloads constructor(
     }
 
     fun loadAds (strUUID : String){
-        Const.log(tagS,"loadAds")
+//        Const.log(tagS,"loadAds")
         try {
-            Const.log(tagS,"try")
+//            Const.log(tagS,"try")
             val timeNow = dateFormat.format(System.currentTimeMillis())
             val timeData = dateFormat.parse((appPreferences.getPreferences(mContext,AppPreferences.KEY_PREFS_TIME_LOADS,"")).toString())
             val result : Long =  (dateFormat.parse(timeNow)!!.time - timeData!!.time)
             if(loadData.checkData == false){
-                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
+//                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
                 mNoticeAdsListener!!.onFailed("Notice Error")
 
             }else if (result > (10 * 60 * 1000)){
-                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
-                loadData.loadAdsData()
+//                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
+                loadData.loadAdsData(true)
                 val newdataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(newdataApi.toString(),strUUID)
 
             }else{
-                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
+//                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
                 val dataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(dataApi.toString(),strUUID)
             }
         }catch (e : Exception){
-            Const.log(tagS,"catch")
-            Const.log(tagS,"loadAds : catch")
+//            Const.log(tagS,"catch")
+//            Const.log(tagS,"loadAds : catch")
             mNoticeAdsListener!!.onFailed("Notice Error")
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     fun setApiToView(dataApi : String, strUUID : String){
-        Const.log(tagS,"strUUID : $strUUID")
+//        Const.log(tagS,"strUUID : $strUUID")
         try {
             val adsModel = Gson().fromJson(dataApi, AdsModel::class.java)
             if(adsModel.Status == "True") {
                 val datarowPublish = adsModel.Datarowpublish
                 for (i in datarowPublish.indices) {
                     noticeAds = this
+                    if((noticeAds as NoticeAds) != null ){
+                        (noticeAds as NoticeAds).removeAllViews()
+                    }
                     (noticeAds as NoticeAds).addView(bindingTextview.root)
+                    (noticeAds as NoticeAds).isSelected = true
                     bindingTextview.mTvTextNoticeMessage.text = datarowPublish[i].Publishtitle
-                    bindingTextview.mTvTextNoticeMessage.isSelected = true
-                    Const.log(tagS,"Text :"+datarowPublish[i].Publishtitle)
+//                    Const.log(tagS,"Text :"+datarowPublish[i].Publishtitle)
                     bindingTextview.mBtCloseNoticeMessage.setOnClickListener {
                         bindingTextview.root.isEnabled = true
                         mNoticeAdsListener!!.onClose()
@@ -95,12 +96,14 @@ class NoticeAds @JvmOverloads constructor(
 
                     bindingTextview.root.setOnClickListener {
                         bindingTextview.root.isEnabled = false
-                        Const.log(tagS,"Publishtype : "+datarowPublish[i].Publishtype)
+//                        Const.log(tagS,"Publishtype : "+datarowPublish[i].Publishtype)
                         if (datarowPublish[i].Publishtype == "LinkToAPP"){
                             Const.openPlayStore(mContext,datarowPublish[i].Publishdetail)
                         }else if(datarowPublish[i].Publishtype == "LinkToURL"){
                             showPopupWebForNoticeMessageBar(datarowPublish[i].Publishdetail)
                         }
+//                        else if(datarowPublish[i].Publishtype == "Text"){}
+//                        runClickNotice(datarowPublish[i].Appadspackage, datarowPublish[i].Publishid)
                     }
 
                 }
@@ -131,7 +134,16 @@ class NoticeAds @JvmOverloads constructor(
                 bindingWebView.mBtGoBack.isEnabled = bindingWebView.mWebView.canGoBack()
                 super.onPageFinished(view, url)
             }
-    }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                error: WebResourceError?
+            ) {
+                super.onReceivedError(view, request, error)
+                bindingWebView.mWebView.loadData(mContext.getString(R.string.text_no_net), "text/html", "UTF-8")
+            }
+        }
         bindingWebView.mWebView.loadUrl(strUrl)
         bindingWebView.mWebView.settings.displayZoomControls = false
         bindingWebView.mWebView.settings.builtInZoomControls = true

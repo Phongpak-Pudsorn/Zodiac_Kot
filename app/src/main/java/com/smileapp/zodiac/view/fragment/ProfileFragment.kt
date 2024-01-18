@@ -25,6 +25,7 @@ import org.json.JSONException
 import java.util.concurrent.Executors
 
 class ProfileFragment:Fragment() {
+    val TEMP_PHOTO_FILE_NAME = "Android/data/com.smileapp.zodiac/temp_photo.jpg"
     var bannerShow:BannerShow?=null
     var zodiacMain:ArrayList<ZodiacInfo.ZodiacData.MainData>?=null
     val executor = Executors.newSingleThreadExecutor()
@@ -42,8 +43,6 @@ class ProfileFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        bannerShow!!.getShowBannerSmall(10)
         CallData()
         setNoticeAds()
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
@@ -145,5 +144,15 @@ class ProfileFragment:Fragment() {
             }
         })
         binding.noticeAds.loadAds(Utils.UUID)
+    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        super.onStart()
+    }
+
+    override fun onResume() {
+        bannerShow!!.getShowBannerSmall(10)
+        super.onResume()
     }
 }

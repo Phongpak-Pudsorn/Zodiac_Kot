@@ -50,7 +50,7 @@ class BitmapManager {
 
     private var sManager: BitmapManager? = null
 
-    private fun BitmapManager() {}
+    constructor() {}
 
     /**
      * Get thread status and create one if specified.
@@ -133,7 +133,7 @@ class BitmapManager {
         }
 
         // Wake up threads in waiting list
-        notifyAll()
+//        notifyAll()
     }
 
     /**

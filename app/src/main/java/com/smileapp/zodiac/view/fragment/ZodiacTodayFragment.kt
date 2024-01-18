@@ -42,8 +42,6 @@ class ZodiacTodayFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        bannerShow!!.getShowBannerSmall(10)
         var listData = ArrayList<ZodiacTodayInfo>()
         val service = ApiClient().getClient().create(Api::class.java)
         service.getToday().enqueue(object: Callback<ZodiacTodayInfo>{
@@ -161,5 +159,15 @@ class ZodiacTodayFragment:Fragment() {
             }
             binding.hourRadioGroup.addView(button)
         }
+    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        super.onStart()
+    }
+
+    override fun onResume() {
+        bannerShow!!.getShowBannerSmall(10)
+        super.onResume()
     }
 }

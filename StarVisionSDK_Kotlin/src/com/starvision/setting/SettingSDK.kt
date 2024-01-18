@@ -139,13 +139,10 @@ class SettingSDK(context : Context) {
                 sendIntent.data = Uri.parse("market://details?id="+mContext.packageName)
                 sendIntent.setClassName("com.android.vending", "com.android.vending.AssetBrowserActivity")
                 mContext.startActivity(sendIntent)
-                Const.log("TAG","setRating try if")
             } else {
-                Const.log("TAG","setRating try else")
                 mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+mContext.packageName)))
             }
         } catch (anfe :android.content.ActivityNotFoundException) {
-            Const.log("TAG","setRating catch ")
             mContext.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+mContext.packageName)))
             anfe.printStackTrace()
         } catch( e : Exception) {
@@ -155,19 +152,16 @@ class SettingSDK(context : Context) {
 
     fun setAppMe(strDev : String){
         try {
-            if(Const.appInstalledOrNot(mContext, "com.android.vending")){
-                Const.log("TAG","setAppMe try if")
+            if(!Const.appInstalledOrNot(mContext, "com.android.vending")){
                 val sendIntent = Intent(Intent.ACTION_VIEW)
                 sendIntent.data = Uri.parse("market://search?q=pub:$strDev")
                 sendIntent.setClassName("com.android.vending", "com.android.vending.AssetBrowserActivity")
                 mContext.startActivity(sendIntent)
             } else {
-                Const.log("TAG","setAppMe try else")
                 mContext.startActivity( Intent(Intent.ACTION_VIEW, Uri.parse(strDev)))
             }
         } catch (anfe : android.content.ActivityNotFoundException) {
-            Const.log("TAG","setAppMe catch")
-            mContext.startActivity( Intent(Intent.ACTION_VIEW, Uri.parse(strDev)))
+            mContext.startActivity( Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=pub:$strDev")))
             anfe.printStackTrace()
         } catch(e : Exception) {
             e.printStackTrace()

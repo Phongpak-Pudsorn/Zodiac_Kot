@@ -17,6 +17,8 @@ object AppPreferences {
     const val KEY_PREFS_SEND_FRIEND_CONTACT = "send_mobile_contact"
     const val KEY_PREFS_SEND_MOBILE_DATA = "send_mobile_data"
     const val KEY_PREFS_CCU_URL = "KEY_PREFS_CCU_URL"
+    const val KEY_CHECK_CCU = "KEY_CHECK_CCU"
+    const val KEY_CHECK_LOAD_ADS_API = "KEY_CHECK_LOAD_ADS_API"
 
     fun setPreferences(mContext: Context,key: String, objects: Any){
         val preferences = mContext.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE)

@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.smileapp.zodiac.MyApplication
 import com.smileapp.zodiac.adapter.MenuMainAdapter
 import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
@@ -20,10 +25,7 @@ import java.util.concurrent.Executors
 class MenuZodiacFragment:Fragment() {
     val executor = Executors.newSingleThreadExecutor()
     val handler = Handler(Looper.getMainLooper())
-    var mMenuMainAdapter: MenuMainAdapter? = null
-    var zodiacMain = ArrayList<ZodiacInfo>()
-    var screenWight = 100
-    var items = ArrayList<String>()
+    var zodiacMain = ArrayList<ZodiacInfo.ZodiacData.MainData>()
     var bannerShow:BannerShow?=null
     val binding:FragmentMenuZodiacBinding by lazy { FragmentMenuZodiacBinding.inflate(layoutInflater) }
     override fun onCreateView(
@@ -37,16 +39,10 @@ class MenuZodiacFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
-        setColumnGridView()
-        bannerShow = BannerShow(requireActivity(),Utils.UUID)
-        bannerShow!!.getShowBannerSmall(10)
-        bannerShow!!.loadPopupBanner(0)
-        mMenuMainAdapter = MenuMainAdapter(requireActivity(),zodiacMain,screenWight,bannerShow)
         binding.imgBack.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigateUp()
         }
-        binding.mGridView.adapter = mMenuMainAdapter
         CallData()
     }
     fun CallData(){
@@ -55,25 +51,44 @@ class MenuZodiacFragment:Fragment() {
             zodiacMain.clear()
             try {
                 val menuData = Gson().fromJson(menuStr,ZodiacInfo::class.java)
-                zodiacMain.add(menuData)
+                for (i in menuData.Data_Zodiac.zodiac_main.indices) {
+                    zodiacMain.add(menuData.Data_Zodiac.zodiac_main[i])
+                }
+                Log.e("zodiacMain size",zodiacMain.size.toString())
+                Log.e("zodiacMain size",zodiacMain.toString())
 
             }catch (e: JSONException){
                 e.printStackTrace()
             }
             handler.post{
-                mMenuMainAdapter?.notifyDataSetChanged()
+//                mMenuMainAdapter?.notifyDataSetChanged()
+                binding.menuView.apply {
+                    layoutManager = GridLayoutManager(MyApplication.getContext(),2,RecyclerView.VERTICAL,false)
+                    adapter = MenuMainAdapter(requireActivity(),zodiacMain, bannerShow!!)
+                }
             }
         }
 
     }
-    fun setColumnGridView() {
-        val displaymetrics = DisplayMetrics()
-        if (android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.R){
-            requireActivity().windowManager.defaultDisplay.getMetrics(displaymetrics)
-            screenWight = displaymetrics.widthPixels / 2
-        }else{
-            requireActivity().windowManager.defaultDisplay.getMetrics(displaymetrics)
-            screenWight = displaymetrics.widthPixels / 2
-        }
+//    fun setColumnGridView() {
+//        val displaymetrics = DisplayMetrics()
+//        if (android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.R){
+//            requireActivity().windowManager.defaultDisplay.getMetrics(displaymetrics)
+//            screenWight = displaymetrics.widthPixels / 2
+//        }else{
+//            requireActivity().windowManager.defaultDisplay.getMetrics(displaymetrics)
+//            screenWight = displaymetrics.widthPixels / 2
+//        }
+//    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(),Utils.UUID)
+        super.onStart()
+    }
+
+    override fun onResume() {
+        bannerShow!!.loadPopupBanner(0)
+        bannerShow!!.getShowBannerSmall(10)
+        super.onResume()
     }
 }

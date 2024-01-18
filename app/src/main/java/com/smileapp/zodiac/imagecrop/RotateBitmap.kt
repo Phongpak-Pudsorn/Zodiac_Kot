@@ -9,12 +9,12 @@ class RotateBitmap {
     private var mBitmap: Bitmap? = null
     private var mRotation = 0
 
-    fun RotateBitmap(bitmap: Bitmap?) {
+    constructor(bitmap: Bitmap?) {
         mBitmap = bitmap
         mRotation = 0
     }
 
-    fun RotateBitmap(bitmap: Bitmap?, rotation: Int) {
+    constructor(bitmap: Bitmap?, rotation: Int) {
         mBitmap = bitmap
         mRotation = rotation % 360
     }

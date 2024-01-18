@@ -40,20 +40,22 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"/>
-        <Button
+
+        <TextView
             android:id="@+id/btnShare"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin = "5dp"
             android:background="@drawable/bg_btn_sharenow"
             android:gravity="center"
-            android:text="ShareNow"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:text="SHARENOW"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:layout_margin="5dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
     <ScrollView

@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 
-class CropImageView:ImageViewTouchBase() {
+open class CropImageView:ImageViewTouchBase {
 
     var mHighlightViews = ArrayList<HighlightView>()
     var mMotionHighlightView: HighlightView? = null
@@ -31,8 +31,8 @@ class CropImageView:ImageViewTouchBase() {
         }
     }
 
-    fun CropImageView(context: Context?, attrs: AttributeSet?) {
-        super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?):super(context,attrs) {
+//        super(context, attrs)
         mContext = context
     }
 
@@ -80,7 +80,7 @@ class CropImageView:ImageViewTouchBase() {
         for (i in mHighlightViews.indices) {
             val hv = mHighlightViews[i]
             val edge = hv.getHit(event.x, event.y)
-            if (edge != HighlightView.GROW_NONE) {
+            if (edge != HighlightView().GROW_NONE) {
                 if (!hv.hasFocus()) {
                     hv.setFocus(true)
                     hv.invalidate()
@@ -104,13 +104,13 @@ class CropImageView:ImageViewTouchBase() {
                 while (i < mHighlightViews.size) {
                     val hv = mHighlightViews[i]
                     val edge = hv.getHit(event.x, event.y)
-                    if (edge != HighlightView.GROW_NONE) {
+                    if (edge != HighlightView().GROW_NONE) {
                         mMotionEdge = edge
                         mMotionHighlightView = hv
                         mLastX = event.x
                         mLastY = event.y
                         mMotionHighlightView!!.setMode(
-                            if (edge == HighlightView.MOVE) HighlightView.ModifyMode.Move else HighlightView.ModifyMode.Grow
+                            if (edge == HighlightView().MOVE) HighlightView.ModifyMode.Move else HighlightView.ModifyMode.Grow
                         )
                         break
                     }
@@ -218,7 +218,7 @@ class CropImageView:ImageViewTouchBase() {
         ensureVisible(hv)
     }
 
-    protected fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas!!)
         for (i in mHighlightViews.indices) {
             mHighlightViews[i].draw(canvas)

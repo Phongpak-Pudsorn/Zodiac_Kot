@@ -33,8 +33,6 @@ class SettingFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Utils.currentFragment = 2
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        bannerShow!!.getShowBannerSmall(10)
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         binding.Details.visibility = View.GONE
         binding.mTvVersion.text = getString(R.string.version)+" "+BuildConfig.VERSION_NAME
@@ -94,6 +92,15 @@ class SettingFragment:Fragment() {
                 }
             }
         })
+    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        super.onStart()
+    }
+
+    override fun onResume() {
         bannerShow!!.getShowBannerSmall(10)
+        super.onResume()
     }
 }

@@ -33,6 +33,7 @@ object Utils {
     const val NAME_USER = "NAME_USER"
     const val KEY_RASI = "KEY_RASI"
     const val KEY_GENDER = "KEY_GENDER"
+    const val KEY_SERVER = "KEY_SERVER"
     const val NAME_DATE_RASI = "NAME_DATE_RASI"
     const val KEY_NOTICEADS = "KEY_NOTICEADS"
     const val ADVERTISING_ID_CLIENT = "ADVERTISING_ID_CLIENT"
@@ -47,8 +48,16 @@ object Utils {
     const val KEY_WEB_URL ="KEY_WEB_URL"
     const val NAME_MONTH = "NAME_MONTH"
     const val NAME_YEAR = "NAME_YEAR"
+    const val KEY_PREDICT_POSITION = "KEY_PREDICT_POSITION"
+    const val KEY_PREDICT_RASI = "KEY_PREDICT_RASI"
+    const val KEY_PREDICT_NAME = "KEY_PREDICT_NAME"
+    const val KEY_PREDICT_MENU = "KEY_PREDICT_MENU"
+    const val KEY_PREDICT_DESCRIPTION = "KEY_PREDICT_DESCRIPTION"
+
     var UUID = ""
     var currentFragment = 0
+    var menuPosition = 0
+    var showOnClick = 0
 
     fun AppPreference(context: Context) {
 //    	Log.e("TAG", APP_SHARED_PREFS);
@@ -74,6 +83,54 @@ object Utils {
     fun getNameUser():String{
         return sharedPrefs!!.getString(NAME_USER,"").toString()
     }
+    fun setPredictPosition(position:Int){
+        prefsEditor!!.putInt(KEY_PREDICT_POSITION,position)
+        prefsEditor!!.commit()
+
+    }
+    fun getPredictPosition():Int{
+        return sharedPrefs!!.getInt(KEY_PREDICT_POSITION,0)
+    }
+    fun setPredictRasi(image:String){
+        prefsEditor!!.putString(KEY_PREDICT_RASI,image)
+        prefsEditor!!.commit()
+
+    }
+    fun getPredictRasi():String{
+        return sharedPrefs!!.getString(KEY_PREDICT_RASI,"").toString()
+    }
+    fun setPredictName(name:String){
+        prefsEditor!!.putString(KEY_PREDICT_NAME,name)
+        prefsEditor!!.commit()
+
+    }
+    fun getPredictName():String{
+        return sharedPrefs!!.getString(KEY_PREDICT_NAME,"").toString()
+    }
+    fun setPredictMenu(name:String){
+        prefsEditor!!.putString(KEY_PREDICT_MENU,name)
+        prefsEditor!!.commit()
+
+    }
+    fun getPredictMenu():String{
+        return sharedPrefs!!.getString(KEY_PREDICT_MENU,"").toString()
+    }
+    fun setPredictDesc(name:String){
+        prefsEditor!!.putString(KEY_PREDICT_DESCRIPTION,name)
+        prefsEditor!!.commit()
+
+    }
+    fun getPredictDesc():String{
+        return sharedPrefs!!.getString(KEY_PREDICT_DESCRIPTION,"").toString()
+    }
+    fun setServerData(s:String){
+        prefsEditor!!.putString(KEY_SERVER,s)
+        prefsEditor!!.commit()
+
+    }
+    fun getServerData():String{
+        return sharedPrefs!!.getString(KEY_SERVER,"").toString()
+    }
     fun setNameMonth(name:String){
         prefsEditor!!.putString(NAME_MONTH,name)
         prefsEditor!!.commit()
@@ -85,7 +142,6 @@ object Utils {
     fun setNameYear(name:String){
         prefsEditor!!.putString(NAME_YEAR,name)
         prefsEditor!!.commit()
-
     }
     fun getNameYear():String{
         return sharedPrefs!!.getString(NAME_YEAR,"").toString()
@@ -357,6 +413,15 @@ object Utils {
             Shader.TileMode.CLAMP
         )
         tv.paint.shader = myShader
+    }
+    fun setTextGradient_Menu_Black_Blue(tv:TextView){
+        val myShader: Shader = LinearGradient(
+            0f, 20f, 0f, 100f,
+            Color.parseColor("#E91E63"), Color.parseColor("#9C27B0"),
+            Shader.TileMode.CLAMP
+        )
+        tv.paint.shader = myShader
+
     }
     fun setStringImageDrawable(
         context: Context,

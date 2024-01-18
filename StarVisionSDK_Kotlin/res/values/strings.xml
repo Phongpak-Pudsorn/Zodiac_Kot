@@ -24,5 +24,7 @@
 	<string name="skip_in">Skip in</string>
 	<string name="get_it">GET IT</string>
 
+	<string name="text_no_net">Please check your internet connection.</string>
+
 
 </resources>

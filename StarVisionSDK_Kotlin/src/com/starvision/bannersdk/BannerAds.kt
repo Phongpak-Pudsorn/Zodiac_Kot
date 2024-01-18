@@ -41,33 +41,34 @@ class BannerAds @JvmOverloads constructor(
     }
 
     fun loadAds (strPage : String, strUUID : String){
-        Const.log(tagS,"loadAds")
+//        Const.log(tagS,"loadAds")
         try {
-            Const.log(tagS,"try")
-            Const.log(tagS,"strUUID : $strUUID")
+//            Const.log(tagS,"try")
+//            Const.log(tagS,"strUUID : $strUUID")
             val timeNow = dateFormat.format(System.currentTimeMillis())
             val timeData = dateFormat.parse((appPreferences.getPreferences(mContext,AppPreferences.KEY_PREFS_TIME_LOADS,"")).toString())
             val result : Long =  (dateFormat.parse(timeNow)!!.time - timeData!!.time)
-            Const.log(tagS, "TimeNow : $timeNow")
-            Const.log(tagS, "result : $result")
+//            Const.log(tagS, "TimeNow : $timeNow")
+//            Const.log(tagS, "result : $result")
             if(loadData.checkData == false){
-                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
+//                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
                 mBannerListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
 
             }else if (result > (10 * 60 * 1000)){
-                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
-                loadData.loadAdsData()
-                val newdataApi = appPreferences.getPreferences(mContext,AppPreferences.KEY_PREFS_JSON_DATA,"")
+//                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
+                loadData.loadAdsData(true)
+                val newdataApi = appPreferences.getPreferences(mContext,
+                    AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(newdataApi.toString(),strPage)
 
             }else{
-                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
+//                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
                 val dataApi = appPreferences.getPreferences(mContext,AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(dataApi.toString(),strPage)
             }
         }catch (e : Exception){
-            Const.log(tagS,"catch")
-            Const.log(tagS,"loadAds : catch")
+//            Const.log(tagS,"catch")
+//            Const.log(tagS,"loadAds : catch")
             mBannerListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
         }
     }
@@ -103,15 +104,15 @@ class BannerAds @JvmOverloads constructor(
 
                                 val dot = "."
                                 val arr = pageBanner.Multilink.split(dot).toTypedArray()
-                                Const.log(tagS,"Image Link arr1 : "+arr[1])
-                                Const.log(tagS,"Image Link arr2 : "+arr[2])
-                                Const.log(tagS,"Image Link arr3 : "+arr[3])
+//                                Const.log(tagS,"Image Link arr1 : "+arr[1])
+//                                Const.log(tagS,"Image Link arr2 : "+arr[2])
+//                                Const.log(tagS,"Image Link arr3 : "+arr[3])
 
                                 if(arr[3] == "gif"){
-                                    Const.log(tagS,"gif function")
+//                                    Const.log(tagS,"gif function")
                                     Glide.with(mContext).asGif().load(pageBanner.Multilink).into(bannerAds!!)
                                 }else {
-                                    Const.log(tagS,"jpeg function")
+//                                    Const.log(tagS,"jpeg function")
                                     Glide.with(mContext).load(pageBanner.Multilink)
                                         .into(bannerAds!!)
                                 }
@@ -144,7 +145,7 @@ class BannerAds @JvmOverloads constructor(
                             }
                             mBannerListener.onSuccess(dataRowPageBanner.toString())
                         }else{
-                            Const.log(tagS,"onOtherAds : Mobileadvertisingname : "+dataPage.Mobileadvertisingname)
+//                            Const.log(tagS,"onOtherAds : Mobileadvertisingname : "+dataPage.Mobileadvertisingname)
                             mBannerListener.onOtherAds(dataPage.Mobileadvertisingname)
                         }
                         break
@@ -152,7 +153,7 @@ class BannerAds @JvmOverloads constructor(
                 }
             }
         }catch (e : Exception){
-            Const.log(tagS,"setApiToView catch")
+//            Const.log(tagS,"setApiToView catch")
             mBannerListener.onFailed("Load Failed")
             mBannerListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
         }

@@ -19,6 +19,7 @@ import com.smileapp.zodiac.R
 import com.smileapp.zodiac.adapter.NewsAdapter
 import com.smileapp.zodiac.api.Api
 import com.smileapp.zodiac.api.ApiClient
+import com.smileapp.zodiac.api.Url
 import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentRecommendBinding
@@ -40,6 +41,10 @@ class ZodiacRecommend:Fragment() {
     val executor = Executors.newSingleThreadExecutor()
     val handler = Handler(Looper.getMainLooper())
     val binding: FragmentRecommendBinding by lazy { FragmentRecommendBinding.inflate(layoutInflater) }
+    private val runnable = Runnable {
+        newsAdapter?.notifyDataSetChanged()
+        binding.layoutFooter.visibility = View.GONE
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,7 +57,7 @@ class ZodiacRecommend:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(0)
-        bannerShow!!.getShowBannerSmall(10)
+        timer.start()
         nativeList = arrayListOf(NewsInfo.DataInfo("abcdef","","","","","","",false))
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
 
@@ -95,11 +100,22 @@ class ZodiacRecommend:Fragment() {
             }
         })
     }
+    val timer = object :CountDownTimer(3000,1000){
+        override fun onTick(p0: Long) {
+            Log.e("time", p0.toString())
+        }
 
-    fun initial(){
-            val service = ApiClient().getClient().create(Api::class.java)
+        override fun onFinish() {
+            bannerShow!!.getShowBannerSmall(10)
+        }
+
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun initial(){
+            val serviceB = ApiClient().getClient().create(Api::class.java)
                 newsList.clear()
-                service.getPullup().enqueue(object : Callback<NewsInfo> {
+                serviceB.getPullup().enqueue(object : Callback<NewsInfo> {
                     override fun onResponse(call: Call<NewsInfo>, response: Response<NewsInfo>) {
                         if (response.isSuccessful) {
                             val strData = Gson().toJson(response.body(), NewsInfo::class.java)
@@ -121,7 +137,13 @@ class ZodiacRecommend:Fragment() {
                                 }
                             }
                             Log.e("newsList pullup", newsList.toString())
-                            newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!)
+                            newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!,object :NewsAdapter.OnItemClickListener{
+                                override fun onClick(position: Int) {
+                                    Utils.setWebTitle(newsList[position].title)
+                                    Utils.setWebUrl(Url.newsUrl+newsList[position].artide_id)
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_zodiacRecommend_to_zodiacWebFragment)
+                                }
+                            })
                             binding.list.apply {
                                 adapter = newsAdapter
                                 layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
@@ -135,6 +157,7 @@ class ZodiacRecommend:Fragment() {
                 })
     }
     fun loadMore(){
+        binding.layoutFooter.visibility = View.VISIBLE
         val service = ApiClient().getClient().create(Api::class.java)
         service.getPulldown().enqueue(object : Callback<NewsInfo> {
             override fun onResponse(call: Call<NewsInfo>, response: Response<NewsInfo>) {
@@ -158,7 +181,10 @@ class ZodiacRecommend:Fragment() {
                         }
                     }
                     Log.e("newsList pulldown", newsList.toString())
-                    newsAdapter?.notifyDataSetChanged()
+                    handler.postDelayed(runnable,1000)
+
+//                    newsAdapter?.notifyDataSetChanged()
+
 //                    newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!)
 //                    binding.list.apply {
 //                        adapter = newsAdapter

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.smileapp.zodiac.R
@@ -12,10 +13,14 @@ import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.AdsNativeBinding
 import com.smileapp.zodiac.databinding.ItemListBinding
 import com.smileapp.zodiac.model.NewsInfo
+import com.smileapp.zodiac.utils.Utils
 
-class NewsAdapter(val mContext:Context,val list:ArrayList<NewsInfo.DataInfo>,private val bannerShow: BannerShow):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsAdapter(val mContext:Context,val list:ArrayList<NewsInfo.DataInfo>,private val bannerShow: BannerShow,val onItemClickListener: OnItemClickListener):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    interface OnItemClickListener{
+        fun onClick(position: Int)
+    }
     class ViewHolder(val newsBinding:ItemListBinding):RecyclerView.ViewHolder(newsBinding.root)
-    class NativeHolder(val nativebinding: AdsNativeBinding):RecyclerView.ViewHolder(nativebinding.root)
+    class NativeHolder(nativebinding: AdsNativeBinding):RecyclerView.ViewHolder(nativebinding.root)
     val VIEW_TYPE_ITEM = 1
     val VIEW_TYPE_NATIVE = 2
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,6 +53,7 @@ class NewsAdapter(val mContext:Context,val list:ArrayList<NewsInfo.DataInfo>,pri
                 holder.newsBinding.txtTotalView.text = list[position].total_view
                 Glide.with(mContext)
                     .load(list[position].image)
+                    .centerCrop()
                     .placeholder(R.mipmap.img_load_default)
                     .into(holder.newsBinding.imageView)
                 if (list[position].pin){
@@ -62,6 +68,9 @@ class NewsAdapter(val mContext:Context,val list:ArrayList<NewsInfo.DataInfo>,pri
                     holder.newsBinding.txtTotalView.setTextColor(Color.parseColor("#888484"))
                     holder.newsBinding.imgViewEye.setImageResource(R.mipmap.eyeview)
                     holder.newsBinding.linearLayout1.setBackgroundResource(R.drawable.click_item_news)
+                }
+                holder.newsBinding.root.setOnClickListener {
+                    onItemClickListener.onClick(position)
                 }
             }catch (e:Exception){
                 e.printStackTrace()

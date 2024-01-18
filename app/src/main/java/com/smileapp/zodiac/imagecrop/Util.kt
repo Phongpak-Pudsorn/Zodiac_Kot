@@ -8,11 +8,10 @@ import android.os.Handler
 import android.view.Surface
 import java.io.Closeable
 
-class Util {
+object Util {
 
     private val TAG = "db.Util"
 
-    private fun Util() {}
 
     /*
      * Compute the sample size as a function of minSideLength

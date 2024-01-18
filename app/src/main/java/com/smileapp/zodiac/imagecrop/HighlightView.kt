@@ -3,6 +3,7 @@ package com.smileapp.zodiac.imagecrop
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import com.smileapp.zodiac.R
 
 class HighlightView {
@@ -18,15 +19,17 @@ class HighlightView {
     val GROW_BOTTOM_EDGE = 1 shl 4
     val MOVE = 1 shl 5
 
-    fun HighlightView(ctx: View?) {
+    constructor(ctx: View?) {
         mContext = ctx
     }
 
+    constructor()
+
     private fun init() {
         val resources = mContext!!.resources
-        mResizeDrawableWidth = resources.getDrawable(R.mipmap.crop_camera_width)
-        mResizeDrawableHeight = resources.getDrawable(R.mipmap.crop_camera_height)
-        mResizeDrawableDiagonal = resources.getDrawable(R.mipmap.crop_indicator_autocrop)
+        mResizeDrawableWidth = ResourcesCompat.getDrawable(resources,R.mipmap.crop_camera_width,null)
+        mResizeDrawableHeight = ResourcesCompat.getDrawable(resources,R.mipmap.crop_camera_height,null)
+        mResizeDrawableDiagonal = ResourcesCompat.getDrawable(resources,R.mipmap.crop_indicator_autocrop,null)
     }
 
     var mIsFocused = false

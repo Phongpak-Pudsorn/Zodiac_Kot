@@ -29,8 +29,6 @@ class MainFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        bannerShow!!.getShowBannerSmall(0)
         setNoticeAds()
         if (Utils.getOpenProfile()){
             binding.userTab.drawer.open()
@@ -141,5 +139,15 @@ class MainFragment:Fragment() {
             }
         })
         binding.noticeAds.loadAds(Utils.UUID)
+    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        super.onStart()
+    }
+
+    override fun onResume() {
+        bannerShow!!.getShowBannerSmall(0)
+        super.onResume()
     }
 }

@@ -20,7 +20,7 @@ object ConstVisionInstallSDK {
     var strAppBannerID = ""
 
     fun getGoogleUrl(strImei: String): String {
-        Const.log("ConstVisionInstallSDK","strImei : $strImei")
+//        Const.log("ConstVisionInstallSDK","strImei : $strImei")
         return strUrlInstall
     }
 

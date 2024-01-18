@@ -59,10 +59,10 @@ class PopupAds (context: Context) {
     }
 
     fun loadAds (strPage : String?, strUUID : String?){
-        Const.log(tagS,"loadAds")
+//        Const.log(tagS,"loadAds")
         try {
             if (strPage != null) {
-                Const.log(tagS, "strUUID : $strUUID")
+//                Const.log(tagS, "strUUID : $strUUID")
                 val timeNow = dateFormat.format(System.currentTimeMillis())
                 val timeData = dateFormat.parse(
                     (appPreferences.getPreferences(
@@ -73,8 +73,8 @@ class PopupAds (context: Context) {
                 )
                 val result: Long = (dateFormat.parse(timeNow)!!.time - timeData!!.time)
                 if (result > (10 * 60 * 1000)) {
-                    Const.log(tagS, "loadAds : if = เกิน10นาที โหลด API ใหม่")
-                    loadData.loadAdsData()
+//                    Const.log(tagS, "loadAds : if = เกิน10นาที โหลด API ใหม่")
+                    loadData.loadAdsData(true)
                     val newDataApi = appPreferences.getPreferences(
                         mContext,
                         AppPreferences.KEY_PREFS_JSON_DATA,
@@ -83,11 +83,11 @@ class PopupAds (context: Context) {
                     setApiToView(newDataApi.toString(), strPage)
 
                 } else if (loadData.checkData == false) {
-                    Const.log(tagS, "loadAds : else if = โหลด Api ไม่ได้")
+//                    Const.log(tagS, "loadAds : else if = โหลด Api ไม่ได้")
                     mPopupListener.onFailed("Load Api Failed")
                     mPopupListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
                 } else {
-                    Const.log(tagS, "loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
+//                    Const.log(tagS, "loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
                     val dataApi = appPreferences.getPreferences(
                         mContext,
                         AppPreferences.KEY_PREFS_JSON_DATA,
@@ -96,13 +96,13 @@ class PopupAds (context: Context) {
                     setApiToView(dataApi.toString(), strPage)
                 }
             }else{
-                Const.log(tagS,"AppOpen : ")
+//                Const.log(tagS,"AppOpen : ")
                 mPopupListener.onFailed("Load Api Failed")
                 mPopupListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
             }
         }catch (e : Exception){
-            Const.log(tagS,"catch : "+loadData.checkData)
-            Const.log(tagS,"loadAds : catch = โหลด Api ไม่ได้")
+//            Const.log(tagS,"catch : "+loadData.checkData)
+//            Const.log(tagS,"loadAds : catch = โหลด Api ไม่ได้")
             mPopupListener.onFailed("Load Api Failed")
             mPopupListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
         }
@@ -121,23 +121,24 @@ class PopupAds (context: Context) {
                             || dataPage.Mobileadvertisingname == MobileAdvertising.ADVERTISING_WINNER) {
 
                             val dataRowPageBanner = adsModel.Datarowpageconfig[i].Datarowpagebanner
-                            for (a in dataRowPageBanner.indices){
-                                val randomBannerIndex = (Math.random() * dataRowPageBanner.size).toInt()
-                                val pageBanner = dataRowPageBanner[randomBannerIndex]
+                            for (a in 0..dataRowPageBanner.size){
+                                val pageBanner = dataRowPageBanner.random()
 
                                 if(pageBanner.Linktype == "image_big") {
-                                    Const.log(tagS,"Linktype : Image_BIG")
+//                                    Const.log(tagS,"Linktype : Image_BIG")
                                     setupPopupBig(pageBanner)
 
                                 }else if (pageBanner.Linktype == "vdo"){
-                                    Const.log(tagS,"Linktype : VDO")
+//                                    Const.log(tagS,"Linktype : VDO")
                                     setupVDOPopup(pageBanner)
 
                                 }
                                 timeSkip = pageBanner.Multilinktimeskip
                             }
+//                            Const.log(tagS,"onSuccess")
                             mPopupListener.onSuccess(dataRowPageBanner.toString())
                         }else{
+//                            Const.log(tagS,"Load Failed")
                             mPopupListener.onFailed("Load Api Failed")
                             mPopupListener.onOtherAds(dataPage.Mobileadvertisingname)
                         }
@@ -146,6 +147,7 @@ class PopupAds (context: Context) {
                 }
             }
         }catch (e : Exception){
+//            Const.log(tagS,"catch")
             mPopupListener.onFailed("Load Api Failed")
             mPopupListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
         }
@@ -154,7 +156,7 @@ class PopupAds (context: Context) {
     @SuppressLint("ClickableViewAccessibility")
     private fun setupPopupBig(listBanner: AdsModel.DatarowConfig.DatarowBanner) {
         try {
-            Const.log(tagS,"setupBig :")
+//            Const.log(tagS,"setupBig :")
             bPopupVdo = false
             val displayMetrics = mContext.resources.displayMetrics
             val popupWidth = displayMetrics.widthPixels
@@ -192,15 +194,15 @@ class PopupAds (context: Context) {
             if (listBanner.Multilink != "") {
                 val dot = "."
                 val arr = listBanner.Multilink.split(dot).toTypedArray()
-                Const.log(tagS,"Image Link arr1 : "+arr[1])
-                Const.log(tagS,"Image Link arr2 : "+arr[2])
-                Const.log(tagS,"Image Link arr3 : "+arr[3])
+//                Const.log(tagS,"Image Link arr1 : "+arr[1])
+//                Const.log(tagS,"Image Link arr2 : "+arr[2])
+//                Const.log(tagS,"Image Link arr3 : "+arr[3])
 
                 if(arr[3] == "gif"){
-                    Const.log(tagS,"gif function")
+//                    Const.log(tagS,"gif function")
                     Glide.with(mContext).asGif().load(listBanner.Multilink).into(bindingBig.mIvBannerPopup)
                 }else {
-                    Const.log(tagS,"jpeg function")
+//                    Const.log(tagS,"jpeg function")
                     Glide.with(mContext).load(listBanner.Multilink)
                         .into(bindingBig.mIvBannerPopup)
                 }
@@ -228,7 +230,7 @@ class PopupAds (context: Context) {
 
     private fun setupVDOPopup(pageBanner: AdsModel.DatarowConfig.DatarowBanner) {
         try {
-            Const.log(tagS,"setupVDO :")
+//            Const.log(tagS,"setupVDO :")
             bPopupVdo = true
             bSkip = false
             bindingVDO.mCardSkip.isEnabled = false
@@ -338,7 +340,7 @@ class PopupAds (context: Context) {
 
         }catch (e : Exception){
             e.printStackTrace()
-            Const.log(tagS,"setVDO : catch")
+//            Const.log(tagS,"setVDO : catch")
             mPopupListener.onFailed("Load Failed")
         }
     }
@@ -346,7 +348,7 @@ class PopupAds (context: Context) {
     fun show() {
         try {
             if (popupDialog != null) {
-                Const.log(tagS, "popupDialog : show")
+//                Const.log(tagS, "popupDialog : show")
                 popupDialog!!.show()
                 if (bPopupVdo && timeSkip != "") {
                     popupDialog!!.setOnKeyListener(object : DialogInterface.OnKeyListener {
@@ -362,38 +364,38 @@ class PopupAds (context: Context) {
                             return false
                         }
                     })
-                bPrepare = true
-                mTimerLoadVideo = object : CountDownTimer(timeSkip.toLong() * 1000, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        bSkip = false
-                    }
+                    bPrepare = true
+                    mTimerLoadVideo = object : CountDownTimer(timeSkip.toLong() * 1000, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            bSkip = false
+                        }
 
-                    override fun onFinish() {
-                        if (!bSkip) {
-                            bindingVDO.mTvSkip.isEnabled = true
-                            bindingVDO.mTvSkip.text = mContext.getString(R.string.skip)
-                            bindingVDO.mCardSkip.visibility = View.VISIBLE
-                        }
-                    }
-                }.start()
-                bindingVDO.mVideoView.setOnCompletionListener {
-                    bindingVDO.mBtClosePopUp.visibility = View.VISIBLE
-                    bindingVDO.mIvVdoPoster.visibility = View.VISIBLE
-                    bindingVDO.mCardSkip.visibility = View.GONE
-                    bindingVDO.mVideoView.visibility = View.GONE
-                    popupDialog!!.setOnKeyListener(object :DialogInterface.OnKeyListener {
-                        override fun onKey(dialog : DialogInterface,keyCode : Int,event : KeyEvent) : Boolean {
-                            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                mPopupListener.onClose()
-                                dialog.dismiss()
-                                return false
+                        override fun onFinish() {
+                            if (!bSkip) {
+                                bindingVDO.mTvSkip.isEnabled = true
+                                bindingVDO.mTvSkip.text = mContext.getString(R.string.skip)
+                                bindingVDO.mCardSkip.visibility = View.VISIBLE
                             }
-                            return true
                         }
-                    })
+                    }.start()
+                    bindingVDO.mVideoView.setOnCompletionListener {
+                        bindingVDO.mBtClosePopUp.visibility = View.VISIBLE
+                        bindingVDO.mIvVdoPoster.visibility = View.VISIBLE
+                        bindingVDO.mCardSkip.visibility = View.GONE
+                        bindingVDO.mVideoView.visibility = View.GONE
+                        popupDialog!!.setOnKeyListener(object :DialogInterface.OnKeyListener {
+                            override fun onKey(dialog : DialogInterface,keyCode : Int,event : KeyEvent) : Boolean {
+                                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                    mPopupListener.onClose()
+                                    dialog.dismiss()
+                                    return false
+                                }
+                                return true
+                            }
+                        })
+                    }
                 }
             }
-        }
         }catch (e : Exception){
             e.printStackTrace()
             mPopupListener.onFailed("Load Failed")
