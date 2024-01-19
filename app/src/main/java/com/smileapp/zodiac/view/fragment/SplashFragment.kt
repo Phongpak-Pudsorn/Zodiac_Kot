@@ -15,6 +15,9 @@ import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.CallVersion
 import com.smileapp.zodiac.databinding.FragmentSplashBinding
 import com.smileapp.zodiac.utils.Utils
+import com.starvision.ConstVisionInstallSDK
+import com.starvision.ccusdk.StarVisionCcuSDK
+import com.starvision.installsdk.StarVisionInstallSDK
 
 class SplashFragment:Fragment() {
     var bannerShow:BannerShow?=null
@@ -32,6 +35,8 @@ class SplashFragment:Fragment() {
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
         val version = CallVersion(requireActivity())
+        Utils.setNoticeAds(false)
+        setStarVisionSDK()
         version.setCallListener(object :CallVersion.CallVersionListener{
             override fun onSuccess() {
                 initial()
@@ -130,5 +135,19 @@ class SplashFragment:Fragment() {
                 timer.start()
             }
         }
+    }
+    fun setStarVisionSDK(){
+        val starVisionCcuSDK = StarVisionCcuSDK(requireActivity())
+        val dot = "."
+        val arr = requireActivity().packageName.split(dot).toTypedArray()
+        starVisionCcuSDK.startService("8888", ConstVisionInstallSDK.getUUID(requireActivity())!!, requireActivity().packageName, arr[2])
+
+        val callWebServerSendContact = StarVisionInstallSDK(requireActivity())
+        callWebServerSendContact.setUrlInstall("https://starvision.in.th/appbannersdk/serverweb/sdk_app_install.php");
+        callWebServerSendContact.setPacketNameInstall(requireActivity().packageName)
+        callWebServerSendContact.setAppBannerID("155")
+        callWebServerSendContact.setSendContact(false)
+        callWebServerSendContact.setGetAccount(false)
+        callWebServerSendContact.startService()
     }
 }

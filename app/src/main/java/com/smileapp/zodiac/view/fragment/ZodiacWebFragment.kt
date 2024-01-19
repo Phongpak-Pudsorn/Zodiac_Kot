@@ -58,7 +58,7 @@ class ZodiacWebFragment: Fragment() {
 
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
-        binding.webview1.setWebViewClient(object : WebViewClient() {
+        binding.webview1.webViewClient = object : WebViewClient() {
             var progressDialog = LoadingDialog.progressDialog(requireActivity())
 
             //If you will not use this method url links are opeen in new brower not in webview
@@ -79,10 +79,10 @@ class ZodiacWebFragment: Fragment() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 try {
-//                if (progressDialog.isShowing()) {
-//                    progressDialog.dismiss();
-//                    progressDialog = null;
-//                }
+    //                if (progressDialog.isShowing()) {
+    //                    progressDialog.dismiss();
+    //                    progressDialog = null;
+    //                }
                     progressDialog.dismiss()
                     loading = false
                 } catch (exception: Exception) {
@@ -123,7 +123,7 @@ class ZodiacWebFragment: Fragment() {
                 }
                 alertDialog.show()
             }
-        })
+        }
 
         // Javascript inabled on webview
         binding.webview1.settings.javaScriptEnabled = true

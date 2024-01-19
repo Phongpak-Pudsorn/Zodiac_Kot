@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.gson.Gson
@@ -25,6 +26,7 @@ import org.json.JSONException
 import java.util.concurrent.Executors
 
 class ProfileFragment:Fragment() {
+    var pressAble = true
     val TEMP_PHOTO_FILE_NAME = "Android/data/com.smileapp.zodiac/temp_photo.jpg"
     var bannerShow:BannerShow?=null
     var zodiacMain:ArrayList<ZodiacInfo.ZodiacData.MainData>?=null
@@ -78,6 +80,15 @@ class ProfileFragment:Fragment() {
                     .navigate(R.id.action_profileFragment_to_mainFragment)
             }
         }
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (pressAble) {
+                        pressAble = false
+                        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_mainFragment)
+                    }
+                }
+            })
         binding.SpinDate.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,

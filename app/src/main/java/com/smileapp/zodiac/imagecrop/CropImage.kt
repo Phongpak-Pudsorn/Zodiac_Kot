@@ -77,12 +77,15 @@ class CropImage:MonitoredActivity() {
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
+            Log.e(TAG,"extras != null")
             if (extras.getString(CIRCLE_CROP) != null) {
+                Log.e(TAG,"extras.getString(CIRCLE_CROP) != null")
                 mImageView!!.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 mCircleCrop = true
                 mAspectX = 1
                 mAspectY = 1
             }
+            Log.e(TAG,"extras.getString(CIRCLE_CROP) = null")
             mImagePath = extras.getString(IMAGE_PATH)
             mSaveUri = getImageUri(mImagePath)
             mBitmap = getBitmap(mImagePath)
@@ -102,10 +105,12 @@ class CropImage:MonitoredActivity() {
             mScaleUp = extras.getBoolean(SCALE_UP_IF_NEEDED, true)
         }
         if (mBitmap == null) {
+            Log.e(TAG,"mBitmap = null")
             Log.d(TAG, "finish!!!")
             finish()
             return
         }
+        Log.e(TAG,"mBitmap != null")
 
         // Make UI fullscreen.
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)

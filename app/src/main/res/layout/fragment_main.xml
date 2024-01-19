@@ -112,9 +112,6 @@
             android:id="@+id/noticeAds"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:visibility="gone">
         </com.starvision.bannersdk.NoticeAds>
 

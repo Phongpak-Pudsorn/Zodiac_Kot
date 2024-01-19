@@ -76,10 +76,13 @@ class EditProfileFragment: Fragment() {
             File(requireActivity().filesDir, TEMP_PHOTO_FILE_NAME)
         }
         if (mFileTemp!!.exists()) {
-            Log.e("mFileTemp onViewCreated", mFileTemp!!.path.toString())
+            Log.e("mFileTemp exist", mFileTemp!!.path.toString())
             myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
             binding.mImguser.setImageBitmap(myBitmap!!)
         }
+        Log.e("mFileTemp not exist", mFileTemp!!.path.toString())
+        Log.e("Environment",Environment.getExternalStorageDirectory().path)
+        Log.e("filesDir",requireActivity().filesDir.path)
         CallData()
         if (Utils.getGENDER()=="Man"){
             binding.rdMan.isChecked = true

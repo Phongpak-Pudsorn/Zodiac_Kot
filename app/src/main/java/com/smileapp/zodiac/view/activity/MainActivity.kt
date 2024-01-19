@@ -28,23 +28,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
         Utils.UUID = getUUID(this)
-        setStarVisionSDK()
         Utils.AppPreference(this)
         Utils.setAdvertisingIdClient(Utils.UUID)
-    }
-    fun setStarVisionSDK(){
-        val starVisionCcuSDK = StarVisionCcuSDK(this)
-        val dot = "."
-        val arr = packageName.split(dot).toTypedArray()
-        starVisionCcuSDK.startService("8888", ConstVisionInstallSDK.getUUID(this)!!, packageName, arr[2])
-
-        val callWebServerSendContact = StarVisionInstallSDK(this)
-        callWebServerSendContact.setUrlInstall("https://starvision.in.th/appbannersdk/serverweb/sdk_app_install.php");
-        callWebServerSendContact.setPacketNameInstall(getPackageName())
-        callWebServerSendContact.setAppBannerID("155")
-        callWebServerSendContact.setSendContact(false)
-        callWebServerSendContact.setGetAccount(false)
-        callWebServerSendContact.startService()
     }
     fun getUUID(context: Context):String{
         try {

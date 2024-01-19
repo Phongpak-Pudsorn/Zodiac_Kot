@@ -1,35 +1,61 @@
 package com.smileapp.zodiac.view.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.api.Url
 import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
+import com.smileapp.zodiac.commonclass.LoadingDialog
 import com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer
 import com.smileapp.zodiac.databinding.FragmentMainBinding
 import com.smileapp.zodiac.utils.Utils
 import com.starvision.bannersdk.NoticeAds
 
 class MainFragment:Fragment() {
+    var backAble = true
     var bannerShow:BannerShow?=null
+    val handler = Handler(Looper.getMainLooper())
     val binding:FragmentMainBinding by lazy { FragmentMainBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var progressDialog = LoadingDialog.progressDialog(requireActivity())
+        progressDialog.show()
         setNoticeAds()
+        setObject()
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (backAble) {
+                        backAble = false
+                        alertDialogExit()
+                    }
+                }
+            })
+        handler.postDelayed({ progressDialog.dismiss() },2000)
+    }
+    private fun setObject(){
         if (Utils.getOpenProfile()){
             binding.userTab.drawer.open()
             binding.userTab.handle.setImageResource(R.mipmap.ic_slide_open)
@@ -64,6 +90,8 @@ class MainFragment:Fragment() {
                 Utils.setOpenProfile(true)
                 binding.RlHead.visibility = View.VISIBLE
                 binding.userTab.handle.setImageResource(R.mipmap.ic_slide_open)
+                val animAlpha = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_top_to_bottom)
+                binding.userTab.drawer.startAnimation(animAlpha)
             }
         })
         binding.userTab.drawer.setOnDrawerCloseListener(object :MultiDirectionSlidingDrawer.OnDrawerCloseListener{
@@ -71,6 +99,8 @@ class MainFragment:Fragment() {
                 Utils.setOpenProfile(false)
                 binding.RlHead.visibility = View.GONE
                 binding.userTab.handle.setImageResource(R.mipmap.ic_slide_close)
+                val animAlpha = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_top_to_bottom)
+                binding.userTab.drawer.startAnimation(animAlpha)
             }
         })
         binding.imgSetting.setOnClickListener {
@@ -112,7 +142,7 @@ class MainFragment:Fragment() {
                 .navigate(R.id.action_mainFragment_to_zodiacRecommend)
         }
     }
-    fun setNoticeAds(){
+    private fun setNoticeAds(){
         binding.noticeAds.setNoticeAdsListener(object : NoticeAds.NoticeAdsListener{
             override fun onSuccess(strJson: String?) {
                 Log.e("noticeAds", "noticeAds onSuccessListener: strJson "+strJson)
@@ -139,6 +169,28 @@ class MainFragment:Fragment() {
             }
         })
         binding.noticeAds.loadAds(Utils.UUID)
+    }
+    fun alertDialogExit(){
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setMessage(getString(R.string.text_exit))
+        builder.setPositiveButton(getString(R.string.text_ok),object : DialogInterface.OnClickListener{
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                requireActivity().finish()
+            }
+        })
+        builder.setNeutralButton(getString(R.string.text_no),object : DialogInterface.OnClickListener{
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                backAble = true
+                p0?.dismiss()
+            }
+        })
+        builder.setCancelable(false)
+        builder.create()
+        val dialog = builder.show()
+        val tvMessage = dialog.findViewById<TextView>(android.R.id.message)
+        tvMessage.gravity = Gravity.CENTER
+        tvMessage.minHeight = 120
+        dialog.show()
     }
 
     override fun onStart() {

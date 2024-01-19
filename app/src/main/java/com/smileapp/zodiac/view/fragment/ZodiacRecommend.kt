@@ -55,9 +55,6 @@ class ZodiacRecommend:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        bannerShow!!.loadPopupBanner(0)
-        timer.start()
         nativeList = arrayListOf(NewsInfo.DataInfo("abcdef","","","","","","",false))
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
 
@@ -100,16 +97,6 @@ class ZodiacRecommend:Fragment() {
             }
         })
     }
-    val timer = object :CountDownTimer(3000,1000){
-        override fun onTick(p0: Long) {
-            Log.e("time", p0.toString())
-        }
-
-        override fun onFinish() {
-            bannerShow!!.getShowBannerSmall(10)
-        }
-
-    }
 
     @SuppressLint("SuspiciousIndentation")
     private fun initial(){
@@ -137,16 +124,16 @@ class ZodiacRecommend:Fragment() {
                                 }
                             }
                             Log.e("newsList pullup", newsList.toString())
-                            newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!,object :NewsAdapter.OnItemClickListener{
-                                override fun onClick(position: Int) {
-                                    Utils.setWebTitle(newsList[position].title)
-                                    Utils.setWebUrl(Url.newsUrl+newsList[position].artide_id)
-                                    Navigation.findNavController(requireView()).navigate(R.id.action_zodiacRecommend_to_zodiacWebFragment)
-                                }
-                            })
                             binding.list.apply {
-                                adapter = newsAdapter
+                                newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!,object :NewsAdapter.OnItemClickListener{
+                                    override fun onClick(position: Int) {
+                                        Utils.setWebTitle(newsList[position].title)
+                                        Utils.setWebUrl(Url.newsUrl+newsList[position].artide_id)
+                                        Navigation.findNavController(requireView()).navigate(R.id.action_zodiacRecommend_to_zodiacWebFragment)
+                                    }
+                                })
                                 layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
+                                adapter = newsAdapter
                             }
                         }
                     }
@@ -197,5 +184,16 @@ class ZodiacRecommend:Fragment() {
             }
         })
         isLoading = false
+    }
+
+    override fun onStart() {
+        bannerShow = BannerShow(requireActivity(), Utils.UUID,requireActivity().getString(R.string.KEY_ADMOB_Native))
+        super.onStart()
+    }
+
+    override fun onResume() {
+        bannerShow!!.loadPopupBanner(0)
+        bannerShow!!.getShowBannerSmall(10)
+        super.onResume()
     }
 }

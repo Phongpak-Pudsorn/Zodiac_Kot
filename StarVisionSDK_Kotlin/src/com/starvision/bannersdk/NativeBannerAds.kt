@@ -50,32 +50,32 @@ class NativeBannerAds @JvmOverloads constructor(
         mBannerAdsListener =  listener
     }
     fun loadAds(strPage : String, strUUID : String, sizeInt : Int){
-//        Const.log(tagS,"loadAds")
+        Const.log(tagS,"loadAds")
         try {
-//            Const.log(tagS,"try")
-//            Const.log(tagS,"strUUID : $strUUID")
+            Const.log(tagS,"try")
+            Const.log(tagS,"strUUID : $strUUID")
             val timeNow = dateFormat.format(System.currentTimeMillis())
             val timeData = dateFormat.parse((appPreferences.getPreferences(mContext,AppPreferences.KEY_PREFS_TIME_LOADS,"")).toString())
             val result : Long =  (dateFormat.parse(timeNow)!!.time - timeData!!.time)
             if(loadData.checkData == false){
-//                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
+                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
                 mBannerAdsListener.onOtherAds(MobileAdvertising.ADVERTISING_ADMOB)
 
             }else if (result > (10*  60*  1000)){
-//                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
+                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
                 loadData.loadAdsData(true)
                 val newdataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(newdataApi.toString(),strPage,sizeInt)
 
             }else{
-//                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
+                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
                 val dataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
                 val adsModel = Gson().fromJson(dataApi.toString(), AdsModel::class.java)
                 val dataRowPageConfig = adsModel.Datarowpageconfig
                 for (i in adsModel.Datarowpageconfig.indices) {
                     if (adsModel.Datarowpageconfig[i].Apppageno.toInt() == strPage.toInt()) {
                         if (dataRowPageConfig[i].Mobileadvertisingname == MobileAdvertising.ADVERTISING_CLOSE) {
-//                            Const.log(tagS, "loadAds : else = CLOSE")
+                            Const.log(tagS, "loadAds : else = CLOSE")
                             mBannerAdsListener.onFailed(MobileAdvertising.ADVERTISING_CLOSE)
                         } else {
                             setApiToView(dataApi.toString(), strPage, sizeInt)
@@ -90,8 +90,8 @@ class NativeBannerAds @JvmOverloads constructor(
 //                    setApiToView(dataApi.toString(),strPage,sizeInt)
             }
         }catch (e : Exception){
-//            Const.log(tagS,"catch")
-//            Const.log(tagS,"loadAds : catch")
+            Const.log(tagS,"catch")
+            Const.log(tagS,"loadAds : catch")
             val dataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
             val adsModel = Gson().fromJson(dataApi.toString(), AdsModel::class.java)
             for (i in adsModel.Datarowpageconfig.indices) {
@@ -164,13 +164,13 @@ class NativeBannerAds @JvmOverloads constructor(
         try {
             val adsModel = Gson().fromJson(dataApi, AdsModel::class.java)
             if(adsModel.Status == "True"){
-//                Const.log(tagS,"setApiToView")
+                Const.log(tagS,"setApiToView")
                 val dataRowPageConfig = adsModel.Datarowpageconfig
                 for (i in dataRowPageConfig.indices){
                     val dataPage = dataRowPageConfig[i]
-//                    Const.log(tagS, "setApiToView dataPage :$dataPage")
+                    Const.log(tagS, "setApiToView dataPage :$dataPage")
                     if(strPage == dataPage.Apppageno && dataPage.Apppageshow == "True"){
-//                        Const.log(tagS,"setApiToView True")
+                        Const.log(tagS,"setApiToView True")
                         if (dataPage.Mobileadvertisingname == MobileAdvertising.ADVERTISING_STARVISION
                             || dataPage.Mobileadvertisingname == MobileAdvertising.ADVERTISING_WINNER) {
 
@@ -181,9 +181,9 @@ class NativeBannerAds @JvmOverloads constructor(
 
                                 val dot = "."
                                 val arr = pageBanner.Multilink.split(dot).toTypedArray()
-//                                Const.log(tagS,"Image Link arr1 : "+arr[1])
-//                                Const.log(tagS,"Image Link arr2 : "+arr[2])
-//                                Const.log(tagS,"Image Link arr3 : "+arr[3])
+                                Const.log(tagS,"Image Link arr1 : "+arr[1])
+                                Const.log(tagS,"Image Link arr2 : "+arr[2])
+                                Const.log(tagS,"Image Link arr3 : "+arr[3])
 
                                 val displayMetrics = resources.displayMetrics
                                 val popupWidth = displayMetrics.widthPixels
@@ -274,10 +274,10 @@ class NativeBannerAds @JvmOverloads constructor(
                                         Glide.with(mContext).load(pageBanner.Appbannericonurl).into(bindingMedium.mIvAppIcon)
 
                                         if(arr[3] == "gif"){
-//                                            Const.log(tagS,"gif function")
+                                            Const.log(tagS,"gif function")
                                             Glide.with(mContext).asGif().load(pageBanner.Multilink).into(bindingMedium.mIvBanner)
                                         }else {
-//                                            Const.log(tagS,"jpeg function")
+                                            Const.log(tagS,"jpeg function")
                                             Glide.with(mContext).load(pageBanner.Multilink).into(bindingMedium.mIvBanner)
                                         }
 
