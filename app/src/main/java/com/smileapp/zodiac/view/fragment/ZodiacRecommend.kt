@@ -37,7 +37,7 @@ class ZodiacRecommend:Fragment() {
     var isLoading = false
     val pullup = "&pullup=false"
     val pulldown = "&pullup=true"
-    var bannerShow :BannerShow?=null
+    var bannerShow : BannerShow?=null
     val executor = Executors.newSingleThreadExecutor()
     val handler = Handler(Looper.getMainLooper())
     val binding: FragmentRecommendBinding by lazy { FragmentRecommendBinding.inflate(layoutInflater) }

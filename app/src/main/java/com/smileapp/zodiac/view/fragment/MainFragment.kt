@@ -112,34 +112,71 @@ class MainFragment:Fragment() {
                 .navigate(R.id.action_mainFragment_to_editProfileFragment)
         }
         binding.btnZodiac12.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_menuZodiacFragment)
+            binding.btnZodiac12.isClickable = false
+            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_mainFragment_to_menuZodiacFragment)
+                    binding.btnZodiac12.isClickable = true
+                }
+            })
         }
         binding.btnToDay.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
+            binding.btnToDay.isClickable = false
+            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
+                    binding.btnToDay.isClickable = true
+                }
+            })
         }
         binding.btnWeek.setOnClickListener {
             Utils.setWebTitle(getString(R.string.zodiac_week))
             Utils.setWebUrl(Url.weekUrl)
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+            binding.btnWeek.isClickable = false
+            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                    binding.btnWeek.isClickable = true
+                }
+            })
+
         }
         binding.btnMonth.setOnClickListener {
             Utils.setWebTitle(getString(R.string.zodiac_month))
             Utils.setWebUrl(Url.monthUrl)
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+            binding.btnMonth.isClickable = false
+            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                    binding.btnMonth.isClickable = true
+                }
+            })
         }
         binding.btnYear.setOnClickListener {
             Utils.setWebTitle(getString(R.string.zodiac_year))
             Utils.setWebUrl(Url.yearUrl)
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+            binding.btnYear.isClickable = false
+            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                    binding.btnYear.isClickable = true
+                }
+            })
         }
         binding.btnRecommend.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_zodiacRecommend)
+            binding.btnRecommend.isClickable = false
+            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_mainFragment_to_zodiacRecommend)
+                    binding.btnRecommend.isClickable = true
+                }
+            })
         }
     }
     private fun setNoticeAds(){
@@ -199,6 +236,7 @@ class MainFragment:Fragment() {
     }
 
     override fun onResume() {
+        bannerShow!!.loadPopupBanner(0)
         bannerShow!!.getShowBannerSmall(0)
         super.onResume()
     }

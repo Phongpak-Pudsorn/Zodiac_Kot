@@ -28,7 +28,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ZodiacTodayFragment:Fragment() {
-    var bannerShow:BannerShow?=null
+    var bannerShow: BannerShow?=null
     private var strDescription = ""
     private var strDescription_share = ""
     val binding:FragmentTodayBinding by lazy { FragmentTodayBinding.inflate(layoutInflater) }

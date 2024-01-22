@@ -1,7 +1,6 @@
 package com.smileapp.zodiac.view.fragment
 
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.http.SslError
@@ -25,7 +24,7 @@ import com.smileapp.zodiac.databinding.WebviewBinding
 import com.smileapp.zodiac.utils.Utils
 
 class ZodiacWebFragment: Fragment() {
-    var bannerShow:BannerShow?=null
+    var bannerShow: BannerShow?=null
     val binding: WebviewBinding by lazy { WebviewBinding.inflate(layoutInflater) }
     var strMessage = ""
     var loading = true

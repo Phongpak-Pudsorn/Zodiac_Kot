@@ -14,6 +14,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.VersionInfo;
 import com.google.android.gms.ads.appopen.AppOpenAd;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
@@ -22,7 +23,7 @@ import com.google.android.gms.ads.nativead.NativeAdOptions;
 import com.google.android.gms.ads.nativead.NativeAdView;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.smileapp.zodiac.R;
-import com.starvision.Const;
+import com.starvision.AppPreferences;
 import com.starvision.api.LoadData;
 import com.starvision.bannersdk.BannerAds;
 import com.starvision.bannersdk.MobileAdvertising;
@@ -48,20 +49,19 @@ public class BannerShow {
     }
 
     LoadData loadDatabanner;
+    AppPreferences appPreferences;
     public BannerShow(Activity activity, String strUUID) {
         loadDatabanner = new LoadData(activity);
-        loadDatabanner.loadAdsData(true);
+//        loadDatabanner.loadAdsData();
+        appPreferences = AppPreferences.INSTANCE;
+        if ((Boolean) appPreferences.getPreferences(activity,AppPreferences.KEY_CHECK_LOAD_ADS_API,true)){
+            loadDatabanner.loadAdsData(true);
+            appPreferences.getPreferences(activity,AppPreferences.KEY_CHECK_LOAD_ADS_API,false);
+        }
         this.strID = strUUID;
         this.activity = activity;
-        adRequest = new AdRequest.Builder()
-
-//                .addTestDevice("3DE0BAB737D5B1D162FB8523876B7638")
-//                .addTestDevice("B113D4E1A32002F9FFED1B6BA9745313")
-//                .addTestDevice("F0E1C4555B775E016C41254AF9698A8A")
-//                .addTestDevice("E85BBCF4EEBEEC6614520ACA99A22066")
-//                .addTestDevice("F22734974E29A11A332805766E133DE1")
-//                .addTestDevice("37833A3DAFF5E893599D3234AABAE7F3")//AAA
-                .build();
+            adRequest = new AdRequest.Builder()
+                    .build();
 //        List<String> testDeviceIds = Arrays.asList("E9152FC60BE0FCABA12CAA834C074312","4B0CA66D064D1D6C02924C14267C1998","CC55566542CF1D525880E2ECA81A3360",
 //                "A92CA39E8FF67563722008636F808F6A,313432522EB1A50E5CAAFA10B671EAE3");
 //        RequestConfiguration configuration =
@@ -76,39 +76,43 @@ public class BannerShow {
 
      //0 เต็มจอ 1 Appopen 2 VDO
     public void loadPopupBanner(int type) {
-        Const.INSTANCE.log(TAG, "loadPopupBanner");
+//        Const.INSTANCE.log(TAG, "loadPopupBanner");
         getShowPopupAdMob(type);
         popupAdstar = new PopupAds(activity);
 
         popupAdstar.setPopupAdsListener(new PopupAds.PopupAdsListener() {
             @Override
             public void onSuccess(@NonNull String strJson) {
-                Const.INSTANCE.log("json load", strJson);
+// Log the adapter patch version to 3 digits to represent the x.x.x.x versioning
+// used by adapters.
+//                Const.INSTANCE.log("json load", strJson);
                 popupAdstar.show();
             }
 
             @Override
             public void onFailed(@NonNull String strErrorMessage) {
-                Const.INSTANCE.log(TAG, "onFailed " + strErrorMessage);
-                if (popupAdMob != null && type ==0) {
-                    popupAdMob.show(activity);
-                }else if(popupVideoAdMob != null && type ==2){
-                    popupVideoAdMob.show(activity);
-                }else if (popupAdMobAppOpen!=null){
-                    popupAdMobAppOpen.show(activity);
-                }
-                else {
-                    if (mOnAdClosed != null && checkOnAdClosed == false) {
-                        Const.INSTANCE.log(TAG, "onFailed onClose");
-                        checkOnAdClosed = true;
-                        mOnAdClosed.onAdClosed();
-                    }
-                }
+// Log the adapter patch version to 3 digits to represent the x.x.x.x versioning
+// used by adapters.
+//                Const.INSTANCE.log(TAG, "onFailed " + strErrorMessage);
+//                if (popupAdMob != null && type ==0) {
+//                    popupAdMob.show(activity);
+////                }else if(popupVideoAdMob != null && type ==2){
+////                    popupVideoAdMob.show(activity);
+//                }else if (popupAdMobAppOpen!=null){
+//                    popupAdMobAppOpen.show(activity);
+//                }
+//                else {
+//                    if (mOnAdClosed != null && checkOnAdClosed == false) {
+//                        Const.INSTANCE.log(TAG, "onFailed onClose");
+//                        checkOnAdClosed = true;
+//                        mOnAdClosed.onAdClosed();
+//                    }
+//                }
             }
 
             @Override
             public void onClose() {
-                Const.INSTANCE.log(TAG, "popupAdstar onClose");
+//                Const.INSTANCE.log(TAG, "popupAdstar onClose");
                 if (mOnAdClosed != null && checkOnAdClosed == false) {
                     checkOnAdClosed = true;
                     mOnAdClosed.onAdClosed();
@@ -117,12 +121,12 @@ public class BannerShow {
 
             @Override
             public void onBannerClick(@NonNull String strJson) {
-                Const.INSTANCE.log(TAG, "onBannerClick");
+//                Const.INSTANCE.log(TAG, "onBannerClick");
             }
 
             @Override
             public void onOtherAds(@NonNull String strAdsvertisingName) {
-                Const.INSTANCE.log(TAG, "onOtherAds " + strAdsvertisingName);
+//                Const.INSTANCE.log(TAG, "onOtherAds " + strAdsvertisingName);
                 if (strAdsvertisingName.equals("admob") || strAdsvertisingName.equals("facebook")) {
                     if (popupAdMob != null && type == 0) {
                         popupAdMob.show(activity);
@@ -138,15 +142,15 @@ public class BannerShow {
                     }
                 } else {
                     if (mOnAdClosed != null && checkOnAdClosed == false) {
-                        Const.INSTANCE.log(TAG, "popupAdstar onClose");
+//                        Const.INSTANCE.log(TAG, "popupAdstar onClose");
                         checkOnAdClosed = true;
                         mOnAdClosed.onAdClosed();
                     }
                 }
             }
         });
-        Const.INSTANCE.log(TAG, "loadPopupBanner : popupAdMobAppOpen B: "+popupAdMobAppOpen);
-        Const.INSTANCE.log(TAG, "loadPopupBanner afeter push activity to PopupAds");
+//        Const.INSTANCE.log(TAG, "loadPopupBanner : popupAdMobAppOpen B: "+popupAdMobAppOpen);
+//        Const.INSTANCE.log(TAG, "loadPopupBanner after push activity to PopupAds");
 //        popupAdstar.loadAds(strPage, strID);
     }
 
@@ -162,20 +166,20 @@ public class BannerShow {
     public void getShowPopupAdMob(int type) {
 //        activity.getString(R.string.KEY_ADMOB_InterstitialBanner test ca-app-pub-3940256099942544/1033173712
         if (type == 0) {
-            Const.INSTANCE.log(TAG, "getShowPopupAdMob : type 0 ");
+//            Const.INSTANCE.log(TAG, "getShowPopupAdMob : type 0 ");
             InterstitialAd.load(activity, activity.getString(R.string.KEY_ADMOB_InterstitialBanner), adRequest, new InterstitialAdLoadCallback() {
                 @Override
                 public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                     // The mInterstitialAd reference will be null until
                     // an ad is loaded.
-                    Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
+//                    Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
                     popupAdMob = interstitialAd;
-                    Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
+//                    Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
                     popupAdMob.setFullScreenContentCallback(new FullScreenContentCallback() {
                         @Override
                         public void onAdDismissedFullScreenContent() {
                             // Called when fullscreen content is dismissed.
-                            Const.INSTANCE.log(TAG, "The ad was dismissed.");
+//                            Const.INSTANCE.log(TAG, "The ad was dismissed.");
                             if (mOnAdClosed != null && checkOnAdClosed == false) {
                                 checkOnAdClosed = true;
                                 mOnAdClosed.onAdClosed();
@@ -192,7 +196,7 @@ public class BannerShow {
                         @Override
                         public void onAdFailedToShowFullScreenContent(AdError adError) {
                             // Called when fullscreen content failed to show.
-                            Const.INSTANCE.log(TAG, "The ad failed to show.");
+//                            Const.INSTANCE.log(TAG, "The ad failed to show.");
                         }
 
                         @Override
@@ -201,7 +205,7 @@ public class BannerShow {
                             // Make sure to set your reference to null so you don't
                             // show it a second time.
                             popupAdMob = null;
-                            Const.INSTANCE.log(TAG, "The ad was shown.");
+//                            Const.INSTANCE.log(TAG, "The ad was shown.");
                         }
                     });
 //                    popupAdMob.show(activity);
@@ -226,18 +230,18 @@ public class BannerShow {
             });
         }
         else if(type == 1) {
-            Const.INSTANCE.log(TAG, "getShowPopupAdMob : type 1 ");
+//            Const.INSTANCE.log(TAG, "getShowPopupAdMob : type 1 ");
             AppOpenAd.load(activity, activity.getString(R.string.KEY_ADMOB_AppOpen), adRequest, AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, new AppOpenAd.AppOpenAdLoadCallback() {
                 @Override
                 public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                     // Handle the error
-                    Const.INSTANCE.log(TAG, "onAdFailedToLoad : "+loadAdError.getMessage());
+//                    Const.INSTANCE.log(TAG, "app open onAdFailedToLoad : "+loadAdError.getMessage());
                     popupAdMobAppOpen = null;
                     if (checkErrorPopup < 3) {
                         getShowPopupAdMob(type);
                     } else {
                         if (mOnAdClosed != null && checkOnAdClosed == false) {
-                            Const.INSTANCE.log("showPopupBanner", "popupAdMob onAdFailedToLoad : " + "errorCode" + " :");
+//                            Const.INSTANCE.log("showPopupBanner", "popupAdMob onAdFailedToLoad : " + "errorCode" + " :");
                             checkOnAdClosed = true;
                             mOnAdClosed.onAdClosed();
                         }
@@ -247,20 +251,20 @@ public class BannerShow {
 
                 @Override
                 public void onAdLoaded(@NonNull AppOpenAd appOpenAd) {
-                    Const.INSTANCE.log(TAG, "Ad was loaded.");
-                    Const.INSTANCE.log(TAG, "appOpenAd :"+appOpenAd);
+//                    Const.INSTANCE.log(TAG, "Ad was loaded.");
+//                    Const.INSTANCE.log(TAG, "appOpenAd :"+appOpenAd);
                     popupAdMobAppOpen = appOpenAd;
-                    Const.INSTANCE.log(TAG, "popupAdMobAppOpen :"+popupAdMobAppOpen);
+//                    Const.INSTANCE.log(TAG, "popupAdMobAppOpen :"+popupAdMobAppOpen);
                     popupAdMobAppOpen.setFullScreenContentCallback(new FullScreenContentCallback() {
                         @Override
                         public void onAdClicked() {
-                            Const.INSTANCE.log(TAG, "onAdClicked");
+//                            Const.INSTANCE.log(TAG, "onAdClicked");
                             super.onAdClicked();
                         }
 
                         @Override
                         public void onAdDismissedFullScreenContent() {
-                            Const.INSTANCE.log(TAG, "onAdDismissedFullScreenContent");
+//                            Const.INSTANCE.log(TAG, "onAdDismissedFullScreenContent");
                             if (mOnAdClosed != null && checkOnAdClosed == false) {
                                 checkOnAdClosed = true;
                                 mOnAdClosed.onAdClosed();
@@ -275,88 +279,88 @@ public class BannerShow {
 
                         @Override
                         public void onAdShowedFullScreenContent() {
-                            Const.INSTANCE.log(TAG, "onAdShowedFullScreenContent");
+//                            Const.INSTANCE.log(TAG, "onAdShowedFullScreenContent");
                             popupAdMobAppOpen = null;
                         }
                     });
                 }
             });
         }
-        else {
-                Const.INSTANCE.log(TAG, "getShowPopupAdMob : type 2 ");
-                InterstitialAd.load(activity, activity.getString(R.string.KEY_ADMOB_InterstitialBanner), adRequest, new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
-                        Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
-                        popupVideoAdMob = interstitialAd;
-                        Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
-                        popupVideoAdMob.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                // Called when fullscreen content is dismissed.
-                                Const.INSTANCE.log(TAG, "The ad was dismissed.");
-                                if (mOnAdClosed != null && checkOnAdClosed == false) {
-                                    checkOnAdClosed = true;
-                                    mOnAdClosed.onAdClosed();
-                                } else {
-                                    if (checkOnAdClosed == false) {
-                                        checkOnAdClosed = true;
-                                        mOnAdClosed.onAdClosed();
-                                    }
-                                }
-                                getShowPopupAdMob(type);
-                            }
-
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(AdError adError) {
-                                // Called when fullscreen content failed to show.
-                                Const.INSTANCE.log(TAG, "The ad failed to show.");
-                            }
-
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                // Called when fullscreen content is shown.
-                                // Make sure to set your reference to null so you don't
-                                // show it a second time.
-                                popupVideoAdMob = null;
-                                Const.INSTANCE.log(TAG, "The ad was shown.");
-                            }
-                        });
-//                    popupAdMob.show(activity);
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        // Const.INSTANCE.log(TAG, loadAdError.getMessage());
-                        popupVideoAdMob = null;
-                        if (checkErrorPopup < 3) {
-                            getShowPopupAdMob(type);
-                        } else {
-                            if (mOnAdClosed != null && checkOnAdClosed == false) {
-//                        Const.INSTANCE.log("showPopupBanner", "popupAdMob onAdFailedToLoad : " + errorCode + " :");
-                                checkOnAdClosed = true;
-                                mOnAdClosed.onAdClosed();
-                            }
-                        }
-                        checkErrorPopup++;
-                    }
-                });
-        }
+//        else {
+////                Const.INSTANCE.log(TAG, "getShowPopupAdMob : type 2 ");
+//                InterstitialAd.load(activity, activity.getString(R.string.admob_ad_unit_pop), adRequest, new InterstitialAdLoadCallback() {
+//                    @Override
+//                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+//                        // The mInterstitialAd reference will be null until
+//                        // an ad is loaded.
+////                        Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
+//                        popupVideoAdMob = interstitialAd;
+////                        Const.INSTANCE.log(TAG, "ad is loaded. :"+interstitialAd);
+//                        popupVideoAdMob.setFullScreenContentCallback(new FullScreenContentCallback() {
+//                            @Override
+//                            public void onAdDismissedFullScreenContent() {
+//                                // Called when fullscreen content is dismissed.
+////                                Const.INSTANCE.log(TAG, "The ad was dismissed.");
+//                                if (mOnAdClosed != null && checkOnAdClosed == false) {
+//                                    checkOnAdClosed = true;
+//                                    mOnAdClosed.onAdClosed();
+//                                } else {
+//                                    if (checkOnAdClosed == false) {
+//                                        checkOnAdClosed = true;
+//                                        mOnAdClosed.onAdClosed();
+//                                    }
+//                                }
+//                                getShowPopupAdMob(type);
+//                            }
+//
+//                            @Override
+//                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+//                                // Called when fullscreen content failed to show.
+////                                Const.INSTANCE.log(TAG, "The ad failed to show.");
+//                            }
+//
+//                            @Override
+//                            public void onAdShowedFullScreenContent() {
+//                                // Called when fullscreen content is shown.
+//                                // Make sure to set your reference to null so you don't
+//                                // show it a second time.
+//                                popupVideoAdMob = null;
+////                                Const.INSTANCE.log(TAG, "The ad was shown.");
+//                            }
+//                        });
+////                    popupAdMob.show(activity);
+//                    }
+//
+//                    @Override
+//                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+//                        // Handle the error
+//                        // Const.INSTANCE.log(TAG, loadAdError.getMessage());
+//                        popupVideoAdMob = null;
+//                        if (checkErrorPopup < 3) {
+//                            getShowPopupAdMob(type);
+//                        } else {
+//                            if (mOnAdClosed != null && checkOnAdClosed == false) {
+////                        Const.INSTANCE.log("showPopupBanner", "popupAdMob onAdFailedToLoad : " + errorCode + " :");
+//                                checkOnAdClosed = true;
+//                                mOnAdClosed.onAdClosed();
+//                            }
+//                        }
+//                        checkErrorPopup++;
+//                    }
+//                });
+//        }
     }
 
-    public static int numberShowPopup = 1;
+    public static int numberShowPopup = 3;
     public boolean starPopup = false;
 
     public void showPopupBanner(int intPage, onAdClosed onAdClosed) {
-        Const.INSTANCE.log("popupAdMob", ""+intPage);
+//        Const.INSTANCE.log("popupAdMob", ""+intPage);
         String strPage = intPage + "";
         checkOnAdClosed = false;
         mOnAdClosed = onAdClosed;
-        if (numberShowPopup >= 5) {
-            Const.INSTANCE.log("showPopupBanner", ">4");
+        if (numberShowPopup >=3) {
+//            Const.INSTANCE.log("showPopupBanner", ">4");
             if (!starPopup) {
                 starPopup = true;
                 popupAdstar.loadAds(String.valueOf(intPage),strID);
@@ -369,14 +373,14 @@ public class BannerShow {
             if (mOnAdClosed != null && checkOnAdClosed == false) {
                 checkOnAdClosed = true;
                 mOnAdClosed.onAdClosed();
-                Const.INSTANCE.log("showPopupBanner", "<4");
+//                Const.INSTANCE.log("showPopupBanner", "<4");
             }
         }
         numberShowPopup++;
     }
 
     public void showPopupBannerNow(int intPage, onAdClosed onAdClosed) {
-        Const.INSTANCE.log(TAG, "showPopupBannerNow");
+//        Const.INSTANCE.log(TAG, "showPopupBannerNow");
         String strPage = intPage + "";
         checkOnAdClosed = false;
         mOnAdClosed = onAdClosed;
@@ -405,25 +409,25 @@ public class BannerShow {
             public void onSuccess(String strJson) {
                 // TODO Auto-generated method stub
                 bannerAds.setVisibility(View.VISIBLE);
-                Const.INSTANCE.log("bannerAds", "onSuccess " +bannerAds.getVisibility());
+//                Const.INSTANCE.log("bannerAds", "onSuccess " +bannerAds.getVisibility());
             }
 
             @Override
             public void onFailed(String strErrorMessage) {
 
-                Const.INSTANCE.log("bannerAds", "onFailed " + strErrorMessage);
+//                Const.INSTANCE.log("bannerAds", "onFailed " + strErrorMessage);
                 bannerAds.setVisibility(View.GONE);
             }
 
             @Override
             public void onBannerClick(String strJson) {
 
-                Const.INSTANCE.log("bannerAds", "onBannerClick " + strJson);
+//                Const.INSTANCE.log("bannerAds", "onBannerClick " + strJson);
             }
 
             @Override
             public void onOtherAds(String strAdsvertisingName) {
-                Const.INSTANCE.log("bannerAds", "onOtherAds " + strAdsvertisingName);
+//                Const.INSTANCE.log("bannerAds", "onOtherAds " + strAdsvertisingName);
 //                if (strAdsvertisingName.equals(MobileAdvertising.INSTANCE.getADVERTISING_ADMOB()) || strAdsvertisingName.equals(MobileAdvertising.INSTANCE.getADVERTISING_FACEBOOK())) {
                 if (strAdsvertisingName.equals(MobileAdvertising.ADVERTISING_ADMOB) || strAdsvertisingName.equals(MobileAdvertising.ADVERTISING_FACEBOOK)) {
                     getShowBannerAdMob(activity);
@@ -450,7 +454,7 @@ public class BannerShow {
 
                 public void onAdFailedToLoad(int errorCode) {
                     adView.setVisibility(View.GONE);
-                    Const.INSTANCE.log("adView", "FailedToLoad:" + errorCode);
+//                    Const.INSTANCE.log("adView", "FailedToLoad:" + errorCode);
                 }
 
                 public void onAdClosed() {
@@ -501,15 +505,15 @@ public class BannerShow {
         nativeBannerAds.setBannerAdsListener(new NativeBannerAds.BannerAdsListener() {
             @Override
             public void onSuccess(@NonNull String strJson) {
-                Const.INSTANCE.log("nativeBannerAds", "onSuccess " + strJson);
+//                Const.INSTANCE.log("nativeBannerAds", "onSuccess " + strJson);
             }
 
             @Override
             public void onOtherAds(@NonNull String strAdsvertisingName) {
-                Const.INSTANCE.log("nativeBannerAds", "onOtherAds " + strAdsvertisingName);
+//                Const.INSTANCE.log("nativeBannerAds", "onOtherAds " + strAdsvertisingName);
 //                if (strAdsvertisingName.equals(MobileAdvertising.INSTANCE.getADVERTISING_ADMOB()) || strAdsvertisingName.equals(MobileAdvertising.INSTANCE.getADVERTISING_FACEBOOK())) {
                 if (strAdsvertisingName.equals(MobileAdvertising.ADVERTISING_ADMOB) || strAdsvertisingName.equals(MobileAdvertising.ADVERTISING_FACEBOOK)){
-                    Const.INSTANCE.log("nativeBannerAds", "onOtherAds IF" + strAdsvertisingName);
+//                    Const.INSTANCE.log("nativeBannerAds", "onOtherAds IF" + strAdsvertisingName);
                     nativeBannerAds.setVisibility(View.GONE);
                     getShowNativeAdMob(view);
                 }else {
@@ -561,7 +565,7 @@ public class BannerShow {
                     .withAdListener(new AdListener() {
                         @Override
                         public void onAdFailedToLoad(@NonNull LoadAdError adError) {
-                            Const.INSTANCE.log("getShowNativeAdMob","onAdFailedToLoad "+adError);
+//                            Const.INSTANCE.log("getShowNativeAdMob","onAdFailedToLoad "+adError);
                             // Handle the failure by logging, altering the UI, and so on.
                         }
                     })
@@ -572,7 +576,7 @@ public class BannerShow {
                     .build();
             adLoader.loadAd(adRequest);
         } catch (Exception e) {
-            Const.INSTANCE.log("getShowNativeAdMob","Exception "+e);
+//            Const.INSTANCE.log("getShowNativeAdMob","Exception "+e);
             nativeAdmobAds.setVisibility(View.GONE);
         }
     }
@@ -580,20 +584,20 @@ public class BannerShow {
     //custom view Native
     public void adViewNativeContent(NativeAd contentAd, NativeAdView adView) {
         adView.setHeadlineView(adView.findViewById(R.id.contentad_headline));
-        adView.setImageView(adView.findViewById(R.id.contentad_image));
+        adView.setMediaView(adView.findViewById(R.id.contentad_image));
         adView.setBodyView(adView.findViewById(R.id.contentad_body));
         adView.setCallToActionView(adView.findViewById(R.id.contentad_call_to_action));
 //        adView.setAdvertiserView(adView.findViewById(R.id.contentad_advertiser));
-       // adView.setIconView(adView.findViewById(R.id.contentad_logo));
+//        adView.setIconView(adView.findViewById(R.id.contentad_logo));
 
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getHeadline());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getBody());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getIcon());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getImages().size());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getCallToAction());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getAdvertiser());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getStarRating());
-            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getStore());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getHeadline());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getBody());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getIcon());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getImages().size());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getCallToAction());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getAdvertiser());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getStarRating());
+//            Const.INSTANCE.log("getShowNativeAdMob","onNativeAdLoaded "+contentAd.getStore());
 
 
         ((TextView) adView.getHeadlineView()).setText(contentAd.getHeadline());
@@ -603,7 +607,8 @@ public class BannerShow {
         List<NativeAd.Image> images = contentAd.getImages();
 
         if (images != null && images.size() > 0) {
-            ((ImageView) adView.getImageView()).setImageDrawable(images.get(0).getDrawable());
+            adView.getMediaView().setImageScaleType(ImageView.ScaleType.FIT_XY);
+            adView.getMediaView().setMediaContent(contentAd.getMediaContent());
         }
 
         NativeAd.Image logoImage = contentAd.getIcon();
@@ -664,7 +669,7 @@ public class BannerShow {
                         @Override
                         public void onAdFailedToLoad(@NonNull LoadAdError adError) {
                             nativeAdmobAds.setVisibility(View.GONE);
-                            Const.INSTANCE.log(TAG,"adError : "+adError);
+//                            Const.INSTANCE.log(TAG,"adError : "+adError);
 //                            Const.log("getShowNativeAdMob","onAdFailedToLoad ",adError.toString());
                             // Handle the failure by logging, altering the UI, and so on.
                         }

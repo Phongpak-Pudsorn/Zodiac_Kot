@@ -25,7 +25,7 @@ import java.io.File
 import java.io.OutputStream
 
 class ShareTodayFragment:Fragment() {
-    var bannerShow:BannerShow?=null
+    var bannerShow: BannerShow?=null
     val binding:FragmentShareTodayBinding by lazy { FragmentShareTodayBinding.inflate(layoutInflater) }
     var check = false
     override fun onCreateView(

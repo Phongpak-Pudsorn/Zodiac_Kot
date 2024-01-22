@@ -2,8 +2,6 @@ package com.smileapp.zodiac.view.fragment
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,13 +13,16 @@ import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.CallVersion
 import com.smileapp.zodiac.databinding.FragmentSplashBinding
 import com.smileapp.zodiac.utils.Utils
+import com.starvision.AppPreferences
 import com.starvision.ConstVisionInstallSDK
 import com.starvision.ccusdk.StarVisionCcuSDK
 import com.starvision.installsdk.StarVisionInstallSDK
 
 class SplashFragment:Fragment() {
-    var bannerShow:BannerShow?=null
+    var bannerShow: BannerShow?=null
     val binding:FragmentSplashBinding by lazy { FragmentSplashBinding.inflate(layoutInflater) }
+    var appPreferences : AppPreferences?=null
+    var firstInit = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +33,8 @@ class SplashFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appPreferences = AppPreferences
+        appPreferences?.setPreferences(requireActivity(), AppPreferences.KEY_CHECK_LOAD_ADS_API,true)
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
         val version = CallVersion(requireActivity())
@@ -52,88 +55,17 @@ class SplashFragment:Fragment() {
 
     }
     fun initial(){
-        val accept = Utils.getPrefer(requireActivity(), Utils.KEY_ACCEPT, false)
-        val firstOpen = Utils.getPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,false)
-        if (accept==false){
+        if(Utils.getPrefer(requireActivity(), Utils.KEY_ACCEPT, false)==false) {
             val policy = PolicyDialogFragment.newInstance()
-            policy.show(childFragmentManager,"SpinDialogFragment")
-            policy.setOnClickAdapterListener(object :PolicyDialogFragment.onClickAdapterListener{
+            policy.show(childFragmentManager, "PolicyDialogFragment")
+            policy.setOnClickAdapterListener(object : PolicyDialogFragment.onClickAdapterListener {
                 override fun onClick(i: Boolean) {
                     Utils.setPrefer(requireActivity(),Utils.KEY_ACCEPT,i)
-                    if (firstOpen==false){
-                        Log.e("accept and first", "$accept $firstOpen")
-                        val timer = object : CountDownTimer(3000, 1000) {
-                            override fun onTick(p0: Long) {
-                                Log.e("time", p0.toString())
-                            }
-                            override fun onFinish() {
-                                bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
-                                    override fun onAdClosed() {
-                                        Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
-                                        Navigation.findNavController(requireView())
-                                            .navigate(R.id.action_splashFragment_to_profileFragment)
-                                    }
-                                })
-                            }
-                        }
-                        timer.start()
-                    }else{
-                        Log.e("accept and first", "$accept $firstOpen")
-                        val timer = object : CountDownTimer(3000, 1000) {
-                            override fun onTick(p0: Long) {
-                                Log.e("time", p0.toString())
-                            }
-                            override fun onFinish() {
-                                bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
-                                    override fun onAdClosed() {
-                                        Navigation.findNavController(requireView())
-                                            .navigate(R.id.action_splashFragment_to_mainFragment)
-                                    }
-                                })
-                            }
-
-                        }
-                        timer.start()
-                    }
+                    timer.start()
                 }
             })
-
         }else{
-            if (firstOpen==false){
-                Log.e("accept and first", "$accept $firstOpen")
-                val timer = object : CountDownTimer(3000, 1000) {
-                    override fun onTick(p0: Long) {
-                        Log.e("time", p0.toString())
-                    }
-                    override fun onFinish() {
-                        bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
-                            override fun onAdClosed() {
-                                Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
-                                Navigation.findNavController(requireView())
-                                    .navigate(R.id.action_splashFragment_to_profileFragment)
-                            }
-                        })
-                    }
-                }
-                timer.start()
-            }else{
-                Log.e("accept and first", "$accept $firstOpen")
-                val timer = object : CountDownTimer(3000, 1000) {
-                    override fun onTick(p0: Long) {
-                        Log.e("time", p0.toString())
-                    }
-                    override fun onFinish() {
-                        bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
-                            override fun onAdClosed() {
-                                Navigation.findNavController(requireView())
-                                    .navigate(R.id.action_splashFragment_to_mainFragment)
-                            }
-                        })
-                    }
-
-                }
-                timer.start()
-            }
+            timer.start()
         }
     }
     fun setStarVisionSDK(){
@@ -149,5 +81,42 @@ class SplashFragment:Fragment() {
         callWebServerSendContact.setSendContact(false)
         callWebServerSendContact.setGetAccount(false)
         callWebServerSendContact.startService()
+    }
+    val timer = object : CountDownTimer(5000, 1000) {
+        override fun onTick(p0: Long) {
+            Log.e("time", p0.toString())
+        }
+        override fun onFinish() {
+            bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{
+                override fun onAdClosed() {
+                    if (Utils.getPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,false)==false){
+                        Utils.setPrefer(requireActivity(),Utils.KEY_FIRST_OPEN,true)
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_splashFragment_to_profileFragment)
+                    }else {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_splashFragment_to_mainFragment)
+                    }
+                }
+            })
+        }
+
+    }
+
+    override fun onPause() {
+        firstInit = true
+        if(Utils.getPrefer(requireActivity(), Utils.KEY_ACCEPT, false)==true){
+            timer.cancel()
+        }
+        super.onPause()
+    }
+
+    override fun onResume() {
+        if (firstInit) {
+            if (Utils.getPrefer(requireActivity(), Utils.KEY_ACCEPT, false) == true) {
+                timer.start()
+            }
+        }
+        super.onResume()
     }
 }

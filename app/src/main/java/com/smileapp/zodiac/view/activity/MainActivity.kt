@@ -18,7 +18,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = Runnable {
-        Log.e("Run", "close app")
+        Log.e("main", "close app")
         this.recreate()
         finish()
     }

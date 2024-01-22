@@ -20,7 +20,7 @@ import com.smileapp.zodiac.utils.Utils
 import com.starvision.setting.SettingSDK
 
 class SettingFragment:Fragment() {
-    var bannerShow:BannerShow?=null
+    var bannerShow: BannerShow?=null
     val binding:FragmentSettingBinding by lazy { FragmentSettingBinding.inflate(layoutInflater) }
     override fun onCreateView(
         inflater: LayoutInflater,
