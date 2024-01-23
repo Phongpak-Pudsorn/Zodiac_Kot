@@ -2,6 +2,7 @@ package com.smileapp.zodiac.view.fragment
 
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,6 +15,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
@@ -25,6 +28,18 @@ import java.io.File
 import java.io.OutputStream
 
 class ShareFragment:Fragment() {
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            shareImageView()
+//            Log.e("requestPermissionLauncher","if")
+            // FCM SDK (and your app) can post notifications.
+        } else {
+//            Log.e("requestPermissionLauncher","else")
+            // TODO: Inform user that that your app will not show notifications.
+        }
+    }
     var bannerShow: BannerShow?=null
     val binding:FragmentShareBinding by lazy { FragmentShareBinding.inflate(layoutInflater) }
     var check = false
@@ -58,7 +73,7 @@ class ShareFragment:Fragment() {
         binding.btnShare.setOnClickListener {
             if (!check){
                 check = true
-                shareImageView()
+                askSharePermission()
             }
 
         }
@@ -71,6 +86,50 @@ class ShareFragment:Fragment() {
         share.type = "image/jpeg"
         share.putExtra(Intent.EXTRA_TEXT,getString(R.string.text_share_hashtag))
         startActivity(Intent.createChooser(share,"Share Image"))
+    }
+    private fun askSharePermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.READ_MEDIA_IMAGES) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                shareImageView()
+                // FCM SDK (and your app) can post notifications.
+//            Log.e("checkSelfPermission","True")
+            } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.READ_MEDIA_IMAGES)) {
+                requestPermissionLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+//            Log.e("checkSelfPermission","else if")
+            } else {
+                // Directly ask for the permission
+//            Log.e("checkSelfPermission","else")
+                requestPermissionLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
+            }
+        }else{
+            if (ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                shareImageView()
+                // FCM SDK (and your app) can post notifications.
+//            Log.e("checkSelfPermission","True")
+            } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+//            Log.e("checkSelfPermission","else if")
+            } else {
+                // Directly ask for the permission
+//            Log.e("checkSelfPermission","else")
+                requestPermissionLauncher.launch(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+
+        }
+        check = false
     }
     private fun insertImage():Uri{
         binding.LiCropShare.visibility = View.VISIBLE

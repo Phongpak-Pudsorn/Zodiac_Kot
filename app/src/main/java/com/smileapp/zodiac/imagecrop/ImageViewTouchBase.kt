@@ -267,8 +267,8 @@ abstract class ImageViewTouchBase : AppCompatImageView{
         if (mBitmapDisplayed.getBitmap() == null) {
             return 1f
         }
-        val fw = mBitmapDisplayed.getWidth() as Float / mThisWidth.toFloat()
-        val fh: Float = mBitmapDisplayed.getHeight() as Float / mThisHeight.toFloat()
+        val fw = mBitmapDisplayed.getWidth().toFloat() / mThisWidth.toFloat()
+        val fh: Float = mBitmapDisplayed.getHeight().toFloat() / mThisHeight.toFloat()
         return Math.max(fw, fh) * 4
     }
 

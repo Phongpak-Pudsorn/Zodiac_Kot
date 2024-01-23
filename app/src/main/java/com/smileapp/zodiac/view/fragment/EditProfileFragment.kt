@@ -45,9 +45,12 @@ class EditProfileFragment: Fragment() {
     var photoFile : File?=null
     var imgUri : Uri?=null
     lateinit var currentPhotoPath: String
-    val TEMP_PHOTO_FILE_NAME = "Android/data/com.smileapp.zodiac/temp_photo.jpg"
+    val TEMP_PHOTO_FILE_NAME = "temp_photo.jpg"
+    val USER_PHOTO_FILE_NAME = "user_photo.jpg"
     var myBitmap: Bitmap? = null
+    var saveBitmap : Bitmap? = null
     private var mFileTemp: File? = null
+    private var mFileSave: File? = null
     var bannerShow:BannerShow?=null
     var zodiacMain:ArrayList<ZodiacInfo.ZodiacData.MainData>?=null
     val executor = Executors.newSingleThreadExecutor()
@@ -69,20 +72,13 @@ class EditProfileFragment: Fragment() {
         Utils.setTextGradient_Blue(binding.TvZodiac)
         Utils.setTextGradient_Blue(binding.TvName)
         Utils.setTextGradient_Blue(binding.TvGender)
-        val state = Environment.getExternalStorageState()
-        mFileTemp = if (Environment.MEDIA_MOUNTED == state) {
-            File(Environment.getExternalStorageDirectory(), TEMP_PHOTO_FILE_NAME)
-        } else {
-            File(requireActivity().filesDir, TEMP_PHOTO_FILE_NAME)
+        val path = requireActivity().getExternalFilesDir(null)
+        mFileTemp = File(path,TEMP_PHOTO_FILE_NAME)
+        mFileSave = File(path,USER_PHOTO_FILE_NAME)
+        if (mFileSave!!.exists()) {
+            val myBitmap = BitmapFactory.decodeFile(mFileSave!!.path)
+            binding.mImguser.setImageBitmap(myBitmap)
         }
-        if (mFileTemp!!.exists()) {
-            Log.e("mFileTemp exist", mFileTemp!!.path.toString())
-            myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
-            binding.mImguser.setImageBitmap(myBitmap!!)
-        }
-        Log.e("mFileTemp not exist", mFileTemp!!.path.toString())
-        Log.e("Environment",Environment.getExternalStorageDirectory().path)
-        Log.e("filesDir",requireActivity().filesDir.path)
         CallData()
         if (Utils.getGENDER()=="Man"){
             binding.rdMan.isChecked = true
@@ -97,6 +93,13 @@ class EditProfileFragment: Fragment() {
             myBitmap!!.recycle()
         }
         binding.btnSave.setOnClickListener {
+            if (saveBitmap!=null){
+                mFileSave = File(path,USER_PHOTO_FILE_NAME)
+                val fOut = FileOutputStream(mFileSave)
+                saveBitmap!!.compress(Bitmap.CompressFormat.JPEG,100,fOut)
+                fOut.flush()
+                fOut.close()
+            }
             Utils.setNameUser(binding.mEdittext.text.toString())
             val gender = binding.rdGender.checkedRadioButtonId
             if (Utils.getNameUser()==""){
@@ -170,15 +173,15 @@ class EditProfileFragment: Fragment() {
     private fun takePicture(){
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try{
-            var mImageCaptureUri: Uri?=null
+            var mImageCaptureUri: Uri?
             val state = Environment.getExternalStorageState()
-            if (Environment.MEDIA_MOUNTED == state){
+            mImageCaptureUri = if (Environment.MEDIA_MOUNTED == state){
                 Log.e("takePicture","if")
                 Log.e("mFileTemp takePicture", mFileTemp!!.path.toString())
-                mImageCaptureUri = FileProvider.getUriForFile(requireActivity(),"com.smileapp.zodiac.provider", mFileTemp!!)
+                FileProvider.getUriForFile(requireActivity(),"com.smileapp.zodiac.provider", mFileTemp!!)
             }else{
                 Log.e("takePicture","else")
-                mImageCaptureUri = InternalStorageContentProvider().CONTENT_URI
+                InternalStorageContentProvider().CONTENT_URI
             }
             intent.putExtra(MediaStore.EXTRA_OUTPUT,mImageCaptureUri)
 
@@ -214,10 +217,12 @@ class EditProfileFragment: Fragment() {
     private val startCropResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: androidx.activity.result.ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK){
             val path = result.data?.getStringExtra(CropImage().IMAGE_PATH)
+            Log.e("image bitmap",CropImage().IMAGE_PATH)
             if (path == null) {
                 Log.e("path","null")
             }
             val myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
+            saveBitmap = myBitmap
             binding.mImguser.setImageBitmap(myBitmap)
         }
 
@@ -245,57 +250,6 @@ class EditProfileFragment: Fragment() {
         }
 
     }
-//    private val startEditResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: androidx.activity.result.ActivityResult ->
-//        if (result.resultCode != Activity.RESULT_OK){
-////            Log.e("result","result_ok")
-//            return@registerForActivityResult
-//        }else{
-//            val i =
-//            when(i){
-//                -> REQUEST_CODE_TAKE_PICTURE{
-//
-//                }
-//            }
-//        }
-//    }
-private fun createImageFile(): File {
-    // Create an image file name
-    val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-    val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    return File.createTempFile(
-        "JPEG_${timeStamp}_", /* prefix */
-        ".jpg", /* suffix */
-        storageDir/* directory */
-    ).apply {
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = absolutePath
-    }
-}
-private fun dispatchTakePictureIntent() {
-    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-    // Create the File where the photo should go
-    photoFile = createImageFile()
-//        Log.e("file","created")
-
-    // Continue only if the File was successfully created
-    if(photoFile != null){
-        val photoURI: Uri = FileProvider.getUriForFile(
-            requireActivity(),
-            "com.smileapp.zodiac.provider", // Your package
-            photoFile!!
-        )
-//            Log.e("photoURI","${photoURI}")
-        imgUri = photoURI
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri)
-        startTakeResult.launch(takePictureIntent)
-    }
-
-//        if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
-//            // Start the image capture intent to take photo
-//            startForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-//        }
-
-}
 
     fun CallData(){
         executor.execute {

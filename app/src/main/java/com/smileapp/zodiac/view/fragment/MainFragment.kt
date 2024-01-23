@@ -2,6 +2,9 @@ package com.smileapp.zodiac.view.fragment
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,20 +15,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.api.Url
-import com.smileapp.zodiac.commonclass.BannerShow
-import com.smileapp.zodiac.commonclass.Font
-import com.smileapp.zodiac.commonclass.LoadingDialog
-import com.smileapp.zodiac.commonclass.MultiDirectionSlidingDrawer
+import com.smileapp.zodiac.commonclass.*
 import com.smileapp.zodiac.databinding.FragmentMainBinding
 import com.smileapp.zodiac.utils.Utils
 import com.starvision.bannersdk.NoticeAds
+import java.io.File
 
 class MainFragment:Fragment() {
+    // Declare the launcher at the top of your Activity/Fragment:
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+//            Log.e("requestPermissionLauncher","if")
+            // FCM SDK (and your app) can post notifications.
+        } else {
+//            Log.e("requestPermissionLauncher","else")
+            // TODO: Inform user that that your app will not show notifications.
+        }
+    }
+    val imgUserFile = "user_photo.jpg"
     var backAble = true
     var bannerShow:BannerShow?=null
     val handler = Handler(Looper.getMainLooper())
@@ -53,7 +70,9 @@ class MainFragment:Fragment() {
                     }
                 }
             })
-        handler.postDelayed({ progressDialog.dismiss() },2000)
+        handler.postDelayed({
+            progressDialog.dismiss()
+            askNotificationPermission() },2000)
     }
     private fun setObject(){
         if (Utils.getOpenProfile()){
@@ -122,61 +141,80 @@ class MainFragment:Fragment() {
             })
         }
         binding.btnToDay.setOnClickListener {
-            binding.btnToDay.isClickable = false
-            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                override fun onAdClosed() {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
-                    binding.btnToDay.isClickable = true
-                }
-            })
+            if (ChkInternet(requireActivity()).isOnline){
+                binding.btnToDay.isClickable = false
+                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                    override fun onAdClosed() {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
+                        binding.btnToDay.isClickable = true
+                    }
+                })
+            }else{
+                Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnWeek.setOnClickListener {
             Utils.setWebTitle(getString(R.string.zodiac_week))
             Utils.setWebUrl(Url.weekUrl)
-            binding.btnWeek.isClickable = false
-            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                override fun onAdClosed() {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
-                    binding.btnWeek.isClickable = true
-                }
-            })
-
+            if (ChkInternet(requireActivity()).isOnline){
+                binding.btnWeek.isClickable = false
+                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                    override fun onAdClosed() {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                        binding.btnWeek.isClickable = true
+                    }
+                })
+            }else{
+                Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnMonth.setOnClickListener {
             Utils.setWebTitle(getString(R.string.zodiac_month))
             Utils.setWebUrl(Url.monthUrl)
-            binding.btnMonth.isClickable = false
-            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                override fun onAdClosed() {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
-                    binding.btnMonth.isClickable = true
-                }
-            })
+            if (ChkInternet(requireActivity()).isOnline){
+                binding.btnMonth.isClickable = false
+                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                    override fun onAdClosed() {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                        binding.btnMonth.isClickable = true
+                    }
+                })
+            }else{
+                Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnYear.setOnClickListener {
             Utils.setWebTitle(getString(R.string.zodiac_year))
             Utils.setWebUrl(Url.yearUrl)
-            binding.btnYear.isClickable = false
-            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                override fun onAdClosed() {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
-                    binding.btnYear.isClickable = true
-                }
-            })
+            if (ChkInternet(requireActivity()).isOnline){
+                binding.btnYear.isClickable = false
+                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                    override fun onAdClosed() {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                        binding.btnYear.isClickable = true
+                    }
+                })
+            }else{
+                Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnRecommend.setOnClickListener {
-            binding.btnRecommend.isClickable = false
-            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                override fun onAdClosed() {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_mainFragment_to_zodiacRecommend)
-                    binding.btnRecommend.isClickable = true
-                }
-            })
+            if (ChkInternet(requireActivity()).isOnline){
+                binding.btnRecommend.isClickable = false
+                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
+                    override fun onAdClosed() {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_mainFragment_to_zodiacRecommend)
+                        binding.btnRecommend.isClickable = true
+                    }
+                })
+            }else{
+                Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
+            }
         }
     }
     private fun setNoticeAds(){
@@ -206,6 +244,27 @@ class MainFragment:Fragment() {
             }
         })
         binding.noticeAds.loadAds(Utils.UUID)
+    }
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // FCM SDK (and your app) can post notifications.
+//            Log.e("checkSelfPermission","True")
+            } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+//            Log.e("checkSelfPermission","else if")
+            } else {
+                // Directly ask for the permission
+//            Log.e("checkSelfPermission","else")
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
     fun alertDialogExit(){
         val builder = AlertDialog.Builder(requireActivity())
@@ -238,6 +297,17 @@ class MainFragment:Fragment() {
     override fun onResume() {
         bannerShow!!.loadPopupBanner(0)
         bannerShow!!.getShowBannerSmall(0)
+        try {
+            val path = requireActivity().getExternalFilesDir(null)
+            val mFileTemp = File(path,imgUserFile)
+            if (mFileTemp.exists()) {
+                val myBitmap = BitmapFactory.decodeFile(mFileTemp.path)
+                binding.userTab.mImguser.setImageBitmap(myBitmap)
+            }
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         super.onResume()
     }
 }

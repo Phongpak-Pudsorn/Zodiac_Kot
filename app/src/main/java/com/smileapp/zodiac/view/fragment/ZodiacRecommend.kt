@@ -45,6 +45,9 @@ class ZodiacRecommend:Fragment() {
         newsAdapter?.notifyDataSetChanged()
         binding.layoutFooter.visibility = View.GONE
     }
+    init {
+        initial()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,7 +65,6 @@ class ZodiacRecommend:Fragment() {
             Navigation.findNavController(requireView())
                 .navigateUp()
         }
-        initial()
         binding.swipeRefreshLayout.setColorSchemeColors(
             ContextCompat.getColor(requireActivity(),R.color.google_blue),
             ContextCompat.getColor(requireActivity(),R.color.google_green),

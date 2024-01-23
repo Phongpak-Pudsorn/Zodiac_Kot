@@ -4,10 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.BannerShow
+import com.smileapp.zodiac.commonclass.ChkInternet
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.AdsNativeBinding
 import com.smileapp.zodiac.databinding.ItemListBinding
@@ -75,7 +77,11 @@ class NewsAdapter(val mContext:Context, val list:ArrayList<NewsInfo.DataInfo>, p
                     holder.newsBinding.linearLayout1.setBackgroundResource(R.drawable.click_item_news)
                 }
                 holder.newsBinding.root.setOnClickListener {
-                    onItemClickListener.onClick(position)
+                    if (ChkInternet(mContext).isOnline) {
+                        onItemClickListener.onClick(position)
+                    }else{
+                        Toast.makeText(mContext,mContext.getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }catch (e:Exception){
                 e.printStackTrace()

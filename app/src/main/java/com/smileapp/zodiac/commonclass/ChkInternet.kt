@@ -18,23 +18,21 @@ class ChkInternet(mContext: Context) {
         chkConnection = mContext as Activity
     }
 
-    fun chkConnectionStatus() {
-        val connMgr =
-            chkConnection.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-        val mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-        statusConnectionInternet = if (wifi!!.isAvailable) {
-            //Toast.makeText(this, "Wifi" , Toast.LENGTH_LONG).show();
-            true
-        } else mobile!!.isAvailable
-    }
+//    fun chkConnectionStatus() {
+//        val connMgr =
+//            chkConnection.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+//        val mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+//        statusConnectionInternet = if (wifi!!.isAvailable) {
+//            //Toast.makeText(this, "Wifi" , Toast.LENGTH_LONG).show();
+//            true
+//        } else mobile!!.isAvailable
+//    }
 
-    //	public String getStaticIPAddress(){
     val isOnline: Boolean
         get() {
-            var result = false
-            val cm = chkConnection.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val connectivityManager =mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val result: Boolean
+            val connectivityManager =chkConnection.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkCapabilities = connectivityManager.activeNetwork ?: return false
             val actNw =
                 connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
@@ -44,6 +42,7 @@ class ChkInternet(mContext: Context) {
                 actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
                 else -> false
             }
+            return result
         }
 
 }

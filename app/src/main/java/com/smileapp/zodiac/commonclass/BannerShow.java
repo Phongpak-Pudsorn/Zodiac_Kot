@@ -56,7 +56,7 @@ public class BannerShow {
         appPreferences = AppPreferences.INSTANCE;
         if ((Boolean) appPreferences.getPreferences(activity,AppPreferences.KEY_CHECK_LOAD_ADS_API,true)){
             loadDatabanner.loadAdsData(true);
-            appPreferences.getPreferences(activity,AppPreferences.KEY_CHECK_LOAD_ADS_API,false);
+            appPreferences.setPreferences(activity,AppPreferences.KEY_CHECK_LOAD_ADS_API,false);
         }
         this.strID = strUUID;
         this.activity = activity;
@@ -113,7 +113,7 @@ public class BannerShow {
             @Override
             public void onClose() {
 //                Const.INSTANCE.log(TAG, "popupAdstar onClose");
-                if (mOnAdClosed != null && checkOnAdClosed == false) {
+                if (mOnAdClosed != null && !checkOnAdClosed) {
                     checkOnAdClosed = true;
                     mOnAdClosed.onAdClosed();
                 }
@@ -135,13 +135,13 @@ public class BannerShow {
                     } else if (popupAdMobAppOpen != null){
                         popupAdMobAppOpen.show(activity);
                     }else {
-                        if (mOnAdClosed != null && checkOnAdClosed == false) {
+                        if (mOnAdClosed != null && !checkOnAdClosed) {
                             checkOnAdClosed = true;
                             mOnAdClosed.onAdClosed();
                         }
                     }
                 } else {
-                    if (mOnAdClosed != null && checkOnAdClosed == false) {
+                    if (mOnAdClosed != null && !checkOnAdClosed) {
 //                        Const.INSTANCE.log(TAG, "popupAdstar onClose");
                         checkOnAdClosed = true;
                         mOnAdClosed.onAdClosed();

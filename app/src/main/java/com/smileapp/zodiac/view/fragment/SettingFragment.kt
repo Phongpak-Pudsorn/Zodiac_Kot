@@ -8,12 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.smileapp.zodiac.BuildConfig
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.BannerShow
+import com.smileapp.zodiac.commonclass.ChkInternet
 import com.smileapp.zodiac.commonclass.Font
 import com.smileapp.zodiac.databinding.FragmentSettingBinding
 import com.smileapp.zodiac.utils.Utils
@@ -74,11 +76,15 @@ class SettingFragment:Fragment() {
             startActivity(intent)
         }
         binding.btnAppStarvision.setOnClickListener {
-            val link = "https://play.google.com/store/apps/developer?id=Gostar+Company+Limited"
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.putExtra(Intent.EXTRA_PACKAGE_NAME,"google")
-            intent.data = Uri.parse(link)
-            startActivity(intent)
+            if (ChkInternet(requireActivity()).isOnline) {
+                val link = "https://play.google.com/store/apps/developer?id=Gostar+Company+Limited"
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.putExtra(Intent.EXTRA_PACKAGE_NAME, "google")
+                intent.data = Uri.parse(link)
+                startActivity(intent)
+            }else{
+                Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai),Toast.LENGTH_SHORT).show()
+            }
         }
         binding.btnPolicy.setOnClickListener {
             val dialog = PolicyFragment()

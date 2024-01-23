@@ -16,6 +16,7 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.smileapp.zodiac.R
 import com.smileapp.zodiac.commonclass.BannerShow
 import com.smileapp.zodiac.commonclass.Font
@@ -41,6 +42,7 @@ class ZodiacWebFragment: Fragment() {
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         startWebView(Utils.getWebUrl().toString())
         binding.TvTitle.text = Utils.getWebTitle()
+        binding.TvTitle.isSelected = true
         binding.imgBack.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigateUp()
