@@ -5,10 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.RectF
 import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
+import kotlin.math.max
+import kotlin.math.min
 
 abstract class ImageViewTouchBase : AppCompatImageView{
 
@@ -97,7 +100,7 @@ abstract class ImageViewTouchBase : AppCompatImageView{
         return super.onKeyDown(keyCode, event)
     }
 
-    protected var mHandler = Handler()
+    protected var mHandler = Handler(Looper.getMainLooper())
 
     override fun setImageBitmap(bitmap: Bitmap?) {
         setImageBitmap(bitmap, 0)
@@ -106,7 +109,7 @@ abstract class ImageViewTouchBase : AppCompatImageView{
     fun setImageBitmap(bitmap: Bitmap?, rotation: Int) {
         super.setImageBitmap(bitmap)
         val d = drawable
-        d?.setDither(true)
+//        d?.setDither(true)
         val old: Bitmap? = mBitmapDisplayed.getBitmap()
         mBitmapDisplayed.setBitmap(bitmap)
         mBitmapDisplayed.setRotation(rotation)
@@ -240,9 +243,9 @@ abstract class ImageViewTouchBase : AppCompatImageView{
 
         // We limit up-scaling to 2x otherwise the result may look bad if it's
         // a small icon.
-        val widthScale = Math.min(viewWidth / w, 2.0f)
-        val heightScale = Math.min(viewHeight / h, 2.0f)
-        val scale = Math.min(widthScale, heightScale)
+        val widthScale = min(viewWidth / w, 2.0f)
+        val heightScale = min(viewHeight / h, 2.0f)
+        val scale = min(widthScale, heightScale)
         matrix.postConcat(bitmap.getRotateMatrix())
         matrix.postScale(scale, scale)
         matrix.postTranslate((viewWidth - w * scale) / 2f, (viewHeight - h * scale) / 2f)
@@ -269,7 +272,7 @@ abstract class ImageViewTouchBase : AppCompatImageView{
         }
         val fw = mBitmapDisplayed.getWidth().toFloat() / mThisWidth.toFloat()
         val fh: Float = mBitmapDisplayed.getHeight().toFloat() / mThisHeight.toFloat()
-        return Math.max(fw, fh) * 4
+        return max(fw, fh) * 4
     }
 
     protected open fun zoomTo(scale: Float, centerX: Float, centerY: Float) {
@@ -294,7 +297,7 @@ abstract class ImageViewTouchBase : AppCompatImageView{
         mHandler.post(object : Runnable {
             override fun run() {
                 val now = System.currentTimeMillis()
-                val currentMs = Math.min(durationMs, (now - startTime).toFloat())
+                val currentMs = min(durationMs, (now - startTime).toFloat())
                 val target = oldScale + incrementPerMs * currentMs
                 zoomTo(target, centerX, centerY)
                 if (currentMs < durationMs) {

@@ -163,21 +163,21 @@ class BitmapManager {
     /**
      * The real place to delegate bitmap decoding to BitmapFactory.
      */
-    fun decodeFileDescriptor(
-        fd: FileDescriptor?,
-        options: BitmapFactory.Options,
-    ): Bitmap? {
-        if (options.mCancel) {
-            return null
-        }
-        val thread = Thread.currentThread()
-        if (!canThreadDecoding(thread)) {
-            // Log.d(TAG, "Thread " + thread + " is not allowed to decode.");
-            return null
-        }
-        setDecodingOptions(thread, options)
-        val b = BitmapFactory.decodeFileDescriptor(fd, null, options)
-        removeDecodingOptions(thread)
-        return b
-    }
+//    fun decodeFileDescriptor(
+//        fd: FileDescriptor?,
+//        options: BitmapFactory.Options,
+//    ): Bitmap? {
+//        if (options.mCancel) {
+//            return null
+//        }
+//        val thread = Thread.currentThread()
+//        if (!canThreadDecoding(thread)) {
+//            // Log.d(TAG, "Thread " + thread + " is not allowed to decode.");
+//            return null
+//        }
+//        setDecodingOptions(thread, options)
+//        val b = BitmapFactory.decodeFileDescriptor(fd, null, options)
+//        removeDecodingOptions(thread)
+//        return b
+//    }
 }

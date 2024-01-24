@@ -4,6 +4,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 open class CropImageView:ImageViewTouchBase {
 
@@ -183,10 +186,10 @@ open class CropImageView:ImageViewTouchBase {
     // Pan the displayed image to make sure the cropping rectangle is visible.
     private fun ensureVisible(hv: HighlightView) {
         val r = hv.mDrawRect
-        val panDeltaX1 = Math.max(0, mLeft - r!!.left)
-        val panDeltaX2 = Math.min(0, mRight - r.right)
-        val panDeltaY1 = Math.max(0, mTop - r.top)
-        val panDeltaY2 = Math.min(0, mBottom - r.bottom)
+        val panDeltaX1 = max(0, mLeft - r!!.left)
+        val panDeltaX2 = min(0, mRight - r.right)
+        val panDeltaY1 = max(0, mTop - r.top)
+        val panDeltaY2 = min(0, mBottom - r.bottom)
         val panDeltaX = if (panDeltaX1 != 0) panDeltaX1 else panDeltaX2
         val panDeltaY = if (panDeltaY1 != 0) panDeltaY1 else panDeltaY2
         if (panDeltaX != 0 || panDeltaY != 0) {
@@ -205,9 +208,9 @@ open class CropImageView:ImageViewTouchBase {
         val z1 = thisWidth / width * .6f
         val z2 = thisHeight / height * .6f
         var zoom = Math.min(z1, z2)
-        zoom = zoom * this.getScale()
-        zoom = Math.max(1f, zoom)
-        if (Math.abs(zoom - getScale()) / zoom > .1) {
+        zoom *= this.getScale()
+        zoom = max(1f, zoom)
+        if (abs(zoom - getScale()) / zoom > .1) {
             val coordinates = floatArrayOf(
                 hv.mCropRect!!.centerX(),
                 hv.mCropRect!!.centerY()
@@ -219,7 +222,7 @@ open class CropImageView:ImageViewTouchBase {
     }
 
     override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas!!)
+        super.onDraw(canvas)
         for (i in mHighlightViews.indices) {
             mHighlightViews[i].draw(canvas)
         }

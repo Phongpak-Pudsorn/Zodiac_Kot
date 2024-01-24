@@ -23,8 +23,12 @@
             android:id="@+id/action_profileFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_cropFragment"
-            app:destination="@id/cropFragment" />
+            android:id="@+id/action_profileFragment_to_mainFragment2"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/fadein"
+            app:exitAnim="@anim/fadeout"
+            app:popEnterAnim="@anim/fadein"
+            app:popExitAnim="@anim/fadeout" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -56,11 +60,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.smileapp.zodiac.view.fragment.EditProfileFragment"
-        android:label="EditProfileFragment" >
-        <action
-            android:id="@+id/action_editProfileFragment_to_cropFragment"
-            app:destination="@id/cropFragment" />
-    </fragment>
+        android:label="EditProfileFragment" />
     <fragment
         android:id="@+id/menuZodiacFragment"
         android:name="com.smileapp.zodiac.view.fragment.MenuZodiacFragment"
@@ -105,8 +105,4 @@
         android:id="@+id/shareTodayFragment"
         android:name="com.smileapp.zodiac.view.fragment.ShareTodayFragment"
         android:label="ShareTodayFragment" />
-    <fragment
-        android:id="@+id/cropFragment"
-        android:name="com.smileapp.zodiac.view.fragment.CropFragment"
-        android:label="CropFragment" />
 </navigation>

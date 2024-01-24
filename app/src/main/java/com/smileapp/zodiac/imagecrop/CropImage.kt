@@ -12,6 +12,7 @@ import android.os.*
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import com.smileapp.zodiac.R
@@ -43,7 +44,7 @@ class CropImage:MonitoredActivity() {
     private var mSaveUri: Uri? = null
     private val mDoFaceDetection = true
     private var mCircleCrop = false
-    private val mHandler = Handler()
+    private val mHandler = Handler(Looper.getMainLooper())
 
     private var mAspectX = 0
     private var mAspectY = 0
@@ -89,12 +90,12 @@ class CropImage:MonitoredActivity() {
             mImagePath = extras.getString(IMAGE_PATH)
             mSaveUri = getImageUri(mImagePath)
             mBitmap = getBitmap(mImagePath)
-            mAspectX = if (extras.containsKey(ASPECT_X) && extras[ASPECT_X] is Int) {
+            mAspectX = if (extras.containsKey(ASPECT_X)) {
                 extras.getInt(ASPECT_X)
             } else {
                 throw IllegalArgumentException("aspect_x must be integer")
             }
-            mAspectY = if (extras.containsKey(ASPECT_Y) && extras[ASPECT_Y] is Int) {
+            mAspectY = if (extras.containsKey(ASPECT_Y)) {
                 extras.getInt(ASPECT_Y)
             } else {
                 throw IllegalArgumentException("aspect_y must be integer")
@@ -113,7 +114,11 @@ class CropImage:MonitoredActivity() {
         Log.e(TAG,"mBitmap != null")
 
         // Make UI fullscreen.
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
         binding.discard.setOnClickListener(
             View.OnClickListener {
                 setResult(RESULT_CANCELED)

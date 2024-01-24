@@ -35,7 +35,7 @@ class RotateBitmap {
         mBitmap = bitmap
     }
 
-    fun getRotateMatrix(): Matrix? {
+    fun getRotateMatrix(): Matrix {
         // By default this is an identity matrix.
         val matrix = Matrix()
         if (mRotation != 0) {

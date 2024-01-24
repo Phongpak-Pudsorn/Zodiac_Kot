@@ -146,7 +146,7 @@ public class CallVersion {
             AlertDialog dialog = builder.show();
             dialog.show();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }

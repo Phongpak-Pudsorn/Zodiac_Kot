@@ -22,6 +22,7 @@ import com.smileapp.zodiac.utils.Utils
 import com.starvision.setting.SettingSDK
 
 class SettingFragment:Fragment() {
+    var back = true
     var bannerShow: BannerShow?=null
     val binding:FragmentSettingBinding by lazy { FragmentSettingBinding.inflate(layoutInflater) }
     override fun onCreateView(
@@ -34,12 +35,14 @@ class SettingFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Utils.currentFragment = 2
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
         binding.Details.visibility = View.GONE
         binding.mTvVersion.text = getString(R.string.version)+" "+BuildConfig.VERSION_NAME
         binding.imgBack.setOnClickListener {
-            Navigation.findNavController(requireView()).navigateUp()
+            if (back){
+                back = false
+                Navigation.findNavController(requireView()).navigateUp()
+            }
         }
         if (Utils.getStatusNotic()) {
             binding.IvSwitchPus.setImageResource(R.mipmap.switch_on)
@@ -93,7 +96,8 @@ class SettingFragment:Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             @SuppressLint("SuspiciousIndentation")
             override fun handleOnBackPressed() {
-                if (Utils.currentFragment==2){
+                if (back){
+                    back = false
                     Navigation.findNavController(requireView()).navigateUp()
                 }
             }

@@ -5,6 +5,10 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.smileapp.zodiac.R
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.sqrt
 
 class HighlightView {
 
@@ -110,12 +114,12 @@ class HighlightView {
             val top = mDrawRect!!.top + 4
             val bottom = mDrawRect!!.bottom + 3
             val widthWidth =
-                mResizeDrawableWidth!!.intrinsicWidth / 2 //เ�?�?�เ�?��?�?�?เ�?�?�เ�?��?�?�?เ�?�?�เ�?�เ�?�?เ�?�?�เ�?��?�?��
+                mResizeDrawableWidth!!.intrinsicWidth / 2
             val widthHeight = mResizeDrawableWidth!!.intrinsicHeight / 2
             val heightHeight = mResizeDrawableHeight!!.intrinsicHeight / 2
             val heightWidth = mResizeDrawableHeight!!.intrinsicWidth / 2
             val xMiddle =
-                mDrawRect!!.left + (mDrawRect!!.right - mDrawRect!!.left) / 2 // เ�?�?�เ�?��?�?��?เ�?�?�เ�?�เ�?�?เ�?�?�เ�?��?�?�?เ�?�?�เ�?�เ�?�เ�?�?�เ�?��?�?�?เ�?�?�เ�?��?�?�?เ�?�?�เ�?��?�?�?
+                mDrawRect!!.left + (mDrawRect!!.right - mDrawRect!!.left) / 2
             val yMiddle = mDrawRect!!.top + (mDrawRect!!.bottom - mDrawRect!!.top) / 2
             mResizeDrawableWidth!!.setBounds(
                 left - widthWidth,
@@ -167,11 +171,11 @@ class HighlightView {
         if (mCircle) {
             val distX = x - r.centerX()
             val distY = y - r.centerY()
-            val distanceFromCenter = Math.sqrt((distX * distX + distY * distY).toDouble()).toInt()
+            val distanceFromCenter = sqrt((distX * distX + distY * distY).toDouble()).toInt()
             val radius = mDrawRect!!.width() / 2
             val delta = distanceFromCenter - radius
-            retval = if (Math.abs(delta) <= hysteresis) {
-                if (Math.abs(distY) > Math.abs(distX)) {
+            retval = if (abs(delta) <= hysteresis) {
+                if (abs(distY) > abs(distX)) {
                     if (distY < 0) {
                         GROW_TOP_EDGE
                     } else {
@@ -256,17 +260,17 @@ class HighlightView {
 
         // Put the cropping rectangle inside image rectangle.
         mCropRect!!.offset(
-            Math.max(0f, mImageRect!!.left - mCropRect!!.left),
-            Math.max(0f, mImageRect!!.top - mCropRect!!.top)
+            max(0f, mImageRect!!.left - mCropRect!!.left),
+            max(0f, mImageRect!!.top - mCropRect!!.top)
         )
         mCropRect!!.offset(
-            Math.min(0f, mImageRect!!.right - mCropRect!!.right),
-            Math.min(0f, mImageRect!!.bottom - mCropRect!!.bottom)
+            min(0f, mImageRect!!.right - mCropRect!!.right),
+            min(0f, mImageRect!!.bottom - mCropRect!!.bottom)
         )
         mDrawRect = computeLayout()
         invalRect.union(mDrawRect!!)
         invalRect.inset(-35, -35)
-        mContext!!.invalidate(invalRect)
+        mContext!!.invalidate()
     }
 
     // Grows the cropping rectange by (dx, dy) in image space.
@@ -328,7 +332,7 @@ class HighlightView {
     }
 
     // Returns the cropping rectangle in image space.
-    fun getCropRect(): Rect? {
+    fun getCropRect(): Rect {
         return Rect(
             mCropRect!!.left.toInt(),
             mCropRect!!.top.toInt(),

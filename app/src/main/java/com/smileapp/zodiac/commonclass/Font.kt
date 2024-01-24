@@ -8,7 +8,7 @@ import android.widget.TextView
 class Font {
 
 
-    fun styleText_RSU_Reg(context: Context, textView: TextView, size: Int): TextView? {
+    fun styleText_RSU_Reg(context: Context, textView: TextView, size: Int): TextView {
         val type = Typeface.createFromAsset(context.assets, "fonts/psl029pro.ttf")
         textView.typeface = type
         textView.textSize = size.toFloat()
@@ -30,7 +30,7 @@ class Font {
     }
 
 
-    fun styleText_RSU_BOLD(context: Context, textView: TextView, size: Int): TextView? {
+    fun styleText_RSU_BOLD(context: Context, textView: TextView, size: Int): TextView {
         // textView.setTextAppearance(context, android.R.style.TextAppearance_Large);
         //textView.setTextColor(Color.parseColor(textColor));
         val type = Typeface.createFromAsset(context.assets, "fonts/psl030pro.ttf")
@@ -53,7 +53,7 @@ class Font {
         return textView
     }
 
-    fun styleText_THSarabun_BOLD(context: Context, textView: TextView, size: Int): TextView? {
+    fun styleText_THSarabun_BOLD(context: Context, textView: TextView, size: Int): TextView {
         // textView.setTextAppearance(context, android.R.style.TextAppearance_Large);
         //textView.setTextColor(Color.parseColor(textColor));
         val type = Typeface.createFromAsset(context.assets, "fonts/THSarabunNew Bold.ttf")
@@ -63,7 +63,7 @@ class Font {
     }
 
 
-    fun styleText_THSarabun_Reg(context: Context, textView: TextView, size: Int): TextView? {
+    fun styleText_THSarabun_Reg(context: Context, textView: TextView, size: Int): TextView {
         // textView.setTextAppearance(context, android.R.style.TextAppearance_Large);
         //textView.setTextColor(Color.parseColor(textColor));
         val type = Typeface.createFromAsset(context.assets, "fonts/THSarabunNew.ttf")

@@ -37,8 +37,6 @@ object Utils {
     const val NAME_DATE_RASI = "NAME_DATE_RASI"
     const val KEY_NOTICEADS = "KEY_NOTICEADS"
     const val ADVERTISING_ID_CLIENT = "ADVERTISING_ID_CLIENT"
-//    const val NAME_MENU_MONTH ="NAME_MENU_MONTH"
-//    const val NAME_MENU_YEAR ="NAME_MENU_YEAR"
     const val KEY_OPEN_PROFILE ="KEY_OPEN_PROFILE"
     const val KEY_SHARED_DAY ="KEY_SHARED_DAY"
     const val KEY_SHARED_ID ="KEY_SHARED_ID"
@@ -53,7 +51,7 @@ object Utils {
     const val KEY_PREDICT_NAME = "KEY_PREDICT_NAME"
     const val KEY_PREDICT_MENU = "KEY_PREDICT_MENU"
     const val KEY_PREDICT_DESCRIPTION = "KEY_PREDICT_DESCRIPTION"
-
+    var Token = ""
     var UUID = ""
     var currentFragment = 0
     var menuPosition = 0

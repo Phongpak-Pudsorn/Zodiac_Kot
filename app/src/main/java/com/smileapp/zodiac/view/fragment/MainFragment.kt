@@ -97,6 +97,12 @@ class MainFragment:Fragment() {
         binding.userTab.TvRasi.text = Utils.getNameAndDateRasi()
         binding.btnMonth.text = Utils.getNameMonth()
         binding.btnYear.text = Utils.getNameYear()
+        if (Utils.getNameMonth()==""){
+            binding.btnMonth.visibility = View.GONE
+        }
+        if (Utils.getNameYear()==""){
+            binding.btnYear.visibility = View.GONE
+        }
         Utils.setTextGradient_Blue(binding.userTab.TvNameUser)
         Utils.setTextGradient_Green(binding.userTab.TvRasi)
         if (Utils.getGENDER() =="Man"){

@@ -37,9 +37,9 @@ class SplashFragment:Fragment() {
         appPreferences?.setPreferences(requireActivity(), AppPreferences.KEY_CHECK_LOAD_ADS_API,true)
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
-        val version = CallVersion(requireActivity())
         Utils.setNoticeAds(false)
         setStarVisionSDK()
+        val version = CallVersion(requireActivity())
         version.setCallListener(object :CallVersion.CallVersionListener{
             override fun onSuccess() {
                 initial()
@@ -49,7 +49,6 @@ class SplashFragment:Fragment() {
             }
 
             override fun onFailed() {
-                requireActivity().finish()
             }
         })
 

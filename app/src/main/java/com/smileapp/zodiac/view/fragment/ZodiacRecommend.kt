@@ -162,6 +162,7 @@ class ZodiacRecommend:Fragment() {
                     for (i in newsList.indices){
                         if (j==7){
                             if (newsList[i].artide_id!="abcdef") {
+                                Log.e("add native field",i.toString())
                                 newsList.addAll(i, nativeList)
                             }
                             j=0

@@ -41,7 +41,7 @@ import java.util.concurrent.Executors
 
 class ProfileFragment:Fragment() {
     var pressAble = true
-    val TEMP_PHOTO_FILE_NAME = "Android/data/com.smileapp.zodiac/temp_photo.jpg"
+    val TEMP_PHOTO_FILE_NAME = "temp_photo.jpg"
     val USER_PHOTO_FILE_NAME = "user_photo.jpg"
     var saveBitmap : Bitmap? = null
     var bannerShow:BannerShow?=null
@@ -120,7 +120,7 @@ class ProfileFragment:Fragment() {
                 override fun handleOnBackPressed() {
                     if (pressAble) {
                         pressAble = false
-                        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_mainFragment)
+                        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_mainFragment2)
                     }
                 }
             })
