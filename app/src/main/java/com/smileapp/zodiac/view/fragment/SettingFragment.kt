@@ -65,7 +65,7 @@ class SettingFragment:Fragment() {
                 Utils.setStatusNotic(true)
                 binding.IvSwitchPus.setImageResource(R.mipmap.switch_on)
             }
-            Log.e("setStatusNotic",Utils.getStatusNotic().toString())
+//            Log.e("setStatusNotic",Utils.getStatusNotic().toString())
         }
         binding.btnNotic.setOnClickListener {
             SettingSDK(requireContext()).setPublic()

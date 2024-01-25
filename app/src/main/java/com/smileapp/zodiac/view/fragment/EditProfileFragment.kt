@@ -107,19 +107,23 @@ class EditProfileFragment: Fragment() {
                 checkUserDataNull = true
             }else{
                 checkUserDataNull = false
-                if (gender==binding.rdMan.id){
-                    Log.e("man",binding.rdMan.id.toString())
-                    val strGender = "Man"
-                    Utils.setGENDER(strGender)
-                    checkUserDataNull = false
-                }else if (gender==binding.rdWoman.id){
-                    Log.e("woman",binding.rdWoman.id.toString())
-                    val strGender = "Woman"
-                    Utils.setGENDER(strGender)
-                    checkUserDataNull = false
-                }else{
-                    Toast.makeText(MyApplication.getContext(),"กรุณาระบุเพศของคุณ", Toast.LENGTH_SHORT).show()
-                    checkUserDataNull = true
+                when (gender) {
+                    binding.rdMan.id -> {
+            //                    Log.e("man",binding.rdMan.id.toString())
+                        val strGender = "Man"
+                        Utils.setGENDER(strGender)
+                        checkUserDataNull = false
+                    }
+                    binding.rdWoman.id -> {
+            //                    Log.e("woman",binding.rdWoman.id.toString())
+                        val strGender = "Woman"
+                        Utils.setGENDER(strGender)
+                        checkUserDataNull = false
+                    }
+                    else -> {
+                        Toast.makeText(MyApplication.getContext(),"กรุณาระบุเพศของคุณ", Toast.LENGTH_SHORT).show()
+                        checkUserDataNull = true
+                    }
                 }
             }
             if(!checkUserDataNull){
@@ -154,12 +158,16 @@ class EditProfileFragment: Fragment() {
         val dialog = AlertDialog.Builder(requireActivity())
         dialog.setTitle(resources.getString(R.string.app_name))
         dialog.setItems(addPhoto) { dialog, id ->
-            if (id == 0) {
-                takePicture()
-            } else if (id == 1) {
-                openGallery()
-            } else if (id == 2) {
-                dialog.dismiss()
+            when (id) {
+                0 -> {
+                    takePicture()
+                }
+                1 -> {
+                    openGallery()
+                }
+                2 -> {
+                    dialog.dismiss()
+                }
             }
         }
         //        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -176,18 +184,18 @@ class EditProfileFragment: Fragment() {
             var mImageCaptureUri: Uri?
             val state = Environment.getExternalStorageState()
             mImageCaptureUri = if (Environment.MEDIA_MOUNTED == state){
-                Log.e("takePicture","if")
-                Log.e("mFileTemp takePicture", mFileTemp!!.path.toString())
+//                Log.e("takePicture","if")
+//                Log.e("mFileTemp takePicture", mFileTemp!!.path.toString())
                 FileProvider.getUriForFile(requireActivity(),"com.smileapp.zodiac.provider", mFileTemp!!)
             }else{
-                Log.e("takePicture","else")
+//                Log.e("takePicture","else")
                 InternalStorageContentProvider().CONTENT_URI
             }
             intent.putExtra(MediaStore.EXTRA_OUTPUT,mImageCaptureUri)
 
             startTakeResult.launch(intent)
         }catch (e:ActivityNotFoundException){
-            Log.e("cannot take picture",e.message.toString())
+//            Log.e("cannot take picture",e.message.toString())
         }
     }
     private fun openGallery(){
@@ -206,7 +214,7 @@ class EditProfileFragment: Fragment() {
         }
     }
     private fun startCropImage() {
-        Log.e("mFileTemp startCropImage", mFileTemp!!.path.toString())
+//        Log.e("mFileTemp startCropImage", mFileTemp!!.path.toString())
         val intent = Intent(requireActivity(), CropImage::class.java)
         intent.putExtra(CropImage().IMAGE_PATH, mFileTemp!!.path)
         intent.putExtra(CropImage().SCALE, true)
@@ -217,9 +225,9 @@ class EditProfileFragment: Fragment() {
     private val startCropResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: androidx.activity.result.ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK){
             val path = result.data?.getStringExtra(CropImage().IMAGE_PATH)
-            Log.e("image bitmap",CropImage().IMAGE_PATH)
+//            Log.e("image bitmap",CropImage().IMAGE_PATH)
             if (path == null) {
-                Log.e("path","null")
+//                Log.e("path","null")
             }
             val myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
             saveBitmap = myBitmap
@@ -237,7 +245,7 @@ class EditProfileFragment: Fragment() {
                 outputStream.close()
                 startCropImage()
             }catch (e:Exception){
-                Log.e("REQUEST_CODE_GALLERY","Error while creating temp file",e)
+//                Log.e("REQUEST_CODE_GALLERY","Error while creating temp file",e)
             }
 
         }
@@ -245,7 +253,7 @@ class EditProfileFragment: Fragment() {
     }
     private val startTakeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: androidx.activity.result.ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK){
-            Log.e("mFileTemp startTakeResult", mFileTemp!!.path.toString())
+//            Log.e("mFileTemp startTakeResult", mFileTemp!!.path.toString())
             startCropImage()
         }
 
@@ -269,7 +277,7 @@ class EditProfileFragment: Fragment() {
                     for (i in zodiacMain!!.indices) {
                         items.add(zodiacMain!![i].zodiac_name_thai + " " + zodiacMain!![i].zodiac_name_eng + " " + zodiacMain!![i].zodiac_date)
                     }
-                    Log.e("CallData",items.toString())
+//                    Log.e("CallData",items.toString())
                 }
                 binding.SpinDate.adapter = SpinnerAdapter(requireActivity(),R.layout.row,items)
                 binding.SpinDate.setSelection(Utils.getRasi())

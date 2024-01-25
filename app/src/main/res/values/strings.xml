@@ -42,18 +42,18 @@
     <string name="Connect">Connect Again</string>
     <string name="web_policy">"https://www.starvision.in.th/term/privacy.html"</string>
     <!--        AdmobREAL-->
-<!--    <string name="admob_id">ca-app-pub-1595388041462924~4567259920</string>-->
-<!--    <string name="KEY_ADMOB_InterstitialBanner">ca-app-pub-1595388041462924/9823525844</string>-->
-<!--    <string name="KEY_ADMOB">ca-app-pub-1595388041462924/6010728752</string>-->
-<!--    <string name="KEY_ADMOB_AppOpen">ca-app-pub-1595388041462924/6013267326</string>-->
-<!--    <string name="KEY_ADMOB_Native">ca-app-pub-1595388041462924/7606330840</string>-->
+    <string name="admob_id">ca-app-pub-1595388041462924~4567259920</string>
+    <string name="KEY_ADMOB_InterstitialBanner">ca-app-pub-1595388041462924/9823525844</string>
+    <string name="KEY_ADMOB">ca-app-pub-1595388041462924/6010728752</string>
+    <string name="KEY_ADMOB_AppOpen">ca-app-pub-1595388041462924/6013267326</string>
+    <string name="KEY_ADMOB_Native">ca-app-pub-1595388041462924/7606330840</string>
 
     <!--        AdmobTEST-->
-        <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>
-        <string name="KEY_ADMOB">ca-app-pub-3940256099942544/6300978111</string>
-        <string name="KEY_ADMOB_InterstitialBanner">ca-app-pub-3940256099942544/1033173712</string>
-        <string name="KEY_ADMOB_AppOpen">ca-app-pub-3940256099942544/9257395921</string>
-        <string name="KEY_ADMOB_Native">ca-app-pub-3940256099942544/2247696110</string>
+<!--        <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>-->
+<!--        <string name="KEY_ADMOB">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--        <string name="KEY_ADMOB_InterstitialBanner">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--        <string name="KEY_ADMOB_AppOpen">ca-app-pub-3940256099942544/9257395921</string>-->
+<!--        <string name="KEY_ADMOB_Native">ca-app-pub-3940256099942544/2247696110</string>-->
 
 
     <string name="text_ok">ตกลง</string>

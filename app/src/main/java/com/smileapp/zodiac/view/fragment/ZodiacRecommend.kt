@@ -108,9 +108,9 @@ class ZodiacRecommend:Fragment() {
                     override fun onResponse(call: Call<NewsInfo>, response: Response<NewsInfo>) {
                         if (response.isSuccessful) {
                             val strData = Gson().toJson(response.body(), NewsInfo::class.java)
-                            Log.e("data pullup", strData.toString())
+//                            Log.e("data pullup", strData.toString())
                             val data = Gson().fromJson(strData,NewsInfo::class.java)
-                            Log.e("strdata pullup", strData.toString())
+//                            Log.e("strdata pullup", strData.toString())
                             for (i in data.Datarow.indices) {
                                 newsList.add(data.Datarow[i])
                             }
@@ -125,7 +125,7 @@ class ZodiacRecommend:Fragment() {
                                     j+=1
                                 }
                             }
-                            Log.e("newsList pullup", newsList.toString())
+//                            Log.e("newsList pullup", newsList.toString())
                             binding.list.apply {
                                 newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!,object :NewsAdapter.OnItemClickListener{
                                     override fun onClick(position: Int) {
@@ -141,7 +141,7 @@ class ZodiacRecommend:Fragment() {
                     }
 
                     override fun onFailure(call: Call<NewsInfo>, t: Throwable) {
-                        Log.e("Failure", "" + t.message)
+//                        Log.e("Failure", "" + t.message)
                     }
                 })
     }
@@ -152,9 +152,9 @@ class ZodiacRecommend:Fragment() {
             override fun onResponse(call: Call<NewsInfo>, response: Response<NewsInfo>) {
                 if (response.isSuccessful) {
                     val strData = Gson().toJson(response.body(), NewsInfo::class.java)
-                    Log.e("data pulldown", strData.toString())
+//                    Log.e("data pulldown", strData.toString())
                     val data = Gson().fromJson(strData,NewsInfo::class.java)
-                    Log.e("strdata pulldown", strData.toString())
+//                    Log.e("strdata pulldown", strData.toString())
                     for (i in data.Datarow.indices) {
                         newsList.add(data.Datarow[i])
                     }
@@ -162,7 +162,7 @@ class ZodiacRecommend:Fragment() {
                     for (i in newsList.indices){
                         if (j==7){
                             if (newsList[i].artide_id!="abcdef") {
-                                Log.e("add native field",i.toString())
+//                                Log.e("add native field",i.toString())
                                 newsList.addAll(i, nativeList)
                             }
                             j=0
@@ -170,7 +170,7 @@ class ZodiacRecommend:Fragment() {
                             j+=1
                         }
                     }
-                    Log.e("newsList pulldown", newsList.toString())
+//                    Log.e("newsList pulldown", newsList.toString())
                     handler.postDelayed(runnable,1000)
 
 //                    newsAdapter?.notifyDataSetChanged()
@@ -183,7 +183,7 @@ class ZodiacRecommend:Fragment() {
                 }
             }
             override fun onFailure(call: Call<NewsInfo>, t: Throwable) {
-                Log.e("Failure", "" + t.message)
+//                Log.e("Failure", "" + t.message)
             }
         })
         isLoading = false

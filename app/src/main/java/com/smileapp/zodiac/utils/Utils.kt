@@ -51,6 +51,7 @@ object Utils {
     const val KEY_PREDICT_NAME = "KEY_PREDICT_NAME"
     const val KEY_PREDICT_MENU = "KEY_PREDICT_MENU"
     const val KEY_PREDICT_DESCRIPTION = "KEY_PREDICT_DESCRIPTION"
+    var firstLoad = true
     var Token = ""
     var UUID = ""
     var currentFragment = 0
@@ -305,7 +306,7 @@ object Utils {
             strHttp = stringBuilder.toString()
             strHttp
         } catch (e: Exception) {
-            Log.e("timeout", "timeout")
+//            Log.e("timeout", "timeout")
             strHttp = ""
             e.printStackTrace()
             strHttp

@@ -96,7 +96,7 @@ class ZodiacWebFragment: Fragment() {
                 handler: SslErrorHandler,
                 error: SslError,
             ) {
-                Log.e("TAG", "onReceivedSslError")
+//                Log.e("TAG", "onReceivedSslError")
                 val builder = AlertDialog.Builder(requireActivity())
                 val alertDialog = builder.create()
                 var message = "Certificate error."
@@ -112,14 +112,14 @@ class ZodiacWebFragment: Fragment() {
                 alertDialog.setButton(
                     DialogInterface.BUTTON_POSITIVE, "OK"
                 ) { dialog, which ->
-                    Log.d("CHECK", "Button ok pressed")
+//                    Log.d("CHECK", "Button ok pressed")
                     // Ignore SSL certificate errors
                     handler.proceed()
                 }
                 alertDialog.setButton(
                     DialogInterface.BUTTON_NEGATIVE, "Cancel"
                 ) { dialog, which ->
-                    Log.d("CHECK", "Button cancel pressed")
+//                    Log.d("CHECK", "Button cancel pressed")
                     handler.cancel()
                 }
                 alertDialog.show()

@@ -92,6 +92,7 @@
                     android:background="@drawable/bg_editext_while"
                     android:layout_weight="1"
                     android:hint="ใส่ชื่อ"
+                    android:imeOptions="actionDone"
                     android:textColorHint="@color/gray"
                     android:inputType="text"
                     android:maxLength="15"

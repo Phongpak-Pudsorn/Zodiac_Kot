@@ -144,11 +144,11 @@ class BitmapManager {
         val i: Iterator<Map.Entry<Thread, ThreadStatus>> = mThreadStatus.entries.iterator()
         while (i.hasNext()) {
             val (key, value) = i.next()
-            Log.v(
-                TAG, "[Dump] Thread " + key + " ("
-                        + key.id
-                        + ")'s status is " + value
-            )
+//            Log.v(
+//                TAG, "[Dump] Thread " + key + " ("
+//                        + key.id
+//                        + ")'s status is " + value
+//            )
         }
     }
 

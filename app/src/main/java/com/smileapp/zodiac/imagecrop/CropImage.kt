@@ -19,6 +19,9 @@ import com.smileapp.zodiac.R
 import com.smileapp.zodiac.databinding.CropImageBinding
 import java.io.*
 import java.util.concurrent.CountDownLatch
+import kotlin.math.ln
+import kotlin.math.max
+import kotlin.math.pow
 
 class CropImage:MonitoredActivity() {
     val binding:CropImageBinding by lazy { CropImageBinding.inflate(layoutInflater) }
@@ -78,15 +81,15 @@ class CropImage:MonitoredActivity() {
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
-            Log.e(TAG,"extras != null")
+//            Log.e(TAG,"extras != null")
             if (extras.getString(CIRCLE_CROP) != null) {
-                Log.e(TAG,"extras.getString(CIRCLE_CROP) != null")
+//                Log.e(TAG,"extras.getString(CIRCLE_CROP) != null")
                 mImageView!!.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
                 mCircleCrop = true
                 mAspectX = 1
                 mAspectY = 1
             }
-            Log.e(TAG,"extras.getString(CIRCLE_CROP) = null")
+//            Log.e(TAG,"extras.getString(CIRCLE_CROP) = null")
             mImagePath = extras.getString(IMAGE_PATH)
             mSaveUri = getImageUri(mImagePath)
             mBitmap = getBitmap(mImagePath)
@@ -106,12 +109,12 @@ class CropImage:MonitoredActivity() {
             mScaleUp = extras.getBoolean(SCALE_UP_IF_NEEDED, true)
         }
         if (mBitmap == null) {
-            Log.e(TAG,"mBitmap = null")
-            Log.d(TAG, "finish!!!")
+//            Log.e(TAG,"mBitmap = null")
+//            Log.d(TAG, "finish!!!")
             finish()
             return
         }
-        Log.e(TAG,"mBitmap != null")
+//        Log.e(TAG,"mBitmap != null")
 
         // Make UI fullscreen.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -164,12 +167,11 @@ class CropImage:MonitoredActivity() {
             `in`!!.close()
             var scale = 1
             if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
-                scale = Math.pow(
-                    2.0,
+                scale = 2.0.pow(
                     Math.round(
-                        Math.log(
-                            IMAGE_MAX_SIZE / Math.max(o.outHeight, o.outWidth).toDouble()
-                        ) / Math.log(0.5)
+                        ln(
+                            IMAGE_MAX_SIZE / max(o.outHeight, o.outWidth).toDouble()
+                        ) / ln(0.5)
                     ).toInt().toDouble()
                 ).toInt()
             }

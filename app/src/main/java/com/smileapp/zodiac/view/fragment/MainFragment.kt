@@ -57,8 +57,7 @@ class MainFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var progressDialog = LoadingDialog.progressDialog(requireActivity())
-        progressDialog.show()
+        val progressDialog = LoadingDialog.progressDialog(requireActivity())
         setNoticeAds()
         setObject()
         requireActivity().onBackPressedDispatcher
@@ -70,11 +69,17 @@ class MainFragment:Fragment() {
                     }
                 }
             })
-        handler.postDelayed({
-            progressDialog.dismiss()
-            askNotificationPermission() },2000)
+        if (Utils.firstLoad) {
+            Utils.firstLoad = false
+            progressDialog.show()
+            handler.postDelayed({
+                progressDialog.dismiss()
+                askNotificationPermission()
+            }, 2000)
+        }
     }
     private fun setObject(){
+        var clickAble = true
         if (Utils.getOpenProfile()){
             binding.userTab.drawer.open()
             binding.userTab.handle.setImageResource(R.mipmap.ic_slide_open)
@@ -129,33 +134,41 @@ class MainFragment:Fragment() {
             }
         })
         binding.imgSetting.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_settingFragment)
+            if (clickAble) {
+                clickAble = false
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_mainFragment_to_settingFragment)
+            }
         }
         binding.userTab.mImguser.setOnClickListener {
-            Navigation.findNavController(requireView())
-                .navigate(R.id.action_mainFragment_to_editProfileFragment)
+            if (clickAble) {
+                clickAble = false
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_mainFragment_to_editProfileFragment)
+            }
         }
         binding.btnZodiac12.setOnClickListener {
-            binding.btnZodiac12.isClickable = false
-            bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                override fun onAdClosed() {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_mainFragment_to_menuZodiacFragment)
-                    binding.btnZodiac12.isClickable = true
-                }
-            })
+            if (clickAble) {
+                clickAble = false
+                bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
+                    override fun onAdClosed() {
+                        Navigation.findNavController(requireView())
+                            .navigate(R.id.action_mainFragment_to_menuZodiacFragment)
+                    }
+                })
+            }
         }
         binding.btnToDay.setOnClickListener {
             if (ChkInternet(requireActivity()).isOnline){
-                binding.btnToDay.isClickable = false
-                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                    override fun onAdClosed() {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
-                        binding.btnToDay.isClickable = true
-                    }
-                })
+                if (clickAble) {
+                    clickAble = false
+                    bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
+                        override fun onAdClosed() {
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
+                        }
+                    })
+                }
             }else{
                 Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
             }
@@ -164,14 +177,15 @@ class MainFragment:Fragment() {
             Utils.setWebTitle(getString(R.string.zodiac_week))
             Utils.setWebUrl(Url.weekUrl)
             if (ChkInternet(requireActivity()).isOnline){
-                binding.btnWeek.isClickable = false
-                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                    override fun onAdClosed() {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
-                        binding.btnWeek.isClickable = true
-                    }
-                })
+                if (clickAble) {
+                    clickAble = false
+                    bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
+                        override fun onAdClosed() {
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                        }
+                    })
+                }
             }else{
                 Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
             }
@@ -180,14 +194,15 @@ class MainFragment:Fragment() {
             Utils.setWebTitle(getString(R.string.zodiac_month))
             Utils.setWebUrl(Url.monthUrl)
             if (ChkInternet(requireActivity()).isOnline){
-                binding.btnMonth.isClickable = false
-                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                    override fun onAdClosed() {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
-                        binding.btnMonth.isClickable = true
-                    }
-                })
+                if (clickAble) {
+                    clickAble = false
+                    bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
+                        override fun onAdClosed() {
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                        }
+                    })
+                }
             }else{
                 Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
             }
@@ -196,28 +211,30 @@ class MainFragment:Fragment() {
             Utils.setWebTitle(getString(R.string.zodiac_year))
             Utils.setWebUrl(Url.yearUrl)
             if (ChkInternet(requireActivity()).isOnline){
-                binding.btnYear.isClickable = false
-                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                    override fun onAdClosed() {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
-                        binding.btnYear.isClickable = true
-                    }
-                })
+                if (clickAble) {
+                    clickAble = false
+                    bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
+                        override fun onAdClosed() {
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
+                        }
+                    })
+                }
             }else{
                 Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnRecommend.setOnClickListener {
             if (ChkInternet(requireActivity()).isOnline){
-                binding.btnRecommend.isClickable = false
-                bannerShow!!.showPopupBanner(6,object :BannerShow.onAdClosed{
-                    override fun onAdClosed() {
-                        Navigation.findNavController(requireView())
-                            .navigate(R.id.action_mainFragment_to_zodiacRecommend)
-                        binding.btnRecommend.isClickable = true
-                    }
-                })
+                if (clickAble) {
+                    clickAble = false
+                    bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
+                        override fun onAdClosed() {
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_mainFragment_to_zodiacRecommend)
+                        }
+                    })
+                }
             }else{
                 Toast.makeText(requireActivity(),getString(R.string.text_nonet_thai), Toast.LENGTH_SHORT).show()
             }
@@ -226,7 +243,7 @@ class MainFragment:Fragment() {
     private fun setNoticeAds(){
         binding.noticeAds.setNoticeAdsListener(object : NoticeAds.NoticeAdsListener{
             override fun onSuccess(strJson: String?) {
-                Log.e("noticeAds", "noticeAds onSuccessListener: strJson "+strJson)
+//                Log.e("noticeAds", "noticeAds onSuccessListener: strJson "+strJson)
                 if (!Utils.getNoticeAds()) {
                     binding.noticeAds.visibility = View.VISIBLE
                 }else{
@@ -235,16 +252,16 @@ class MainFragment:Fragment() {
             }
 
             override fun onBannerClick(strJson: String?) {
-                Log.e("noticeAds", "noticeAds onBannerClick: strJson "+strJson)
+//                Log.e("noticeAds", "noticeAds onBannerClick: strJson "+strJson)
             }
 
             override fun onFailed(strErrorMessage: String?) {
-                Log.e("noticeAds", "noticeAds onFailedListener: strErrorMessage "+strErrorMessage)
+//                Log.e("noticeAds", "noticeAds onFailedListener: strErrorMessage "+strErrorMessage)
                 binding.noticeAds.visibility = View.GONE
             }
 
             override fun onClose() {
-                Log.e("noticeAds", "noticeAds onClose")
+//                Log.e("noticeAds", "noticeAds onClose")
                 Utils.setNoticeAds(true)
                 binding.noticeAds.visibility = View.GONE
             }

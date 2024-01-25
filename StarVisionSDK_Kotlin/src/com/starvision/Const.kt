@@ -12,7 +12,7 @@ import android.util.Log
 
 object Const {
     fun log(strClass :String,text :String){
-        Log.e(strClass,text)
+//        Log.e(strClass,text)
     }
     @SuppressLint("InternalInsetResource", "DiscouragedApi")
     fun getStatusBarHeight(activity: Activity): Int {

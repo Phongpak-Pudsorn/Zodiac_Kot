@@ -1,5 +1,6 @@
 package com.smileapp.zodiac.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,6 +27,9 @@ class MenuZodiacFragment:Fragment() {
     var zodiacMain = ArrayList<ZodiacInfo.ZodiacData.MainData>()
     var bannerShow:BannerShow?=null
     val binding:FragmentMenuZodiacBinding by lazy { FragmentMenuZodiacBinding.inflate(layoutInflater) }
+    init {
+        callData()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,19 +45,18 @@ class MenuZodiacFragment:Fragment() {
             Navigation.findNavController(requireView())
                 .navigateUp()
         }
-        CallData()
     }
-    fun CallData(){
+    private fun callData(){
         executor.execute {
-            val menuStr = Utils.loadFromAssets(requireActivity())
+            val menuStr = Utils.loadFromAssets(MyApplication.getContext())
             zodiacMain.clear()
             try {
                 val menuData = Gson().fromJson(menuStr,ZodiacInfo::class.java)
                 for (i in menuData.Data_Zodiac.zodiac_main.indices) {
                     zodiacMain.add(menuData.Data_Zodiac.zodiac_main[i])
                 }
-                Log.e("zodiacMain size",zodiacMain.size.toString())
-                Log.e("zodiacMain size",zodiacMain.toString())
+//                Log.e("zodiacMain size",zodiacMain.size.toString())
+//                Log.e("zodiacMain size",zodiacMain.toString())
 
             }catch (e: JSONException){
                 e.printStackTrace()

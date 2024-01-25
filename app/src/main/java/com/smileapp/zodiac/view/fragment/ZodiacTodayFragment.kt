@@ -52,7 +52,7 @@ class ZodiacTodayFragment:Fragment() {
                 if (response.isSuccessful){
                     listData.clear()
                     listData.addAll(listOf(response.body()!!))
-                    Log.e("listData",listData.toString())
+//                    Log.e("listData",listData.toString())
                     setToday(listData)
                 }else{
 
@@ -60,7 +60,7 @@ class ZodiacTodayFragment:Fragment() {
             }
 
             override fun onFailure(call: Call<ZodiacTodayInfo>, t: Throwable) {
-                Log.e("Failure",""+t.message)
+//                Log.e("Failure",""+t.message)
             }
         })
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvTitle,32)
@@ -111,51 +111,57 @@ class ZodiacTodayFragment:Fragment() {
             button.setShadowLayer(0.01f,-2f,2f,ContextCompat.getColor(requireActivity(),R.color.black))
             when(i){
                 0 -> {
-                    button.setText(getString(R.string.sun))
+                    button.text = getString(R.string.sun)
                     button.setBackgroundResource(R.drawable.bg_day_0)
                 }
                 1 -> {
-                    button.setText(getString(R.string.mon))
+                    button.text = getString(R.string.mon)
                     button.setBackgroundResource(R.drawable.bg_day_1)
                 }
                 2 -> {
-                    button.setText(getString(R.string.tue))
+                    button.text = getString(R.string.tue)
                     button.setBackgroundResource(R.drawable.bg_day_2)
                 }
                 3 -> {
-                    button.setText(getString(R.string.wed))
+                    button.text = getString(R.string.wed)
                     button.setBackgroundResource(R.drawable.bg_day_3)
                 }
                 4 -> {
-                    button.setText(getString(R.string.thu))
+                    button.text = getString(R.string.thu)
                     button.setBackgroundResource(R.drawable.bg_day_4)
                 }
                 5 -> {
-                    button.setText(getString(R.string.fri))
+                    button.text = getString(R.string.fri)
                     button.setBackgroundResource(R.drawable.bg_day_5)
                 }
                 6 -> {
-                    button.setText(getString(R.string.sat))
+                    button.text = getString(R.string.sat)
                     button.setBackgroundResource(R.drawable.bg_day_6)
                 }
 
             }
             button.setOnClickListener {
-                binding.RlWebView.removeAllViews()
-                idDay = binding.hourRadioGroup.checkedRadioButtonId
-                Utils.setStringImageDrawable(requireActivity(),binding.imgDay, "day$idDay",300,215)
-                val webView = WebView(requireActivity())
-                webView.setBackgroundColor(Color.TRANSPARENT)
-                webView.isVerticalFadingEdgeEnabled = false
-                webView.loadDataWithBaseURL(null, Utils.getHtmlData(requireActivity(),strDescription,28)!!,"text/html", "utf-8", null)
-                binding.RlWebView.addView(webView)
-                strDescription = "<p  style=\"line-height:100%\">"+"<font size=\"6\" color=\"blue\" ><b>การงาน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].work+"</p>"+"<p  style=\"line-height:100%\"><font   size=\"6\" color=\"#d0ac1a\" ><b>การเงิน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].money+"</p>"+"<p  style=\"line-height:100%\"><font  size=\"6\" color=\"#FF4081\" ><b>ความรัก :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].love+"</p>"+"<font size=\"3\" >"+list[0].Datarow.credit+"</font>"
-                strDescription_share = "<p  style=\"line-height:100%\">"+"<font size=\"6\" color=\"blue\" ><b>การงาน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].work+"</p>"+"<p  style=\"line-height:100%\"><font   size=\"6\" color=\"#d0ac1a\" ><b>การเงิน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].money+"</p>"+"<p  style=\"line-height:100%\"><font  size=\"6\" color=\"#FF4081\" ><b>ความรัก :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].love+"</p>"
-                webView.loadDataWithBaseURL(null, Utils.getHtmlData(requireActivity(),strDescription,30)!!,"text/html", "utf-8", null)
-                Utils.setSharedDay(list[0].Datarow.daily_date)
-                Utils.setSharedID(idDay)
-                Utils.setSharedImage("day$idDay")
-                Utils.setSharedDesc(strDescription)
+                bannerShow!!.showPopupBanner(2,object :BannerShow.onAdClosed {
+                    override fun onAdClosed() {
+                        binding.RlWebView.removeAllViews()
+                        idDay = binding.hourRadioGroup.checkedRadioButtonId
+                        Utils.setStringImageDrawable(requireActivity(),binding.imgDay, "day$idDay",300,215)
+                        val webView = WebView(requireActivity())
+                        webView.setBackgroundColor(Color.TRANSPARENT)
+                        webView.isVerticalFadingEdgeEnabled = false
+                        webView.loadDataWithBaseURL(null, Utils.getHtmlData(requireActivity(),strDescription,28)!!,"text/html", "utf-8", null)
+                        binding.RlWebView.addView(webView)
+                        strDescription = "<p  style=\"line-height:100%\">"+"<font size=\"6\" color=\"blue\" ><b>การงาน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].work+"</p>"+"<p  style=\"line-height:100%\"><font   size=\"6\" color=\"#d0ac1a\" ><b>การเงิน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].money+"</p>"+"<p  style=\"line-height:100%\"><font  size=\"6\" color=\"#FF4081\" ><b>ความรัก :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].love+"</p>"+"<font size=\"3\" >"+list[0].Datarow.credit+"</font>"
+                        strDescription_share = "<p  style=\"line-height:100%\">"+"<font size=\"6\" color=\"blue\" ><b>การงาน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].work+"</p>"+"<p  style=\"line-height:100%\"><font   size=\"6\" color=\"#d0ac1a\" ><b>การเงิน :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].money+"</p>"+"<p  style=\"line-height:100%\"><font  size=\"6\" color=\"#FF4081\" ><b>ความรัก :</b></font><br>"+list[0].Datarow.zodiactoday[idDay].love+"</p>"
+                        webView.loadDataWithBaseURL(null, Utils.getHtmlData(requireActivity(),strDescription,30)!!,"text/html", "utf-8", null)
+                        Utils.setSharedDay(list[0].Datarow.daily_date)
+                        Utils.setSharedID(idDay)
+                        Utils.setSharedImage("day$idDay")
+                        Utils.setSharedDesc(strDescription)
+                    }
+
+                })
+
             }
             binding.hourRadioGroup.addView(button)
         }
@@ -167,6 +173,7 @@ class ZodiacTodayFragment:Fragment() {
     }
 
     override fun onResume() {
+        bannerShow!!.loadPopupBanner(0)
         bannerShow!!.getShowBannerSmall(10)
         super.onResume()
     }

@@ -70,9 +70,9 @@ class ProfileFragment:Fragment() {
         Utils.setTextGradient_Blue(binding.TvName)
         Utils.setTextGradient_Blue(binding.TvGender)
         val path = requireActivity().getExternalFilesDir(null)
-        mFileTemp = File(path,"temp_photo.jpg")
+        mFileTemp = File(path,TEMP_PHOTO_FILE_NAME)
         if (mFileTemp!!.exists()) {
-            Log.e("mFileTemp exist", mFileTemp!!.path.toString())
+//            Log.e("mFileTemp exist", mFileTemp!!.path.toString())
             val myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
             binding.mImguser.setImageBitmap(myBitmap)
         }
@@ -94,19 +94,23 @@ class ProfileFragment:Fragment() {
                 checkUserDataNull = true
             }else{
                 checkUserDataNull = false
-                if (gender==binding.rdMan.id){
-                    Log.e("man",binding.rdMan.id.toString())
-                    val strGender = "Man"
-                    Utils.setGENDER(strGender)
-                    checkUserDataNull = false
-                }else if (gender==binding.rdWoman.id){
-                    Log.e("woman",binding.rdWoman.id.toString())
-                    val strGender = "Woman"
-                    Utils.setGENDER(strGender)
-                    checkUserDataNull = false
-                }else{
-                    Toast.makeText(MyApplication.getContext(),"กรุณาระบุเพศของคุณ",Toast.LENGTH_SHORT).show()
-                    checkUserDataNull = true
+                when (gender) {
+                    binding.rdMan.id -> {
+            //                    Log.e("man",binding.rdMan.id.toString())
+                        val strGender = "Man"
+                        Utils.setGENDER(strGender)
+                        checkUserDataNull = false
+                    }
+                    binding.rdWoman.id -> {
+            //                    Log.e("woman",binding.rdWoman.id.toString())
+                        val strGender = "Woman"
+                        Utils.setGENDER(strGender)
+                        checkUserDataNull = false
+                    }
+                    else -> {
+                        Toast.makeText(MyApplication.getContext(),"กรุณาระบุเพศของคุณ",Toast.LENGTH_SHORT).show()
+                        checkUserDataNull = true
+                    }
                 }
             }
             if(!checkUserDataNull){
@@ -156,7 +160,7 @@ class ProfileFragment:Fragment() {
                     for (i in zodiacMain!!.indices) {
                         items.add(zodiacMain!![i].zodiac_name_thai + " " + zodiacMain!![i].zodiac_name_eng + " " + zodiacMain!![i].zodiac_date)
                     }
-                    Log.e("CallData",items.toString())
+//                    Log.e("CallData",items.toString())
                 }
                 binding.SpinDate.adapter = SpinnerAdapter(requireActivity(),R.layout.row,items)
             }
@@ -197,18 +201,18 @@ class ProfileFragment:Fragment() {
             var mImageCaptureUri: Uri?
             val state = Environment.getExternalStorageState()
             mImageCaptureUri = if (Environment.MEDIA_MOUNTED == state){
-                Log.e("takePicture","if")
-                Log.e("mFileTemp takePicture", mFileTemp!!.path.toString())
+//                Log.e("takePicture","if")
+//                Log.e("mFileTemp takePicture", mFileTemp!!.path.toString())
                 FileProvider.getUriForFile(requireActivity(),"com.smileapp.zodiac.provider", mFileTemp!!)
             }else{
-                Log.e("takePicture","else")
+//                Log.e("takePicture","else")
                 InternalStorageContentProvider().CONTENT_URI
             }
             intent.putExtra(MediaStore.EXTRA_OUTPUT,mImageCaptureUri)
 
             startTakeResult.launch(intent)
         }catch (e: ActivityNotFoundException){
-            Log.e("cannot take picture",e.message.toString())
+//            Log.e("cannot take picture",e.message.toString())
         }
     }
     private fun openGallery(){
@@ -218,7 +222,7 @@ class ProfileFragment:Fragment() {
 
     }
     private fun startCropImage() {
-        Log.e("mFileTemp startCropImage", mFileTemp!!.path.toString())
+//        Log.e("mFileTemp startCropImage", mFileTemp!!.path.toString())
         val intent = Intent(requireActivity(), CropImage::class.java)
         intent.putExtra(CropImage().IMAGE_PATH, mFileTemp!!.path)
         intent.putExtra(CropImage().SCALE, true)
@@ -229,9 +233,9 @@ class ProfileFragment:Fragment() {
     private val startCropResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: androidx.activity.result.ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK){
             val path = result.data?.getStringExtra(CropImage().IMAGE_PATH)
-            Log.e("image bitmap",CropImage().IMAGE_PATH)
+//            Log.e("image bitmap",CropImage().IMAGE_PATH)
             if (path == null) {
-                Log.e("path","null")
+//                Log.e("path","null")
             }
             val myBitmap = BitmapFactory.decodeFile(mFileTemp!!.path)
             saveBitmap = myBitmap
@@ -249,7 +253,7 @@ class ProfileFragment:Fragment() {
                 outputStream.close()
                 startCropImage()
             }catch (e:Exception){
-                Log.e("REQUEST_CODE_GALLERY","Error while creating temp file",e)
+//                Log.e("REQUEST_CODE_GALLERY","Error while creating temp file",e)
             }
 
         }
@@ -257,7 +261,7 @@ class ProfileFragment:Fragment() {
     }
     private val startTakeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: androidx.activity.result.ActivityResult ->
         if (result.resultCode == Activity.RESULT_OK){
-            Log.e("mFileTemp startTakeResult", mFileTemp!!.path.toString())
+//            Log.e("mFileTemp startTakeResult", mFileTemp!!.path.toString())
             startCropImage()
         }
 
@@ -274,7 +278,7 @@ class ProfileFragment:Fragment() {
     fun setNoticeAds(){
         binding.noticeAds.setNoticeAdsListener(object : NoticeAds.NoticeAdsListener{
             override fun onSuccess(strJson: String?) {
-                Log.e("noticeAds", "noticeAds onSuccessListener: strJson "+strJson)
+//                Log.e("noticeAds", "noticeAds onSuccessListener: strJson "+strJson)
                 if (!Utils.getNoticeAds()) {
                     binding.noticeAds.visibility = View.VISIBLE
                 }else{
@@ -283,16 +287,16 @@ class ProfileFragment:Fragment() {
             }
 
             override fun onBannerClick(strJson: String?) {
-                Log.e("noticeAds", "noticeAds onBannerClick: strJson "+strJson)
+//                Log.e("noticeAds", "noticeAds onBannerClick: strJson "+strJson)
             }
 
             override fun onFailed(strErrorMessage: String?) {
-                Log.e("noticeAds", "noticeAds onFailedListener: strErrorMessage "+strErrorMessage)
+//                Log.e("noticeAds", "noticeAds onFailedListener: strErrorMessage "+strErrorMessage)
                 binding.noticeAds.visibility = View.GONE
             }
 
             override fun onClose() {
-                Log.e("noticeAds", "noticeAds onClose")
+//                Log.e("noticeAds", "noticeAds onClose")
                 Utils.setNoticeAds(true)
                 binding.noticeAds.visibility = View.GONE
             }

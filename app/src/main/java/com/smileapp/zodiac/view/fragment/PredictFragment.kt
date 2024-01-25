@@ -51,8 +51,8 @@ class PredictFragment:Fragment() {
         Font().styleText_RSU_BOLD(requireActivity(),binding.TvNameRasi,30)
         Utils.setTextGradient_Menu_Black_Blue(binding.TvNameRasi)
         callData()
-        Log.e("oncreated zodiacMain",zodiacMain.toString())
-        Log.e("oncreated zodiacGeneral",zodiacGeneral.toString())
+//        Log.e("oncreated zodiacMain",zodiacMain.toString())
+//        Log.e("oncreated zodiacGeneral",zodiacGeneral.toString())
         binding.imgShare.setOnClickListener {
             bannerShow!!.showPopupBanner(3,object :BannerShow.onAdClosed{
                 override fun onAdClosed() {
@@ -121,10 +121,10 @@ class PredictFragment:Fragment() {
                         zodiacLove.addAll(menuData.Data_Zodiac.zodiac_love.zodiac_12)
                     }
                 }
-                Log.e("zodiacMain size",zodiacMain.size.toString())
-                Log.e("zodiacMain size",zodiacMain.toString())
-                Log.e("zodiacGeneral",zodiacGeneral.toString())
-                Log.e("zodiacGeneral size",zodiacGeneral.size.toString())
+//                Log.e("zodiacMain size",zodiacMain.size.toString())
+//                Log.e("zodiacMain size",zodiacMain.toString())
+//                Log.e("zodiacGeneral",zodiacGeneral.toString())
+//                Log.e("zodiacGeneral size",zodiacGeneral.size.toString())
                 binding.TvNameRasi.text = zodiacMain[0].zodiac_name_thai+" "+zodiacMain[0].zodiac_name_eng+"\n"+zodiacMain[0].zodiac_date
                 val name = zodiacMain[0].zodiac_image.replace(".png","")
                 Utils.setPredictRasi(name)

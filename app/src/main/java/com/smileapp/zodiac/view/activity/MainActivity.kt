@@ -23,7 +23,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = Runnable {
-        Log.e("main", "close app")
+//        Log.e("main", "close app")
         finishAndRemoveTask()
     }
     val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -62,18 +62,18 @@ class MainActivity : AppCompatActivity() {
         return ""
     }
     override fun onPause() {
-        Log.e("main","onPause")
+//        Log.e("main","onPause")
         handler.postDelayed(runnable,5*60*1000)
         super.onPause()
     }
 
     override fun onStop() {
-        Log.e("main","onStop")
+//        Log.e("main","onStop")
         super.onStop()
     }
 
     override fun onResume() {
-        Log.e("main","onResume")
+//        Log.e("main","onResume")
         handler.removeCallbacks(runnable)
         super.onResume()
     }

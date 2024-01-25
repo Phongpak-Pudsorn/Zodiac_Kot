@@ -30,7 +30,7 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:windowSoftInputMode="adjustPan"
-            android:configChanges="screenSize|orientation"
+            android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

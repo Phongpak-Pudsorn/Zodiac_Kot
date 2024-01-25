@@ -38,6 +38,7 @@ class SplashFragment:Fragment() {
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
         Utils.setNoticeAds(false)
+        Utils.firstLoad = true
         setStarVisionSDK()
         val version = CallVersion(requireActivity())
         version.setCallListener(object :CallVersion.CallVersionListener{
@@ -81,9 +82,9 @@ class SplashFragment:Fragment() {
         callWebServerSendContact.setGetAccount(false)
         callWebServerSendContact.startService()
     }
-    val timer = object : CountDownTimer(5000, 1000) {
+    val timer = object : CountDownTimer(6000, 1000) {
         override fun onTick(p0: Long) {
-            Log.e("time", p0.toString())
+//            Log.e("time", p0.toString())
         }
         override fun onFinish() {
             bannerShow!!.showPopupBannerNow(1,object : BannerShow.onAdClosed{

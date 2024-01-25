@@ -50,49 +50,49 @@ class NoticeAdsListView @JvmOverloads constructor(
     }
 
     fun loadAds (strUUID : String){
-//        Const.log(tagS,"loadAds")
+        Const.log(tagS,"loadAds")
         try {
-//            Const.log(tagS,"try")
+            Const.log(tagS,"try")
             val timeNow = dateFormat.format(System.currentTimeMillis())
             val timeData = dateFormat.parse((appPreferences.getPreferences(mContext,AppPreferences.KEY_PREFS_TIME_LOADS,"")).toString())
             val result : Long =  (dateFormat.parse(timeNow)!!.time - timeData!!.time)
             if(loadData.checkData == false){
-//                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
+                Const.log(tagS,"loadAds : if = โหลด Api ไม่ได้")
                 mNoticeAdsListViewListener!!.onFailed("Notice Error")
 
             }else if (result > (10 * 60 * 1000)){
-//                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
+                Const.log(tagS,"loadAds : else if = เกิน10นาที โหลด API ใหม่")
                 loadData.loadAdsData(true)
                 val newdataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(newdataApi.toString(),strUUID)
 
             }else{
-//                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
+                Const.log(tagS,"loadAds : else = ยังไม่เกิน10นาที ใช้ Json Preferences")
                 val dataApi = appPreferences.getPreferences(mContext, AppPreferences.KEY_PREFS_JSON_DATA,"")
                 setApiToView(dataApi.toString(),strUUID)
             }
         }catch (e : Exception){
-//            Const.log(tagS,"catch")
-//            Const.log(tagS,"loadAds : catch")
+            Const.log(tagS,"catch")
+            Const.log(tagS,"loadAds : catch")
             mNoticeAdsListViewListener!!.onFailed("Notice Error")
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     fun setApiToView(dataApi : String, strUUID : String){
-//        Const.log(tagS,"strUUID : $strUUID")
+        Const.log(tagS,"strUUID : $strUUID")
         try {
             val adsModel = Gson().fromJson(dataApi, AdsModel::class.java)
             if(adsModel.Status == "True") {
                 val dataRowPublish = adsModel.Datarowpublish
                 noticeAds = this
                 try {
-//                    Const.log(tagS,"try check Publishtitle : $dataRowPublish")
+                    Const.log(tagS,"try check Publishtitle : $dataRowPublish")
                     if (dataRowPublish[0].Publishtitle == ""){
-//                        Const.log(tagS,"dataRowPublish in null : $dataRowPublish")
+                        Const.log(tagS,"dataRowPublish in null : $dataRowPublish")
                         mNoticeAdsListViewListener!!.onFailed("No Notice")
                     }else{
-//                        Const.log(tagS,"dataRowPublish else : $dataRowPublish")
+                        Const.log(tagS,"dataRowPublish else : $dataRowPublish")
                         (noticeAds as NoticeAdsListView).removeAllViews()
                         (noticeAds as NoticeAdsListView).addView(bindingListview.root)
                         bindingListview.mTvTextNoticeMessage.adapter = AdapterNotice(mContext,dataRowPublish)
@@ -100,12 +100,12 @@ class NoticeAdsListView @JvmOverloads constructor(
 
                     }
                 }catch (e : Exception){
-//                    Const.log(tagS,"Catch : setApiToView")
+                    Const.log(tagS,"Catch : setApiToView")
                     mNoticeAdsListViewListener!!.onFailed("No Notice")
                 }
             }
         }catch (e : Exception){
-//            Const.log(tagS,"Catch : setApiToView")
+            Const.log(tagS,"Catch : setApiToView")
             mNoticeAdsListViewListener!!.onFailed("Notice Error")
         }
     }

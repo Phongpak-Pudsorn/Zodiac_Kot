@@ -17,6 +17,7 @@ import com.smileapp.zodiac.utils.Utils
 
 class MenuMainAdapter(val context: Context,val listData:ArrayList<ZodiacInfo.ZodiacData.MainData>,val bannerShow: BannerShow):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+    var click = false
 
     class ViewHolder(val menuBinding: ItemMenuMainBinding): RecyclerView.ViewHolder(menuBinding.root)
 
@@ -40,35 +41,28 @@ class MenuMainAdapter(val context: Context,val listData:ArrayList<ZodiacInfo.Zod
                 val animAlpha = AnimationUtils.loadAnimation(
                     context, R.anim.move_y2
                 )
-                holder.menuBinding.imgClick.visibility = View.VISIBLE
-                v.startAnimation(animAlpha)
-                Utils.menuPosition = position
-                holder.menuBinding.imgClick.isClickable = false
-                val timer = object : CountDownTimer(1000,1000){
-                    override fun onTick(p0: Long) {
-                    }
-
-                    override fun onFinish() {
-                        Utils.setPredictPosition(position)
-                        holder.menuBinding.imgClick.isClickable = true
-                        if (Utils.showOnClick==5) {
-                            Utils.showOnClick = 0
-                            bannerShow.showPopupBannerNow(2, object : BannerShow.onAdClosed {
-                                override fun onAdClosed() {
-                                    Navigation.findNavController(v)
-                                        .navigate(R.id.action_menuZodiacFragment_to_predictFragment)
-                                }
-
-                            })
-                        }else{
-                            Utils.showOnClick += 1
-                            Navigation.findNavController(v)
-                                .navigate(R.id.action_menuZodiacFragment_to_predictFragment)
+                if (!click) {
+                    click = true
+                    v.startAnimation(animAlpha)
+                    Utils.menuPosition = position
+                    val timer = object : CountDownTimer(1000, 1000) {
+                        override fun onTick(p0: Long) {
                         }
-                    }
 
+                        override fun onFinish() {
+                            Utils.setPredictPosition(position)
+                                bannerShow.showPopupBanner(2, object : BannerShow.onAdClosed {
+                                    override fun onAdClosed() {
+                                        click = false
+                                        Navigation.findNavController(v)
+                                            .navigate(R.id.action_menuZodiacFragment_to_predictFragment)
+                                    }
+                                })
+                        }
+
+                    }
+                    timer.start()
                 }
-                timer.start()
             }
 
         }
