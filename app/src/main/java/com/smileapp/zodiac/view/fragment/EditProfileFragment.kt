@@ -58,6 +58,10 @@ class EditProfileFragment: Fragment() {
     var items = ArrayList<String>()
     var checkUserDataNull = false
     val binding:FragmentEditprofileBinding by lazy { FragmentEditprofileBinding.inflate(layoutInflater) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -284,11 +288,6 @@ class EditProfileFragment: Fragment() {
             }
         }
 
-    }
-
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        super.onStart()
     }
 
     override fun onResume() {

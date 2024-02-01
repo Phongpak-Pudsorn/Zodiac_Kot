@@ -114,6 +114,7 @@ class ProfileFragment:Fragment() {
                 }
             }
             if(!checkUserDataNull){
+                Utils.showBanner = false
                 Utils.setNameAndDateRasi(zodiacMain!![Utils.getRasi()].zodiac_name_thai+" "+zodiacMain!![Utils.getRasi()].zodiac_name_eng+"\n"+zodiacMain!![Utils.getRasi()].zodiac_date)
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_profileFragment_to_mainFragment)
@@ -124,6 +125,7 @@ class ProfileFragment:Fragment() {
                 override fun handleOnBackPressed() {
                     if (pressAble) {
                         pressAble = false
+                        Utils.showBanner = false
                         Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_mainFragment2)
                     }
                 }
@@ -305,12 +307,14 @@ class ProfileFragment:Fragment() {
     }
 
     override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
         super.onStart()
     }
 
     override fun onResume() {
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 }

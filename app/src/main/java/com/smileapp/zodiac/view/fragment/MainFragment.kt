@@ -47,19 +47,32 @@ class MainFragment:Fragment() {
     var bannerShow:BannerShow?=null
     val handler = Handler(Looper.getMainLooper())
     val binding:FragmentMainBinding by lazy { FragmentMainBinding.inflate(layoutInflater) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Utils.log("MainFragment","onCreate")
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.loadPopupBanner(0)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        Utils.log("MainFragment","onCreateView")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Utils.log("MainFragment","onViewCreated")
         val progressDialog = LoadingDialog.progressDialog(requireActivity())
         setNoticeAds()
         setObject()
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         requireActivity().onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -136,6 +149,7 @@ class MainFragment:Fragment() {
         binding.imgSetting.setOnClickListener {
             if (clickAble) {
                 clickAble = false
+                Utils.showBanner = false
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_mainFragment_to_settingFragment)
             }
@@ -143,6 +157,7 @@ class MainFragment:Fragment() {
         binding.userTab.mImguser.setOnClickListener {
             if (clickAble) {
                 clickAble = false
+                Utils.showBanner = false
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_mainFragment_to_editProfileFragment)
             }
@@ -152,6 +167,7 @@ class MainFragment:Fragment() {
                 clickAble = false
                 bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
                     override fun onAdClosed() {
+                        Utils.showBanner = false
                         Navigation.findNavController(requireView())
                             .navigate(R.id.action_mainFragment_to_menuZodiacFragment)
                     }
@@ -164,6 +180,7 @@ class MainFragment:Fragment() {
                     clickAble = false
                     bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
                         override fun onAdClosed() {
+                            Utils.showBanner = false
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_mainFragment_to_zodiacTodayFragment)
                         }
@@ -181,6 +198,7 @@ class MainFragment:Fragment() {
                     clickAble = false
                     bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
                         override fun onAdClosed() {
+                            Utils.showBanner = false
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
                         }
@@ -198,6 +216,7 @@ class MainFragment:Fragment() {
                     clickAble = false
                     bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
                         override fun onAdClosed() {
+                            Utils.showBanner = false
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
                         }
@@ -215,6 +234,7 @@ class MainFragment:Fragment() {
                     clickAble = false
                     bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
                         override fun onAdClosed() {
+                            Utils.showBanner = false
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_mainFragment_to_zodiacWebFragment)
                         }
@@ -230,6 +250,7 @@ class MainFragment:Fragment() {
                     clickAble = false
                     bannerShow!!.showPopupBanner(6, object : BannerShow.onAdClosed {
                         override fun onAdClosed() {
+                            Utils.showBanner = false
                             Navigation.findNavController(requireView())
                                 .navigate(R.id.action_mainFragment_to_zodiacRecommend)
                         }
@@ -313,13 +334,10 @@ class MainFragment:Fragment() {
     }
 
     override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
         super.onStart()
     }
 
     override fun onResume() {
-        bannerShow!!.loadPopupBanner(0)
-        bannerShow!!.getShowBannerSmall(0)
         try {
             val path = requireActivity().getExternalFilesDir(null)
             val mFileTemp = File(path,imgUserFile)

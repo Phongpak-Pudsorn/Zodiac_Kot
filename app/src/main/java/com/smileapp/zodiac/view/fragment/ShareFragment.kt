@@ -43,6 +43,10 @@ class ShareFragment:Fragment() {
     var bannerShow: BannerShow?=null
     val binding:FragmentShareBinding by lazy { FragmentShareBinding.inflate(layoutInflater) }
     var check = false
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -108,6 +112,8 @@ class ShareFragment:Fragment() {
 //            Log.e("checkSelfPermission","else")
                 requestPermissionLauncher.launch(android.Manifest.permission.READ_MEDIA_IMAGES)
             }
+        }else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
+            shareImageView()
         }else{
             if (ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED
@@ -164,13 +170,12 @@ class ShareFragment:Fragment() {
         return image
     }
 
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        super.onStart()
-    }
 
     override fun onResume() {
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 }

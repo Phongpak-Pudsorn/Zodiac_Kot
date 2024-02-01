@@ -29,6 +29,10 @@ class ZodiacWebFragment: Fragment() {
     val binding: WebviewBinding by lazy { WebviewBinding.inflate(layoutInflater) }
     var strMessage = ""
     var loading = true
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -142,13 +146,12 @@ class ZodiacWebFragment: Fragment() {
         binding.webview1.loadUrl(url)
     }
 
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        super.onStart()
-    }
 
     override fun onResume() {
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 

@@ -22,7 +22,6 @@ class MenuMainAdapter(val context: Context,val listData:ArrayList<ZodiacInfo.Zod
     class ViewHolder(val menuBinding: ItemMenuMainBinding): RecyclerView.ViewHolder(menuBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        bannerShow.loadPopupBanner(0)
         val binding = ItemMenuMainBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
@@ -54,6 +53,7 @@ class MenuMainAdapter(val context: Context,val listData:ArrayList<ZodiacInfo.Zod
                                 bannerShow.showPopupBanner(2, object : BannerShow.onAdClosed {
                                     override fun onAdClosed() {
                                         click = false
+                                        Utils.showBanner = false
                                         Navigation.findNavController(v)
                                             .navigate(R.id.action_menuZodiacFragment_to_predictFragment)
                                     }

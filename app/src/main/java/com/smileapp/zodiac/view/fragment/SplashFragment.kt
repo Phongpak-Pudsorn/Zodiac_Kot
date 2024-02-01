@@ -35,6 +35,7 @@ class SplashFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appPreferences = AppPreferences
         appPreferences?.setPreferences(requireActivity(), AppPreferences.KEY_CHECK_LOAD_ADS_API,true)
+        Utils.showBanner = false
         bannerShow = BannerShow(requireActivity(), Utils.UUID)
         bannerShow!!.loadPopupBanner(1)
         Utils.setNoticeAds(false)

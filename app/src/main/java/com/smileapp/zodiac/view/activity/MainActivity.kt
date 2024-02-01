@@ -19,12 +19,13 @@ import com.starvision.ConstVisionInstallSDK
 import com.starvision.ccusdk.StarVisionCcuSDK
 import com.starvision.installsdk.StarVisionInstallSDK
 import java.util.*
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = Runnable {
 //        Log.e("main", "close app")
-        finishAndRemoveTask()
+        finishAffinity()
     }
     val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {

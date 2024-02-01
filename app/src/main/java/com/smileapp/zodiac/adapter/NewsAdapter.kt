@@ -2,6 +2,7 @@ package com.smileapp.zodiac.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -33,10 +34,10 @@ class NewsAdapter(val mContext:Context, val list:ArrayList<NewsInfo.DataInfo>, p
             return ViewHolder(binding)
         }else{
             val binding=AdsNativeBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-            if (firstIn) {
-                firstIn = false
-                bannerShow.showNativeList(7.toString(), 1, binding.root)
-            }
+//            if (firstIn) {
+//                firstIn = false
+            bannerShow.showNativeList(7.toString(), 1, binding.root)
+//            }
             return NativeHolder(binding)
         }
     }

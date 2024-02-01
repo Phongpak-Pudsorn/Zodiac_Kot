@@ -57,12 +57,16 @@ object Utils {
     var currentFragment = 0
     var menuPosition = 0
     var showOnClick = 0
+    var showBanner = false
 
     fun AppPreference(context: Context) {
 //    	Log.e("TAG", APP_SHARED_PREFS);
         sharedPrefs = context.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE)
         prefsEditor = sharedPrefs!!.edit()
 
+    }
+    fun log(strClass :String,text :String){
+        Log.e(strClass,text)
     }
     fun getStatusPushNoticfication(): Boolean? {
         return sharedPrefs!!.getBoolean(KEY_STATUS_PUSNOTIFICATION, false)

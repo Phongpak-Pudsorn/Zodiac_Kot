@@ -25,6 +25,10 @@ class SettingFragment:Fragment() {
     var back = true
     var bannerShow: BannerShow?=null
     val binding:FragmentSettingBinding by lazy { FragmentSettingBinding.inflate(layoutInflater) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -104,13 +108,11 @@ class SettingFragment:Fragment() {
         })
     }
 
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        super.onStart()
-    }
-
     override fun onResume() {
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 }

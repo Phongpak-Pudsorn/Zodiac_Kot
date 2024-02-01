@@ -48,6 +48,11 @@ class ZodiacRecommend:Fragment() {
     init {
         initial()
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID,requireActivity().getString(R.string.KEY_ADMOB_Native))
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -125,6 +130,12 @@ class ZodiacRecommend:Fragment() {
                                     j+=1
                                 }
                             }
+                            Log.e("initial newsList size",newsList.size.toString())
+                            for (i in newsList.indices){
+                                if (newsList[i].artide_id=="abcdef"){
+                                    Log.e("newsList Native",i.toString())
+                                }
+                            }
 //                            Log.e("newsList pullup", newsList.toString())
                             binding.list.apply {
                                 newsAdapter = NewsAdapter(requireActivity(),newsList, bannerShow!!,object :NewsAdapter.OnItemClickListener{
@@ -170,6 +181,12 @@ class ZodiacRecommend:Fragment() {
                             j+=1
                         }
                     }
+                    Log.e("loadmore newsList size",newsList.size.toString())
+                    for (i in newsList.indices){
+                        if (newsList[i].artide_id=="abcdef"){
+                            Log.e("newsList Native",i.toString())
+                        }
+                    }
 //                    Log.e("newsList pulldown", newsList.toString())
                     handler.postDelayed(runnable,1000)
 
@@ -189,14 +206,11 @@ class ZodiacRecommend:Fragment() {
         isLoading = false
     }
 
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID,requireActivity().getString(R.string.KEY_ADMOB_Native))
-        super.onStart()
-    }
-
     override fun onResume() {
-        bannerShow!!.loadPopupBanner(0)
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 }

@@ -32,6 +32,11 @@ class ZodiacTodayFragment:Fragment() {
     private var strDescription = ""
     private var strDescription_share = ""
     val binding:FragmentTodayBinding by lazy { FragmentTodayBinding.inflate(layoutInflater) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(), Utils.UUID)
+        bannerShow!!.loadPopupBanner(0)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,6 +74,7 @@ class ZodiacTodayFragment:Fragment() {
                 .navigateUp()
         }
         binding.imgShare.setOnClickListener {
+            Utils.showBanner = false
             Navigation.findNavController(requireView()).navigate(R.id.action_zodiacTodayFragment_to_shareTodayFragment)
         }
     }
@@ -167,14 +173,12 @@ class ZodiacTodayFragment:Fragment() {
         }
     }
 
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(), Utils.UUID)
-        super.onStart()
-    }
 
     override fun onResume() {
-        bannerShow!!.loadPopupBanner(0)
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 }

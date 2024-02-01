@@ -30,6 +30,12 @@ class MenuZodiacFragment:Fragment() {
     init {
         callData()
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bannerShow = BannerShow(requireActivity(),Utils.UUID)
+        bannerShow!!.loadPopupBanner(0)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,14 +88,11 @@ class MenuZodiacFragment:Fragment() {
 //        }
 //    }
 
-    override fun onStart() {
-        bannerShow = BannerShow(requireActivity(),Utils.UUID)
-        super.onStart()
-    }
-
     override fun onResume() {
-        bannerShow!!.loadPopupBanner(0)
-        bannerShow!!.getShowBannerSmall(10)
+        if (!Utils.showBanner) {
+            Utils.showBanner = true
+            bannerShow!!.getShowBannerSmall(10)
+        }
         super.onResume()
     }
 }
